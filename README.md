@@ -35,8 +35,32 @@ max-academic-bo/
 
 ## Instalación
 
-Copia **toda la carpeta** (o clónala) dentro del directorio de skills de tu harness, con el nombre
-`max-academic-bo`. Rutas típicas:
+### Opción A — CLI de `skills` (skills.sh) ⭐
+
+Este repositorio ya es instalable con el CLI oficial del ecosistema (`npx skills` / `bunx skills`),
+porque la **raíz contiene un `SKILL.md`** (el CLI descubre la skill a nivel raíz):
+
+```bash
+# Ver qué skills trae el repo, sin instalar
+npx skills add https://github.com/Max29xD/max-academic-bo --list
+
+# Instalar (global, en tu usuario)
+npx skills add https://github.com/Max29xD/max-academic-bo --skill max-academic-bo -g -y
+
+# Equivalente con bun
+bunx skills@latest add https://github.com/Max29xD/max-academic-bo --skill max-academic-bo -g -y
+
+# Instalar solo en harness concretos
+npx skills add Max29xD/max-academic-bo --skill max-academic-bo -a claude-code -a opencode
+```
+
+El repositorio es **privado**: el CLI usa tus credenciales de Git / GitHub CLI / SSH ya configuradas.
+Si lo haces público, cualquiera podrá instalarlo igual y aparecerá en [skills.sh](https://skills.sh/).
+
+### Opción B — manual (copiar la carpeta)
+
+Copia toda la carpeta dentro del directorio de skills de tu harness, con el nombre `max-academic-bo`.
+Rutas típicas:
 
 | Harness | Ámbito | Ruta |
 |---|---|---|
