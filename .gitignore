@@ -1,0 +1,28 @@
+# ---- Not part of the installable skill: never publish ----
+# Old skill (eval baseline) + the author's messy working notes
+datos/
+# skill-creator dev tooling and its lockfile (scaffolding only)
+.agents/
+skills-lock.json
+
+# ---- Generated / scratch ----
+output/
+scratch/
+*-workspace/
+*.skill
+
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.Python
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
