@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/header/graph.svg?title=max-academic-bo&subtitle=Monograf%C3%ADas%20de%20compilaci%C3%B3n%20%C2%B7%20APA%207.%C2%AA%20%C2%B7%20Bolivia&mode=dark" />
-    <img alt="max-academic-bo — monografías de compilación · APA 7.ª · Bolivia" src="https://shieldcn.dev/header/graph.svg?title=max-academic-bo&subtitle=Monograf%C3%ADas%20de%20compilaci%C3%B3n%20%C2%B7%20APA%207.%C2%AA%20%C2%B7%20Bolivia&mode=light" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/header/gradient.svg?title=max-academic-bo&subtitle=Monograf%C3%ADas%20de%20compilaci%C3%B3n%20%C2%B7%20APA%207.%C2%AA%20%C2%B7%20Bolivia&logo=googlescholar&mode=dark" />
+    <img alt="max-academic-bo — monografías de compilación · APA 7.ª · Bolivia" src="https://shieldcn.dev/header/gradient.svg?title=max-academic-bo&subtitle=Monograf%C3%ADas%20de%20compilaci%C3%B3n%20%C2%B7%20APA%207.%C2%AA%20%C2%B7%20Bolivia&logo=googlescholar&mode=light" />
   </picture>
 </p>
 
@@ -13,11 +13,21 @@
   <img alt="Python 3.8+" src="https://shieldcn.dev/badge/Python-3.8%2B-3776ab.svg?logo=python" />
 </p>
 
-Skill de agente para elaborar **monografías de compilación** (EIP-FINOR-UAGRM, Bolivia, Taller de Grado)
-bajo la guía institucional y las **normas APA 7.ª**, con enfoque territorial **exclusivo en Bolivia**,
-**fuentes reales y verificadas** (cero invención) y control exacto del alcance paso a paso (P0–P11).
+<p align="center">
+  Elabora <b>monografías de compilación</b> de la EIP-FINOR-UAGRM (Bolivia, Taller de Grado) bajo la<br/>
+  guía institucional y las <b>normas APA 7.ª</b>, con enfoque <b>exclusivo en Bolivia</b> y<br/>
+  fuentes <b>reales y verificadas</b> (cero invención), paso a paso y con control exacto del alcance.
+</p>
 
-## Instalación
+## ✨ Qué hace
+
+- Ejecuta la monografía **paso a paso** (P0–P11) y **se detiene exactamente donde le indiques**.
+- **Cero invención bibliográfica**: cada fuente, DOI y cifra sale de una búsqueda real y abierta.
+- Búsqueda con **embudo geográfico boliviano** (local → departamental → nacional → regional → global).
+- **Auditor** automático contra reglas con ID (TIT, PRO, OBJ, REV, DIS, CON, RES, REF…).
+- Ensambla el **`.docx` final** sobre la plantilla oficial (carátula, índice, referencias APA 7).
+
+## 🚀 Instalación
 
 ```bash
 npx  skills add https://github.com/Max29xD/max-academic-bo --skill max-academic-bo
@@ -25,19 +35,34 @@ bunx skills add https://github.com/Max29xD/max-academic-bo --skill max-academic-
 pnpx skills add https://github.com/Max29xD/max-academic-bo --skill max-academic-bo
 ```
 
-Usa la que tengas. Con `-g` se instala global (en tu usuario) y con `-y` se omiten las confirmaciones:
+Usa la que tengas. Añade `-g` para instalar global (en tu usuario) y `-y` para omitir confirmaciones:
 
 ```bash
 npx skills add https://github.com/Max29xD/max-academic-bo --skill max-academic-bo -g -y
 ```
 
-## Requisitos
+## 🤖 Cómo se usa en el agente
+
+Se activa **sola** (por su `description`): basta con hablar de tu monografía. Después la diriges en
+lenguaje natural y se detiene donde se lo pidas:
+
+| Le pides… | Hace… |
+|---|---|
+| `Hazme la monografía completa` | Ejecuta P1–P11 y va parando en cada control |
+| `Solo el planteamiento del problema` | Entrega únicamente el paso 2, con datos oficiales de Bolivia |
+| `Hasta el paso 3` | Ejecuta P1–P3 y se detiene |
+| `Solo buscar fuentes` | Búsqueda real + verificación y matriz de análisis bibliográfico |
+| `Solo el eje 2` | Redacta una sola sección de la revisión literaria |
+| `Audita mi borrador` | Revisa tu texto y te dice exactamente qué incumple |
+| `Genera el .docx` | Ensambla el documento final sobre la plantilla oficial |
+
+## 📦 Requisitos
 
 - **Python 3.8+**
-- `python-docx` para generar el `.docx`: `pip install python-docx`
+- `python-docx` para el `.docx`: `pip install python-docx`
 - Una herramienta de búsqueda web y otra de fetch (las del harness)
 
-## Estructura
+## 🗂 Estructura
 
 ```
 max-academic-bo/
@@ -48,6 +73,14 @@ max-academic-bo/
 └── vendor/                   # generador de Sources.xml
 ```
 
-## Creador
+## 👤 Creador
 
-**Marcos Leandro Bonilla Borges** · [@Max29xD](https://github.com/Max29xD) · [maxcoding.pages.dev](https://maxcoding.pages.dev)
+<p align="center">
+  <a href="https://github.com/Max29xD">
+    <img src="https://avatars.githubusercontent.com/u/85517789?v=4" width="96" height="96" alt="Marcos Leandro Bonilla Borges" />
+  </a>
+  <br/>
+  <b>Marcos Leandro Bonilla Borges</b>
+  <br/>
+  <a href="https://github.com/Max29xD">@Max29xD</a> · <a href="https://maxcoding.pages.dev">maxcoding.pages.dev</a>
+</p>
