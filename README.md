@@ -1,4 +1,17 @@
-# max-academic-bo
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/header/graph.svg?title=max-academic-bo&subtitle=Monograf%C3%ADas%20de%20compilaci%C3%B3n%20%C2%B7%20APA%207.%C2%AA%20%C2%B7%20Bolivia&mode=dark" />
+    <img alt="max-academic-bo — monografías de compilación · APA 7.ª · Bolivia" src="https://shieldcn.dev/header/graph.svg?title=max-academic-bo&subtitle=Monograf%C3%ADas%20de%20compilaci%C3%B3n%20%C2%B7%20APA%207.%C2%AA%20%C2%B7%20Bolivia&mode=light" />
+  </picture>
+</p>
+
+<p align="center">
+  <img alt="Agent Skill compatible" src="https://shieldcn.dev/badge/Agent%20Skill-compatible-18181b.svg?variant=secondary" />
+  <img alt="APA 7.ª obligatoria" src="https://shieldcn.dev/badge/APA%207.%C2%AA-obligatoria-1d4ed8.svg?variant=secondary" />
+  <img alt="Bolivia, enfoque exclusivo" src="https://shieldcn.dev/badge/Bolivia-enfoque%20exclusivo-16a34a.svg?variant=secondary" />
+  <img alt="EIP FINOR UAGRM, guía institucional" src="https://shieldcn.dev/badge/EIP%20FINOR%20UAGRM-gu%C3%ADa%20institucional-7c3aed.svg?variant=secondary" />
+  <img alt="Python 3.8+" src="https://shieldcn.dev/badge/Python-3.8%2B-3776ab.svg?logo=python" />
+</p>
 
 Skill de agente para elaborar **monografías de compilación** (revisión documental de postgrado)
 de la **EIP-FINOR-UAGRM** (Bolivia, Taller de Grado), bajo la Guía Institucional y las
@@ -114,6 +127,21 @@ P1 Título · P2 Planteamiento · P3 Objetivos · P4 Revisión · P5 Términos �
 P7 Conclusiones · P8 Introducción · P9 Resumen · P10 Título final y Referencias · P11 Formales.
 
 El detalle de reglas, búsqueda, formato APA y plantillas está en `references/`.
+
+## Creador
+
+<p align="left">
+  <a href="https://github.com/Max29xD">
+    <img src="https://avatars.githubusercontent.com/u/85517789?v=4" width="88" height="88" alt="Marcos Leandro Bonilla Borges" />
+  </a>
+</p>
+
+**Marcos Leandro Bonilla Borges** · [@Max29xD](https://github.com/Max29xD) · [maxcoding.pages.dev](https://maxcoding.pages.dev)
+
+> Frontend developer (Next.js, React, Qwik, Astro, Tailwind, TypeScript, JavaScript, Go, Python)
+> y diseñador gráfico.
+
+---
 
 > **Nota:** la carpeta `datos/` (apuntes de trabajo) y `.agents/` (herramientas de desarrollo) están
 > excluidas de git en `.gitignore`; no forman parte de la skill instalable.
