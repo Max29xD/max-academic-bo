@@ -77,10 +77,18 @@ max-academic-bo/
 
 <p align="center">
   <a href="https://github.com/Max29xD">
-    <img src="https://avatars.githubusercontent.com/u/85517789?v=4" width="96" height="96" alt="Marcos Leandro Bonilla Borges" />
+    <img src="https://avatars.githubusercontent.com/u/85517789?v=4" width="104" height="104" alt="Marcos Leandro Bonilla Borges" />
   </a>
-  <br/>
-  <b>Marcos Leandro Bonilla Borges</b>
-  <br/>
-  <a href="https://github.com/Max29xD">@Max29xD</a> · <a href="https://maxcoding.pages.dev">maxcoding.pages.dev</a>
+</p>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/header/surface.svg?title=Marcos%20Leandro%20Bonilla%20Borges&subtitle=Frontend%20Developer%20%C2%B7%20Graphic%20Designer&logo=github&align=center&mode=dark" />
+    <img alt="Marcos Leandro Bonilla Borges — Frontend Developer · Graphic Designer" src="https://shieldcn.dev/header/surface.svg?title=Marcos%20Leandro%20Bonilla%20Borges&subtitle=Frontend%20Developer%20%C2%B7%20Graphic%20Designer&logo=github&align=center&mode=light" />
+  </picture>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Max29xD"><img alt="GitHub — Max29xD" src="https://shieldcn.dev/badge/GitHub-Max29xD-181717.svg?variant=secondary&logo=github" /></a>
+  <a href="https://maxcoding.pages.dev"><img alt="Web — maxcoding.pages.dev" src="https://shieldcn.dev/badge/Web-maxcoding.pages.dev-0ea5e9.svg?variant=secondary&logo=googlechrome" /></a>
 </p>
