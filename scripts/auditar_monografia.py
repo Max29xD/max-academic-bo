@@ -69,7 +69,7 @@ def chequear_titulo(titulo, r):
 
 
 def chequear_resumen(sec, r):
-    cuerpo, kw_raw, pk_line_raw = [], None, None
+    cuerpo, kw_raw, pk_line_raw = [], None, ""
     for l in sec["lineas"]:
         if not l.strip():
             continue
@@ -397,9 +397,8 @@ def main():
     for p in paras:
         txt = p["texto"].strip()
         est = (p["estilo"] or "").lower()
-        if any(h in est for h in ["ttulo", "heading", "titulo"]):
-            if re.match(r"^\d+(\.\d+)*\.?\s+", txt):
-                num_manual_estilos.append((p["estilo"], txt))
+        if any(h in est for h in ["ttulo", "heading", "titulo"]) and re.match(r"^\d+(\.\d+)*\.?\s+", txt):
+            num_manual_estilos.append((p["estilo"], txt))
         if re.match(r"^\s*#+\s*\d+[\.\)]\s*\d+[\.\)]", p["texto"]) or re.match(r"^\s*\d+\.\s*\d+\.\s+[A-Za-z]", p["texto"]):
             duplicados_num.append(txt)
     if num_manual_estilos:

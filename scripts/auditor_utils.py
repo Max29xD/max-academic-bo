@@ -215,7 +215,7 @@ INSTITUCIONAL = re.compile(
     r"\b(Comisi[oó]n|Instituto|Autoridad|Banco|Ministerio|Organizaci[oó]n|Organismo|Fondo|Programa|"
     r"Agencia|Comit[eé]|Centro|Universidad|Servicio|Direcci[oó]n|Superintendencia|Asociaci[oó]n|"
     r"C[aá]mara|Confederaci[oó]n|Consejo|Secretar[ií]a|Gobierno|Estado|Empresa|Sociedad|Federaci[oó]n|"
-    r"Fundaci[oó]n|Observatorio|Naciones|Departamento|Municipio|Prefectura|Viceministerio)\b", re.I)
+    r"Fundaci[oó]n|Observatorio|Naciones|Departamento|Municipio|Prefectura|Viceministerio)\b", re.IGNORECASE)
 
 
 def anio_base(y):
@@ -235,13 +235,14 @@ def extraer_citas(lines, offset=0):
         l = sin_md(raw)
         for m in re.finditer(r"\(([^()]*)\)", l):
             cont = m.group(1)
-            if RX_NARR.match(cont):
+            m_narr = RX_NARR.match(cont)
+            if m_narr:
                 aut = autor_narrativo(l[:m.start()])
                 if aut:
-                    citas.append({"aut": aut, "anio": RX_NARR.match(cont).group(1), "linea": ln + offset, "tipo": "narr"})
+                    citas.append({"aut": aut, "anio": m_narr.group(1), "linea": ln + offset, "tipo": "narr"})
                 continue
             for parte in cont.split(";"):
-                parte = re.sub(r"^\s*(v[eé]ase|ver|cf\.|p\.\s?ej\.,?|por ejemplo,?|e\.g\.,?)\s*", "", parte, flags=re.I)
+                parte = re.sub(r"^\s*(v[eé]ase|ver|cf\.|p\.\s?ej\.,?|por ejemplo,?|e\.g\.,?)\s*", "", parte, flags=re.IGNORECASE)
                 m2 = RX_ANIO_EN_PART.search(parte)
                 if not m2:
                     continue
@@ -323,8 +324,8 @@ def parrafos(lines, min_pal=1):
 
 
 def quitar_enumeracion(t):
-    t = re.sub(r"^\s*objetivo\s+(general|espec[ií]fico)\s*\d*\s*[:.\-–]\s*", "", t, flags=re.I)
-    pat = re.compile(r"^\s*(\d+[\.\)]|[-•*]|OE\s?\d+[:.]?|[a-z]\)|\d+\.\d+\.?)\s*", flags=re.I)
+    t = re.sub(r"^\s*objetivo\s+(general|espec[ií]fico)\s*\d*\s*[:.\-–]\s*", "", t, flags=re.IGNORECASE)
+    pat = re.compile(r"^\s*(\d+[\.\)]|[-•*]|OE\s?\d+[:.]?|[a-z]\)|\d+\.\d+\.?)\s*", flags=re.IGNORECASE)
     for _ in range(5):
         nuevo = pat.sub("", t)
         if nuevo == t:
@@ -347,10 +348,10 @@ VERBOS_BAJOS_OG = {"conocer", "saber", "recordar", "listar", "enumerar", "nombra
 PRIMERA_PERSONA = re.compile(
     r"\b(yo|nosotros|nosotras|nuestro|nuestra|nuestros|nuestras|mi|mis|considero|creo que|pienso|"
     r"analic[eé]|conclu[ií]|concluimos|analizamos|observamos|encontramos|realic[eé]|realizamos|propongo|proponemos)\b",
-    re.I)
+    re.IGNORECASE)
 MARCADORES_CONTRASTE = re.compile(
     r"mientras que|sin embargo|en contraste|no obstante|por el contrario|a diferencia|diverg|coincid|"
     r"en cambio|contrast|por su parte|converg|pese a|aunque|difier|discrep|en consonancia|de modo similar|de manera similar",
-    re.I)
+    re.IGNORECASE)
 FUENTES_PROHIBIDAS = ["wikipedia", "rincondelvago", "rincón del vago", "monografias.com", "buenastareas", "tareasya", "ecured"]
 FUENTES_DUDOSAS = ["slideshare", "scribd", "blogspot", "wordpress", "medium.com", "youtube.com", "facebook.com"]

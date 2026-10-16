@@ -1,0 +1,4 @@
+{
+  "extraPaths": ["scripts", "vendor/word-bibliography"],
+  "exclude": ["vendor"]
+}

@@ -9,16 +9,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
-from auditor_utils import (  # noqa: E402
+from auditor_utils import (
     anio_base,
-    coincide,
     clave_autor,
+    coincide,
     es_sigla,
     extraer_citas,
     n_autores,
     norm,
-    parsear_referencias,
     palabras,
+    parsear_referencias,
     primer_verbo,
     quitar_enumeracion,
     subsecuencia,

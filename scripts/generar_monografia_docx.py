@@ -25,11 +25,11 @@ import re
 from pathlib import Path
 
 import docx
-from docx.shared import Inches, Pt
+from docx.enum.table import WD_ALIGN_VERTICAL, WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
 from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls
+from docx.shared import Inches, Pt
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -63,11 +63,11 @@ def _apa_borders(table):
         for cell in row.cells:
             cell.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
             if r_idx == 0:
-                _set_cell_border(cell, top=dict(sz=8), bottom=dict(sz=6), left=dict(val="nil"), right=dict(val="nil"))
+                _set_cell_border(cell, top={"sz": 8}, bottom={"sz": 6}, left={"val": "nil"}, right={"val": "nil"})
             elif r_idx == n - 1:
-                _set_cell_border(cell, bottom=dict(sz=8), left=dict(val="nil"), right=dict(val="nil"), top=dict(val="nil"))
+                _set_cell_border(cell, bottom={"sz": 8}, left={"val": "nil"}, right={"val": "nil"}, top={"val": "nil"})
             else:
-                _set_cell_border(cell, top=dict(val="nil"), bottom=dict(val="nil"), left=dict(val="nil"), right=dict(val="nil"))
+                _set_cell_border(cell, top={"val": "nil"}, bottom={"val": "nil"}, left={"val": "nil"}, right={"val": "nil"})
 
 
 def _add_runs(p, text, size=12):
@@ -76,13 +76,9 @@ def _add_runs(p, text, size=12):
         if not tk:
             continue
         t, bold, italic = tk, False, False
-        if tk.startswith("**") and tk.endswith("**") and len(tk) > 4:
+        if tk.startswith("**") and tk.endswith("**") and len(tk) > 4 or tk.startswith("__") and tk.endswith("__") and len(tk) > 4:
             t, bold = tk[2:-2], True
-        elif tk.startswith("__") and tk.endswith("__") and len(tk) > 4:
-            t, bold = tk[2:-2], True
-        elif tk.startswith("*") and tk.endswith("*") and len(tk) > 2:
-            t, italic = tk[1:-1], True
-        elif tk.startswith("_") and tk.endswith("_") and len(tk) > 2:
+        elif tk.startswith("*") and tk.endswith("*") and len(tk) > 2 or tk.startswith("_") and tk.endswith("_") and len(tk) > 2:
             t, italic = tk[1:-1], True
         run = p.add_run(t)
         run.bold = bold
@@ -152,7 +148,7 @@ def parse_md(text):
                 i += 1
             blocks.append(("table", rows))
             continue
-        if s.startswith("- ") or s.startswith("* "):
+        if s.startswith(("- ", "* ")):
             blocks.append(("bullet", s[2:].strip()))
             i += 1
             continue

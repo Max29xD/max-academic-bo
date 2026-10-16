@@ -18,6 +18,8 @@ __pycache__/
 .venv/
 venv/
 .Python
+.ruff_cache/
+.pytest_cache/
 
 # ---- OS / editor ----
 .DS_Store
