@@ -30,15 +30,9 @@
 ## 🚀 Instalación
 
 ```bash
-npx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
 bunx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
 pnpx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
-```
-
-Usa la que tengas. Añade `-g` para instalar global (en tu usuario) y `-y` para omitir confirmaciones:
-
-```bash
-npx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo -g -y
+npx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
 ```
 
 ## 🤖 Cómo se usa en el agente
