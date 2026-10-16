@@ -30,7 +30,7 @@
 ## 🚀 Instalación
 
 ```bash
-npx  skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
+npx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
 bunx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
 pnpx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
 ```
