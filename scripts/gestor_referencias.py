@@ -158,7 +158,14 @@ def cmd_build(data_file: Path, md_file: Path, xml_file: Path, auto_apa: bool):
             if not f.get("formato_apa7"):
                 f["formato_apa7"] = _apa_aprox(f)
 
-    ordenadas = sorted(fuentes, key=lambda x: (x.get("formato_apa7") or x.get("autores_cita") or "").lower())
+    def _clave_orden(f):
+        # APA 7: orden alfabético por autor, luego por año. Nunca por la cadena
+        # formateada completa (mala para autores compartidos).
+        autor = (f.get("autores_cita") or f.get("autores") or "").lower()
+        anio = str(f.get("anio", ""))
+        return (autor, anio)
+
+    ordenadas = sorted(fuentes, key=_clave_orden)
 
     md = [
         "# Registro de fuentes y referencias APA 7.ª",

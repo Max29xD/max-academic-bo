@@ -69,6 +69,7 @@ max-academic-bo/
 ├── SKILL.md                  # entrada de la skill (flujo P0–P11)
 ├── references/               # reglas, búsqueda Bolivia, APA 7, plantillas por paso
 ├── scripts/                  # auditar · consultas · referencias · generar .docx
+├── tests/                    # pruebas de regresión del auditor
 ├── templates/apa7ma.docx     # plantilla Word oficial
 └── vendor/                   # generador de Sources.xml
 ```
