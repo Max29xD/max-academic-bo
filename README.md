@@ -31,9 +31,14 @@
 
 ```bash
 bunx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
+```
+```bash
 pnpx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
+```
+```bash
 npx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
 ```
+
 
 ## 🤖 Cómo se usa en el agente
 
