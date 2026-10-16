@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/header/gradient.svg?title=max-academic-bo&subtitle=Monograf%C3%ADas%20de%20compilaci%C3%B3n%20%C2%B7%20APA%207.%C2%AA%20%C2%B7%20Bolivia&logo=googlescholar&mode=dark" />
-    <img alt="max-academic-bo — monografías de compilación · APA 7.ª · Bolivia" src="https://shieldcn.dev/header/gradient.svg?title=max-academic-bo&subtitle=Monograf%C3%ADas%20de%20compilaci%C3%B3n%20%C2%B7%20APA%207.%C2%AA%20%C2%B7%20Bolivia&logo=googlescholar&mode=light" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/header/gradient.svg?title=Max%20Academic%20Bo%20-%20Agent%20Skill&subtitle=Monograf%C3%ADas%20de%20compilaci%C3%B3n%20%C2%B7%20APA%207.%C2%AA%20%C2%B7%20Bolivia&logo=googlescholar&mode=dark" />
+    <img alt="max-academic-bo — monografías de compilación · APA 7.ª · Bolivia" src="https://shieldcn.dev/header/gradient.svg?title=Max%20Academic%20Bo%20-%20Agent%20Skill&subtitle=Monograf%C3%ADas%20de%20compilaci%C3%B3n%20%C2%B7%20APA%207.%C2%AA%20%C2%B7%20Bolivia&logo=googlescholar&mode=light" />
   </picture>
 </p>
 
@@ -30,15 +30,15 @@
 ## 🚀 Instalación
 
 ```bash
-npx  skills add https://github.com/Max29xD/max-academic-bo --skill max-academic-bo
-bunx skills add https://github.com/Max29xD/max-academic-bo --skill max-academic-bo
-pnpx skills add https://github.com/Max29xD/max-academic-bo --skill max-academic-bo
+npx  skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
+bunx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
+pnpx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo
 ```
 
 Usa la que tengas. Añade `-g` para instalar global (en tu usuario) y `-y` para omitir confirmaciones:
 
 ```bash
-npx skills add https://github.com/Max29xD/max-academic-bo --skill max-academic-bo -g -y
+npx skills add https://github.com/max29xd/max-academic-bo --skill max-academic-bo -g -y
 ```
 
 ## 🤖 Cómo se usa en el agente
@@ -73,22 +73,22 @@ max-academic-bo/
 └── vendor/                   # generador de Sources.xml
 ```
 
-## 👤 Creador
+## 👨‍💻 Autor
 
-<p align="center">
-  <a href="https://github.com/Max29xD">
+<p>
+  <a href="https://github.com/max29xd">
     <img src="https://avatars.githubusercontent.com/u/85517789?v=4" width="104" height="104" alt="Marcos Leandro Bonilla Borges" />
   </a>
 </p>
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/header/surface.svg?title=Marcos%20Leandro%20Bonilla%20Borges&subtitle=Frontend%20Developer%20%C2%B7%20Graphic%20Designer&logo=github&align=center&mode=dark" />
-    <img alt="Marcos Leandro Bonilla Borges — Frontend Developer · Graphic Designer" src="https://shieldcn.dev/header/surface.svg?title=Marcos%20Leandro%20Bonilla%20Borges&subtitle=Frontend%20Developer%20%C2%B7%20Graphic%20Designer&logo=github&align=center&mode=light" />
-  </picture>
+<p>
+  <b>MaxCoding</b> •
+  <i>Fullstack & System Engineer · UI/UX Designer</i>
 </p>
 
-<p align="center">
-  <a href="https://github.com/Max29xD"><img alt="GitHub — Max29xD" src="https://shieldcn.dev/badge/GitHub-Max29xD-181717.svg?variant=secondary&logo=github" /></a>
-  <a href="https://maxcoding.pages.dev"><img alt="Web — maxcoding.pages.dev" src="https://shieldcn.dev/badge/Web-maxcoding.pages.dev-0ea5e9.svg?variant=secondary&logo=googlechrome" /></a>
+<p>
+  <a href="https://maxcoding.pages.dev/"><img src="https://shieldcn.dev/badge/Portfolio-maxcoding.pages.dev-10b981.svg?logo=cloudflarepages&variant=secondary" alt="Portfolio" /></a>
+  <a href="https://github.com/max29xd"><img src="https://shieldcn.dev/badge/GitHub-Max29xD-181717.svg?logo=github&variant=secondary" alt="GitHub" /></a>
+  <a href="https://www.linkedin.com/in/maxcoding"><img src="https://shieldcn.dev/badge/LinkedIn-MaxCoding-0a66c2.svg?logo=linkedin&variant=secondary" alt="LinkedIn" /></a>
+  <a href="mailto:marcos291198@gmail.com"><img src="https://shieldcn.dev/badge/Email-marcos291198@gmail.com-ea4335.svg?logo=gmail&variant=secondary" alt="Email" /></a>
 </p>
