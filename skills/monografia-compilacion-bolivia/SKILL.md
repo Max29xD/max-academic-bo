@@ -168,10 +168,10 @@ proyecto:
 
 ```bash
 # Global (disponible en todos los proyectos)
-bunx skills add <owner>/<repo> --skill monografia-compilacion-bolivia -g -y
+bunx skills add Max29xD/max-academic-bo --skill monografia-compilacion-bolivia -g -y
 
 # Por proyecto (queda en .agents/skills y se fija en skills-lock.json)
-bunx skills add <owner>/<repo> --skill monografia-compilacion-bolivia -y
+bunx skills add Max29xD/max-academic-bo --skill monografia-compilacion-bolivia -y
 ```
 
 Si el repo no está publicado, también acepta la ruta local:

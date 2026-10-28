@@ -17,12 +17,12 @@ En cualquier proyecto donde quieras trabajar, ejecuta en tu terminal:
 
 ### Opción A: Desde GitHub (Recomendado)
 ```bash
-bunx skills add <tu-usuario>/<tu-repo> --skill monografia-compilacion-bolivia -y
+bunx skills add Max29xD/max-academic-bo --skill monografia-compilacion-bolivia -y
 ```
 
 ### Opción B: Instalación Global (disponible en todos tus proyectos)
 ```bash
-bunx skills add <tu-usuario>/<tu-repo> --skill monografia-compilacion-bolivia -g -y
+bunx skills add Max29xD/max-academic-bo --skill monografia-compilacion-bolivia -g -y
 ```
 
 ### Opción C: Desde una copia local (sin subir a GitHub)
