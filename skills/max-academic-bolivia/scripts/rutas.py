@@ -19,12 +19,12 @@ SCRIPTS_DIR = SKILL_ROOT / "scripts"
 TEMPLATES_DIR = SKILL_ROOT / "templates"
 ASSETS_DIR = SKILL_ROOT / "assets"
 
-NOMBRE_DOCX = "monografia_compilacion_bolivia.docx"
+NOMBRE_DOCX = "max_academic_bolivia.docx"
 
 
 def output_dir(crear: bool = True) -> Path:
-    """Carpeta de salida del proyecto actual (o la indicada en MONOGRAFIA_OUTPUT)."""
-    raw = os.environ.get("MONOGRAFIA_OUTPUT", "").strip()
+    """Carpeta de salida del proyecto actual (o la indicada en MAX_ACADEMIC_OUTPUT / MONOGRAFIA_OUTPUT)."""
+    raw = (os.environ.get("MAX_ACADEMIC_OUTPUT") or os.environ.get("MONOGRAFIA_OUTPUT", "")).strip()
     base = Path(raw).expanduser() if raw else Path.cwd() / "output"
     if not base.is_absolute():
         base = (Path.cwd() / base).resolve()

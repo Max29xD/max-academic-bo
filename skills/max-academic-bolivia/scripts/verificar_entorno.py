@@ -86,7 +86,7 @@ def principal() -> int:
     if args.json:
         print(json.dumps(d, ensure_ascii=False, indent=2))
     else:
-        print("Monografía de compilación — diagnóstico de entorno")
+        print("Max Academic Bolivia — diagnóstico de entorno")
         print("=" * 55)
         print(f"Python            : {d['python']} ({d['ejecutable']})")
         print(f"Skill             : {d['skill_root']}")

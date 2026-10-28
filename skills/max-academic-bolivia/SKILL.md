@@ -1,5 +1,5 @@
 ---
-name: monografia-compilacion-bolivia
+name: max-academic-bolivia
 description: >-
   Asistente metodológico para monografías de compilación (revisión documental) de postgrado:
   Guía EIP-FINOR-UAGRM 2025/2026, APA 7.ª, datos verificados (corte 2026) y enfoque en Bolivia.
@@ -163,21 +163,21 @@ Antes de declarar terminado un entregable:
 
 ## 8. Instalación (para el agente o el usuario)
 
-Repositorio con la skill en `skills/monografia-compilacion-bolivia/`. Instalación global o por
+Repositorio con la skill en `skills/max-academic-bolivia/`. Instalación global o por
 proyecto:
 
 ```bash
 # Global (disponible en todos los proyectos)
-bunx skills add Max29xD/max-academic-bo --skill monografia-compilacion-bolivia -g -y
+bunx skills add Max29xD/max-academic-bo --skill max-academic-bolivia -g -y
 
 # Por proyecto (queda en .agents/skills y se fija en skills-lock.json)
-bunx skills add Max29xD/max-academic-bo --skill monografia-compilacion-bolivia -y
+bunx skills add Max29xD/max-academic-bo --skill max-academic-bolivia -y
 ```
 
 Si el repo no está publicado, también acepta la ruta local:
 
 ```bash
-bunx skills add ./skills/monografia-compilacion-bolivia -g -y
+bunx skills add ./skills/max-academic-bolivia -g -y
 ```
 
 Requisitos y solución de problemas: `README.md` del repositorio.

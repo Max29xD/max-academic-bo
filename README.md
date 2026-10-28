@@ -43,7 +43,7 @@
 
 ## 🧭 Visión y Propósito
 
-**Max Academic Bolivia** (`monografia-compilacion-bolivia`) es una skill de agente inteligente concebida para la elaboración sistemática, redacción rigurosa, búsqueda bibliográfica real y ensamblado editorial de **monografías de compilación documental** para programas de postgrado y titulación en la **EIP-FINOR-UAGRM** (Montero / Santa Cruz, Bolivia).
+**Max Academic Bolivia** (`max-academic-bolivia`) es una skill de agente inteligente concebida para la elaboración sistemática, redacción rigurosa, búsqueda bibliográfica real y ensamblado editorial de **monografías de compilación documental** para programas de postgrado y titulación en la **EIP-FINOR-UAGRM** (Montero / Santa Cruz, Bolivia).
 
 A diferencia de los asistentes conversacionales estándar que sufren de alucinaciones bibliográficas, citas apócrifas y formatos desordenados, esta skill opera bajo el principio de **Cero Invención**: ninguna cita, cifra o enlace proviene de la memoria del modelo; toda fuente debe encontrarse, verificarse y respaldarse en disco en tiempo real. 
 
@@ -75,7 +75,7 @@ flowchart TD
         BUNX["bunx skills add Max29xD/max-academic-bo<br/>• Compatible con Antigravity, Claude Code, Cursor, Cline<br/>• Copia local aislada en .agents/skills/"]
     end
 
-    subgraph ENGINE["🧠 Núcleo de la Skill (monografia-compilacion-bolivia)"]
+    subgraph ENGINE["🧠 Núcleo de la Skill (max-academic-bolivia)"]
         direction TB
 
         subgraph PROMPT["📋 Protocolo Metodológico"]
@@ -201,7 +201,7 @@ Ensambla la monografía completa en Word usando la plantilla institucional templ
 
 ```graphql
 max-academic-bo/
-├── 📁 skills/monografia-compilacion-bolivia/   # 📦 Paquete instalable completo
+├── 📁 skills/max-academic-bolivia/             # 📦 Paquete instalable completo
 │   ├── 📄 SKILL.md                            # Manifiesto agéntico (<500 líneas)
 │   ├── 📁 references/                         # Documentación técnica bajo demanda
 │   │   ├── 📘 reglas_institucionales.md       # Matriz normativa y checklist maestro
@@ -240,25 +240,25 @@ max-academic-bo/
 
 ```bash
 # 1. Instalación local por proyecto (recomendada)
-bunx skills add Max29xD/max-academic-bo --skill monografia-compilacion-bolivia -y
+bunx skills add Max29xD/max-academic-bo --skill max-academic-bolivia -y
 
 # 2. Instalación global (disponible en todos los directorios de tu equipo)
-bunx skills add Max29xD/max-academic-bo --skill monografia-compilacion-bolivia -g -y
+bunx skills add Max29xD/max-academic-bo --skill max-academic-bolivia -g -y
 
 # 3. Instalación directa desde ruta local (desarrollo)
-bunx skills add ./skills/monografia-compilacion-bolivia -y
+bunx skills add ./skills/max-academic-bolivia -y
 ```
 
 ### Comandos de Ejecución Manual
 
 | Comando | Propósito |
 | :--- | :--- |
-| `python skills/monografia-compilacion-bolivia/scripts/verificar_entorno.py` | Diagnostica dependencias, rutas, plantillas y conectividad Tavily |
-| `python skills/monografia-compilacion-bolivia/scripts/buscar_fuentes.py "tema" --tipo search` | Ejecuta búsqueda con Tavily y guarda evidencia en `output/fuentes/` |
-| `python skills/monografia-compilacion-bolivia/scripts/gestor_referencias.py` | Convierte `referencias.json` a Markdown APA 7 y `Sources.xml` |
-| `python skills/monografia-compilacion-bolivia/scripts/generar_monografia_docx.py` | Ensambla el documento Word oficial sobre `apa7ma.docx` |
-| `python skills/monografia-compilacion-bolivia/scripts/docx_utils.py validar output/*.docx` | Valida que el archivo Word cumpla con el estándar OOXML sin errores |
-| `python skills/monografia-compilacion-bolivia/scripts/auditar_monografia.py archivo.md --json` | Audita el manuscrito contra las reglas normativas de la EIP-FINOR |
+| `python skills/max-academic-bolivia/scripts/verificar_entorno.py` | Diagnostica dependencias, rutas, plantillas y conectividad Tavily |
+| `python skills/max-academic-bolivia/scripts/buscar_fuentes.py "tema" --tipo search` | Ejecuta búsqueda con Tavily y guarda evidencia en `output/fuentes/` |
+| `python skills/max-academic-bolivia/scripts/gestor_referencias.py` | Convierte `referencias.json` a Markdown APA 7 y `Sources.xml` |
+| `python skills/max-academic-bolivia/scripts/generar_monografia_docx.py` | Ensambla el documento Word oficial sobre `apa7ma.docx` |
+| `python skills/max-academic-bolivia/scripts/docx_utils.py validar output/*.docx` | Valida que el archivo Word cumpla con el estándar OOXML sin errores |
+| `python skills/max-academic-bolivia/scripts/auditar_monografia.py archivo.md --json` | Audita el manuscrito contra las reglas normativas de la EIP-FINOR |
 
 ---
 
