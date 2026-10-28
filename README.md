@@ -1,183 +1,151 @@
-# Monografía de Compilación — EIP-FINOR-UAGRM (Bolivia)
+# 🎓 Monografía de Compilación — EIP-FINOR-UAGRM (Bolivia)
 
-Skill de agente para elaborar monografías de compilación de postgrado: Guía Institucional
-EIP-FINOR-UAGRM 2025/2026, APA 7.ª, enfoque exclusivo en Bolivia, información verificada y
-actualizada, ejecución en 11 pasos y auditoría automatizada.
+> **Skill de agente para elaboración, búsqueda documental, generación en Word y auditoría de monografías de postgrado (EIP-FINOR-UAGRM, corte 2026, APA 7.ª edición).**
 
-Integra, sin depender de ellas:
+[![Skill Compatible](https://img.shields.io/badge/skills.sh-compatible-blue?style=flat-square)](https://skills.sh)
+[![Normas APA](https://img.shields.io/badge/Normas-APA%207.%C2%AA%20edici%C3%B3n-success?style=flat-square)](https://apastyle.apa.org/)
+[![Enfoque](https://img.shields.io/badge/Enfoque-Bolivia%20(2021--2026)-red?style=flat-square)](#)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=flat-square&logo=python)](https://python.org)
 
-- **docx** para Word profesional (la skill trae su propio generador institucional).
-- **Tavily** (`tvly`) para búsquedas tipo Perplexity, extracción y research con citas.
-- **word-bibliography** para bibliografía APA 7 y `Sources.xml` de Microsoft Word.
+Esta skill permite a cualquier agente de IA (Antigravity, Claude Code, Cursor, Cline, etc.) asistir paso a paso en la elaboración de **monografías de compilación documental**. Es **100 % autocontenida y portable**: no requiere instalar plugins adicionales para generar documentos Word ni para gestionar citas.
 
-## Características e Integración Nativa
+---
 
-La skill es **100 % autocontenida y portable** para cualquier proyecto gracias a la incorporación de las capacidades clave de:
+## ⚡ Instalación Rápida con `bunx skills`
 
-1. **DOCX profesional (Word):**
-   - Ensamblado institucional con `scripts/generar_monografia_docx.py` sobre `templates/apa7ma.docx`.
-   - Utilidades OOXML en `scripts/docx_utils.py`: validación contra esquemas XML (previene archivos corruptos), fusión de text runs fragmentados y extracción de texto a Markdown.
-   - Guía técnica completa en `references/docx_guia.md`.
+En cualquier proyecto donde quieras trabajar, ejecuta en tu terminal:
 
-2. **Búsqueda académica tipo Perplexity (Tavily):**
-   - `scripts/buscar_fuentes.py` opera tanto con el CLI oficial (`tvly`) como mediante conexión directa a la API REST de Tavily (`TAVILY_API_KEY`), sin librerías externas obligatorias.
-   - Búsqueda profunda (`search`), investigación sintética multi-fuente (`research`) y extracción de contenido limpio (`extract`).
-   - Registro automático de evidencia en `output/fuentes/*.json`.
-   - Protocolo y embudo territorial en `references/tavily_busqueda.md` y `references/busqueda_bolivia.md`.
+### Opción A: Desde GitHub (Recomendado)
+```bash
+bunx skills add <tu-usuario>/<tu-repo> --skill monografia-compilacion-bolivia -y
+```
 
-3. **Bibliografía Word APA 7 (word-bibliography):**
-   - Generación de `Sources.xml` compatible con el esquema Office Open XML Bibliography mediante `scripts/word_bibliography.py` y `scripts/gestor_referencias.py`.
-   - Importación directa en Microsoft Word (**Referencias → Administrar fuentes → Examinar...**).
-   - Formateo estricto en Markdown APA 7.ª edición con sangría francesa y orden alfabético.
-   - Guía de esquemas y tipos en `references/word_bibliography_guia.md`.
+### Opción B: Instalación Global (disponible en todos tus proyectos)
+```bash
+bunx skills add <tu-usuario>/<tu-repo> --skill monografia-compilacion-bolivia -g -y
+```
 
-## Estructura
+### Opción C: Desde una copia local (sin subir a GitHub)
+```bash
+bunx skills add ./skills/monografia-compilacion-bolivia -y
+```
+
+---
+
+## 🧩 ¿Qué incluye esta Skill?
+
+No necesitas instalar skills secundarias. Todo viene integrado en el paquete:
+
+| Capacidad | Módulo Incorporado | Descripción |
+|---|---|---|
+| 📄 **Word Profesional (.docx)** | `scripts/generar_monografia_docx.py`<br>`scripts/docx_utils.py` | Genera el `.docx` oficial sobre la plantilla `apa7ma.docx`, con carátula de 10 elementos, numeración romana/arábiga y validación contra el esquema XML de Word. |
+| 🔍 **Búsqueda tipo Perplexity** | `scripts/buscar_fuentes.py`<br>`scripts/generar_consultas.py` | Búsqueda profunda de literatura real en Bolivia (BCB, ASFI, INE, SciELO) mediante el CLI `tvly` o directamente con `TAVILY_API_KEY`. Guarda evidencia reproducible en `output/fuentes/`. |
+| 📚 **Bibliografía APA 7 + Word** | `scripts/word_bibliography.py`<br>`scripts/gestor_referencias.py` | Genera `Sources.xml` para importar directamente en Microsoft Word (**Referencias → Administrar fuentes**) y la lista de referencias en Markdown APA 7. |
+| 🛡️ **Auditoría Metodológica** | `scripts/auditar_monografia.py` | Audita borradores contra las reglas institucionales (cero citas inventadas, ventana 2021–2026, verbos Bloom y ausencia de premadurez). |
+
+---
+
+## 📝 Secuencia de Trabajo (11 Pasos)
+
+La skill trabaja de manera modular y no lineal; puedes pedirle que ejecute pasos individuales o bloques completos:
 
 ```text
-.
-├── skills/
-│   └── monografia-compilacion-bolivia/   # ← paquete instalable completo
-│       ├── SKILL.md                      # Instrucciones del agente (<500 líneas)
-│       ├── references/                   # Guías: APA 7, reglas, Word OOXML, Tavily, bibliografía
-│       ├── scripts/                      # Generadores, validador OOXML, búsqueda, bibliografía, auditor
-│       ├── templates/                    # Plantilla Word oficial APA 7 (apa7ma.docx)
-│       └── assets/                       # Logotipo oficial y catálogo de ejemplo
-├── evals/                                # Suite de pruebas y benchmarks (desarrollo)
-├── output/                               # Directorio de trabajo del usuario (generado en ejecución)
-├── .gitignore                            # Exclusión limpia de archivos de entorno y temporales
-└── README.md                             # Documentación
+CIMIENTOS (P1–P3)  ──►  NÚCLEO (P4–P7)  ──►  CIERRE (P8–P11)  ──►  ENTREGA (.docx)
 ```
 
-`output/` y `.agents/` **no forman parte** del paquete instalable: el CLI solo toma
-`skills/monografia-compilacion-bolivia/`.
+| Paso | Entregable | Criterio de Cierre |
+|---|---|---|
+| **P1** | **Título borrador** | ≤ 20 palabras, nominal, sin punto final (Qué + Quién + Dónde + Cuándo). |
+| **P2** | **Planteamiento** | Pirámide invertida (Global → Bolivia → GAP local) + 1 pregunta motora abierta. |
+| **P3** | **Objetivos** | 1 Objetivo General canónico + 3 a 5 Objetivos Específicos escalonados (Bloom). |
+| **P4** | **Revisión literaria** | Síntesis crítica por temas, ≥ 5 fuentes indexadas y Matriz de Análisis (MAB). |
+| **P5** | **Definiciones** | 5 a 10 constructos clave conceptualizados por autores reconocidos. |
+| **P6** | **Discusión** | Análisis crítico de hallazgos; **cero autores o cifras nuevas**. |
+| **P7** | **Conclusiones** | 1 conclusión por objetivo específico + 1 integradora; pretérito impersonal. |
+| **P8** | **Introducción** | Se redacta al final (5 párrafos canónicos que integran todo el trabajo). |
+| **P9** | **Resumen y palabras clave** | Párrafo único de hasta 400 palabras + 3 a 6 palabras clave. |
+| **P10** | **Título definitivo y citas** | Auditoría 1:1 entre citas del texto y lista de referencias APA 7. |
+| **P11** | **Carátula e índice** | Carátula institucional reglamentaria, índice automático y paginación mixta. |
 
-## Requisitos
+---
 
-- Python 3.10+ y `python-docx`.
-- Opcional: `tvly` (Tavily CLI) para búsquedas y research.
-- Opcional: skills `docx`, `word-bibliography` y `tavily-*`.
+## 💬 Prompts Listos para Usar con tu Agente
 
-```bash
-pip install python-docx
-python skills/monografia-compilacion-bolivia/scripts/verificar_entorno.py
-```
+Una vez instalada la skill, puedes darle instrucciones como estas:
 
-## Instalación con `bunx skills`
+### 1. Iniciar los Cimientos (Pasos 1 al 3)
+> *"Hasta el paso 3 (CIMIENTOS): elabora el título, el planteamiento del problema y los objetivos para una monografía sobre adopción de pagos QR en Santa Cruz, Bolivia (corte 2026). Busca fuentes reales y guarda la MAB como Apéndice A."*
 
-**Global** (disponible en todos los proyectos):
+### 2. Buscar Literatura Verificada
+> *"Busca literatura académica e informes oficiales sobre regulación fintech en Bolivia entre 2021 y 2026. Guarda la evidencia de búsqueda y añade las fuentes al catálogo."*
 
-```bash
-bunx skills add <owner>/<repo> --skill monografia-compilacion-bolivia -g -y
-```
+### 3. Generar la Bibliografía y `Sources.xml` para Word
+> *"Toma las fuentes encontradas, genera el archivo referencias.json, la lista formateada en APA 7 y el Sources.xml para importarlo en Microsoft Word."*
 
-**Por proyecto** (queda en `.agents/skills` y se fija en `skills-lock.json`):
+### 4. Generar el Documento Word y Auditar
+> *"Ensambla la monografía completa en Word usando la plantilla institucional y corre la auditoría para verificar que cumpla todas las reglas antes de entregar."*
 
-```bash
-bunx skills add <owner>/<repo> --skill monografia-compilacion-bolivia -y
-```
+---
 
-**Desde una copia local** (sin publicar el repo):
+## 🛠️ Comandos de Terminal Útiles
 
-```bash
-bunx skills add ./skills/monografia-compilacion-bolivia -g -y
-```
-
-> **Importante:** usa siempre `--skill monografia-compilacion-bolivia`. Sin ese filtro, el CLI
-> también detecta las skills de desarrollo de `.agents/skills` (docx, pdf, pptx,
-> word-bibliography) e intentaría instalarlas. No uses `--all` en este repo.
-
-Verificar y mantener:
+Todos los scripts pueden ejecutarse manualmente en cualquier momento:
 
 ```bash
-bunx skills list
-bunx skills update monografia-compilacion-bolivia -y
-```
-
-Al instalar en otro proyecto, el CLI copia solo la carpeta de la skill. El agente la detecta por
-`SKILL.md`; no hace falta configurar nada más.
-
-### Skills compañeras (opcionales)
-
-```bash
-# Word avanzado (edición, control de cambios, PDF)
-bunx skills add anthropics/skills --skill docx -g -y
-
-# Tavily (búsqueda, extracción, research)
-bunx skills add tavily-ai/skills -g -y
-```
-
-`word-bibliography` se instala desde la fuente que ya uses; si no está, el generador interno de la
-monografía produce el mismo `Sources.xml`.
-
-## Uso
-
-Dentro del proyecto donde quieras trabajar:
-
-```bash
-cp -r <ruta-a-la-skill>/templates ./templates   # solo si quieres personalizar la plantilla
-```
-
-Pídele al agente, por ejemplo:
-
-- «Hasta el paso 3: planteamiento y objetivos para una monografía sobre fintech en Santa Cruz».
-- «Busca literatura 2024–2026 sobre inclusión financiera en Bolivia y arma la MAB».
-- «Convierte estas referencias a APA 7 y genera `Sources.xml`».
-- «Genera el `.docx` final y audítalo».
-
-Artefactos en `./output/` (configurable con `MONOGRAFIA_OUTPUT`):
-
-| Archivo | Contenido |
-|---|---|
-| `monografia_completa.md` | Manuscrito de trabajo |
-| `monografia_compilacion_bolivia.docx` | Entregable Word |
-| `referencias.json` | Catálogo verificado de fuentes |
-| `referencias_bibliograficas.md` | Lista APA 7 + fichas |
-| `Sources.xml` | Bibliografía para Word |
-| `fuentes/*.json` | Evidencia de búsquedas (consulta, fecha, URLs) |
-
-## Comandos útiles
-
-```bash
-# Diagnóstico
+# 1. Comprobar que tu entorno tenga todo lo necesario
 python skills/monografia-compilacion-bolivia/scripts/verificar_entorno.py
 
-# Bibliografía (primera vez: catálogo de ejemplo)
-python skills/monografia-compilacion-bolivia/scripts/gestor_referencias.py --init
+# 2. Buscar literatura (CLI tvly o mediante variable TAVILY_API_KEY)
+python skills/monografia-compilacion-bolivia/scripts/buscar_fuentes.py "inclusión financiera Bolivia" --tipo search --rango-tiempo year
+
+# 3. Generar la bibliografía (Sources.xml y referencias_bibliograficas.md)
 python skills/monografia-compilacion-bolivia/scripts/gestor_referencias.py
 
-# Word y auditoría
+# 4. Construir el documento Word oficial
 python skills/monografia-compilacion-bolivia/scripts/generar_monografia_docx.py
+
+# 5. Auditar el contenido contra las normas institucionales
 python skills/monografia-compilacion-bolivia/scripts/auditar_monografia.py output/monografia_completa.md --json
 
-# Búsqueda con evidencia
-python skills/monografia-compilacion-bolivia/scripts/buscar_fuentes.py "tema" --tipo search --rango-tiempo year
+# 6. Validar que el archivo .docx no tenga errores de esquema OOXML
+python skills/monografia-compilacion-bolivia/scripts/docx_utils.py validar output/monografia_compilacion_bolivia.docx
 ```
 
-En PowerShell funciona igual, cambiando las barras si lo prefieres:
-`python skills\monografia-compilacion-bolivia\scripts\verificar_entorno.py`.
+---
 
-## Solución de problemas
+## 📂 Directorio de Salida (`output/`)
 
-| Problema | Solución |
-|---|---|
-| `ModuleNotFoundError: docx` | `pip install python-docx` |
-| `tvly` no existe | Instálalo o usa la búsqueda web del agente (plan B documentado) |
-| `research` pide login | `tvly login` (interactivo) o usa `search` + `extract` |
-| `oauth_refresh_failed` | `tvly login` o `tvly logout` para volver al modo keyless |
-| Word bloquea el `.docx` | Cierra Word; se genera `*_actualizada.docx` |
-| El CLI instala todo el repo | Asegúrate de que exista `skills/monografia-compilacion-bolivia/SKILL.md` y no un `SKILL.md` en la raíz |
-| El índice sale vacío | Usa los estilos Heading de la plantilla incluida |
+Cuando la skill trabaja en tu proyecto, deposita todos los archivos generados en `./output/` (ignorado por Git para mantener tu repositorio limpio):
 
-## Desarrollo
+- `output/monografia_completa.md`: Manuscrito de trabajo en Markdown.
+- `output/monografia_compilacion_bolivia.docx`: Documento Word final listo para presentar.
+- `output/referencias.json`: Catálogo maestro de fuentes verificadas.
+- `output/referencias_bibliograficas.md`: Lista de referencias en formato APA 7.
+- `output/Sources.xml`: Archivo importable en Word (**Referencias → Administrar fuentes → Examinar**).
+- `output/fuentes/*.json`: Evidencia reproducible de cada búsqueda realizada.
 
-- Reglas y checklist: `skills/monografia-compilacion-bolivia/references/reglas_institucionales.md`.
-- Integraciones y planes B: `references/integraciones.md`.
-- Validación del frontmatter: `skills-ref validate ./skills/monografia-compilacion-bolivia`
-  (si tienes `skills-ref`).
-- Los scripts históricos específicos del proyecto están en `archive/` y no se instalan.
+---
 
-## Licencias
+## ❓ Preguntas Frecuentes
 
-Cada skill compañera conserva su licencia original (`docx`, `pdf`, `pptx` y `word-bibliography`
-son propietarias; Tavily y `skill-creator` tienen las suyas). Esta skill no las copia: solo las
-invoca si están presentes.
+<details>
+<summary><b>¿Qué necesito tener instalado en mi computadora?</b></summary>
+Solo necesitas <b>Python 3.10+</b> y la librería <code>python-docx</code> (<code>pip install python-docx</code>). La búsqueda con Tavily y la bibliografía funcionan de forma nativa.
+</details>
+
+<details>
+<summary><b>¿Cómo activo las búsquedas profundas con Tavily?</b></summary>
+Puedes instalar el CLI oficial (<code>curl -fsSL https://cli.tavily.com/install.sh | bash</code>) o simplemente definir tu clave en las variables de entorno:<br>
+<code>$env:TAVILY_API_KEY="tvly-..."</code> (en Windows PowerShell) o <code>export TAVILY_API_KEY="tvly-..."</code> (en Linux/Mac). Si no tienes clave, el agente utilizará su búsqueda web nativa y registrará la evidencia con <code>--plantilla</code>.
+</details>
+
+<details>
+<summary><b>¿Cómo importo las fuentes en Microsoft Word?</b></summary>
+Abre tu Word, ve a la pestaña <b>Referencias</b> → <b>Administrar fuentes</b> → haz clic en <b>Examinar...</b> y selecciona el archivo <code>output/Sources.xml</code>. Copia las fuentes a la lista del documento y listo.
+</details>
+
+---
+
+## 📄 Licencia
+
+Este proyecto está disponible bajo la licencia MIT. La plantilla institucional y logotipos pertenecen a la EIP-FINOR-UAGRM para fines académicos.
