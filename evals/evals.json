@@ -1,0 +1,62 @@
+{
+  "skill_name": "monografia-compilacion-bolivia",
+  "evals": [
+    {
+      "id": 1,
+      "name": "cimientos-p2-p3",
+      "prompt": "Hasta el paso 3 (CIMIENTOS): elabora el título, el planteamiento del problema y los objetivos de una monografía de compilación de postgrado EIP-FINOR-UAGRM sobre la adopción de pagos QR interoperables en Santa Cruz de Bolivia, corte octubre 2026. No inventes fuentes ni cifras: si necesitas un dato, búscalo o márcalo [VERIFICAR]. Entrega un solo archivo Markdown llamado cimientos.md en la carpeta de salida. Incluye la MAB como Apéndice A si el paso 3 la exige según la guía.",
+      "expected_output": "cimientos.md con título ≤20 palabras sin punto final, planteamiento en pirámide invertida con datos bolivianos verificados o [VERIFICAR], una pregunta motora abierta, OG + 3–5 OE con verbos Bloom, MAB como Apéndice A y sin Introducción, Índice ni Referencias finales.",
+      "files": [],
+      "assertions": [
+        "El archivo cimientos.md existe en la carpeta de salida.",
+        "El titulo tiene 20 palabras o menos y no termina en punto.",
+        "El titulo identifica fenomeno, sujeto/sector, lugar (Santa Cruz/Bolivia) y periodo 2021-2026.",
+        "El planteamiento sigue la piramide invertida: contexto global, contexto Bolivia y brecha (GAP).",
+        "La formulacion es una sola pregunta abierta, no dicotomica.",
+        "Incluye un objetivo general y entre 3 y 5 objetivos especificos.",
+        "Los objetivos usan verbos cognitivos superiores de Bloom y evitan verbos de trabajo de campo.",
+        "Incluye la MAB como Apendice A.",
+        "No incluye Introduccion, Indice ni lista final de Referencias (premadurez).",
+        "Ninguna cita o cifra inventada: cada dato tiene URL/DOI verificable o marca [VERIFICAR].",
+        "El enfoque territorial es Bolivia/Santa Cruz, no un caso extranjero."
+      ]
+    },
+    {
+      "id": 2,
+      "name": "bibliografia-sources-xml",
+      "prompt": "A partir de estas tres fuentes verificadas, genera (1) referencias.json, (2) la lista APA 7 en referencias_bibliograficas.md y (3) Sources.xml importable en Microsoft Word. No añadas fuentes que no estén en la lista. Fuente 1: Banco Central de Bolivia [BCB]. (2026). Informe de vigilancia del sistema de pagos 2025. BCB. https://www.bcb.gob.bo/webdocs/files_noticias/IVSP%202025vf.pdf — Fuente 2: Autoridad de Supervisión del Sistema Financiero [ASFI]. (2025, 8 de agosto). ASFI destaca crecimiento continuo en depósitos y créditos del sistema financiero nacional [Nota de prensa]. https://www.asfi.gob.bo/node/1179 — Fuente 3: Zimeri David, G. I., & Saucedo Cuellar, D. L. (2025). Transformación estructural de los medios de pago en Bolivia entre 2025 y 2026. Ecosistemas y Negocios, 2(1). https://doi.org/10.65924/enegocios.v2i1.11",
+      "expected_output": "Los tres archivos en la carpeta de salida. Sources.xml válido con exactamente 3 b:Source, tipos Report/InternetSite/JournalArticle, tags únicos y campos Tag, SourceType, Title, Year y URL. Markdown APA 7 con las 3 referencias en orden alfabético.",
+      "files": [],
+      "assertions": [
+        "Existen los tres archivos: referencias.json, referencias_bibliograficas.md y Sources.xml.",
+        "Sources.xml es XML bien formado y contiene exactamente 3 b:Source.",
+        "Cada b:Source tiene Tag, SourceType, Title, Year y URL.",
+        "Los SourceType son validos y adecuados: Report, InternetSite y JournalArticle.",
+        "Los tags son unicos.",
+        "El Markdown contiene las 3 referencias en orden alfabetico.",
+        "El articulo usa JournalArticle con revista, volumen y numero.",
+        "No hay fuentes adicionales ni inventadas.",
+        "El DOI aparece como URL https://doi.org/..."
+      ]
+    },
+    {
+      "id": 3,
+      "name": "auditoria-borrador",
+      "prompt": "Audita este borrador de CIMIENTOS (P1–P3) contra la guía EIP-FINOR-UAGRM y APA 7. Entrega un informe en Markdown con cada hallazgo, la regla/ID incumplida y la corrección concreta. No inventes cumplimientos. BORRADOR:\n\n## Título: \"Análisis de la morosidad en Bolivia.\"\n\n## Bibliografía\n\nYo analicé la morosidad en Santa Cruz con datos de 2019. La mora es un problema muy importante y veremos cómo afecta al sistema financiero.\n\n## Introducción\n\nEn este trabajo veremos la morosidad.",
+      "expected_output": "Informe que detecta al menos: título con comillas y punto final, sección 'Bibliografía' (debe ser 'Referencias' y no va en Cimientos), primera persona ('Yo analicé', 'veremos'), datos de 2019 fuera de la ventana 2021–2026, ausencia de fuentes/citas verificables y ausencia de MAB/Apéndice A. Cada hallazgo con ID normativo y corrección.",
+      "files": [],
+      "assertions": [
+        "El informe auditoria.md existe.",
+        "Detecta el titulo entre comillas y con punto final.",
+        "Detecta el uso de 'Bibliografia' y exige 'Referencias' (o su exclusion en Cimientos).",
+        "Detecta la primera persona ('Yo analice', 'veremos').",
+        "Detecta datos de 2019 fuera de la ventana 2021-2026.",
+        "Detecta la ausencia de fuentes/citas verificables.",
+        "Detecta la ausencia de MAB/Apendice A en Cimientos.",
+        "Cada hallazgo cita un ID normativo (TIT, PRO, REV, REF, APE, GEO...).",
+        "Propone correcciones concretas, no genericas.",
+        "No declara cumplimientos inexistentes."
+      ]
+    }
+  ]
+}

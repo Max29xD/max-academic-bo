@@ -1,0 +1,55 @@
+[
+  {
+    "id": "S01",
+    "tipo": "Informe oficial de sistema de pagos",
+    "tipo_documento": "Report",
+    "autores_cita": "BCB",
+    "autor_corporativo": "Banco Central de Bolivia [BCB]",
+    "anio": 2026,
+    "titulo": "Informe de Vigilancia del Sistema de Pagos 2025",
+    "institucion": "Banco Central de Bolivia",
+    "url": "https://www.bcb.gob.bo/webdocs/files_noticias/IVSP%202025vf.pdf",
+    "pais": "Bolivia",
+    "datos_extraidos": "Operaciones con QR interoperables, valor anual, pagos por minuto y desplazamiento del efectivo.",
+    "formato_apa7": "Banco Central de Bolivia [BCB]. (2026). *Informe de vigilancia del sistema de pagos 2025*. BCB. https://www.bcb.gob.bo/webdocs/files_noticias/IVSP%202025vf.pdf",
+    "verificado": "URL abierta y metadatos contrastados"
+  },
+  {
+    "id": "S02",
+    "tipo": "Nota de prensa oficial",
+    "tipo_documento": "InternetSite",
+    "autores_cita": "ASFI",
+    "autor_corporativo": "Autoridad de Supervisión del Sistema Financiero [ASFI]",
+    "anio": 2025,
+    "mes": "08",
+    "dia": "08",
+    "titulo": "ASFI destaca crecimiento continuo en depósitos y créditos del Sistema Financiero Nacional",
+    "sitio_web": "ASFI",
+    "url": "https://www.asfi.gob.bo/node/1179",
+    "pais": "Bolivia (Santa Cruz)",
+    "datos_extraidos": "Cartera de créditos por departamento, mora y concentración regional.",
+    "formato_apa7": "Autoridad de Supervisión del Sistema Financiero [ASFI]. (2025, 8 de agosto). *ASFI destaca crecimiento continuo en depósitos y créditos del sistema financiero nacional* [Nota de prensa]. https://www.asfi.gob.bo/node/1179",
+    "verificado": "URL abierta y metadatos contrastados"
+  },
+  {
+    "id": "S03",
+    "tipo": "Artículo científico",
+    "tipo_documento": "JournalArticle",
+    "autores": [
+      { "last": "Zimeri David", "first": "G. I." },
+      { "last": "Saucedo Cuellar", "first": "D. L." }
+    ],
+    "autores_cita": "Zimeri & Saucedo",
+    "anio": 2025,
+    "titulo": "Transformación estructural de los medios de pago en Bolivia entre 2025 y 2026",
+    "revista": "Ecosistemas y Negocios",
+    "volumen": "2",
+    "numero": "1",
+    "doi": "10.65924/enegocios.v2i1.11",
+    "url": "https://doi.org/10.65924/enegocios.v2i1.11",
+    "pais": "Bolivia",
+    "datos_extraidos": "Cambio estructural en medios de pago y adopción de pagos digitales.",
+    "formato_apa7": "Zimeri David, G. I., & Saucedo Cuellar, D. L. (2025). Transformación estructural de los medios de pago en Bolivia entre 2025 y 2026. *Ecosistemas y Negocios*, *2*(1). https://doi.org/10.65924/enegocios.v2i1.11",
+    "verificado": "DOI resuelto"
+  }
+]

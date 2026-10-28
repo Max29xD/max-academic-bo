@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Paquete compilado de skill (.skill es un zip empaquetado, distribuir vía Releases)
+*.skill
+
+# Entorno local de agentes y dependencias de skills CLI
+.agents/
+skills-lock.json
+
+# Salidas de trabajo del usuario
+output/
+
+# Resultados y snapshots efímeros de evaluación
+evals/iteration-*/
+evals/baseline/
+evals/**/outputs/
+evals/**/old_skill/
+evals/**/with_skill/
+evals/**/grading.json
+evals/**/timing.json
+evals/**/review.html
+evals/**/benchmark.json
+evals/**/benchmark.md
+
+# Archivos del sistema y editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
