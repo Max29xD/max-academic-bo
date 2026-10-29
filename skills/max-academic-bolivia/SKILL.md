@@ -2,34 +2,51 @@
 name: max-academic-bolivia
 description: >-
   Asistente metodológico para monografías de compilación (revisión documental) de postgrado:
-  Guía EIP-FINOR-UAGRM 2025/2026, APA 7.ª, datos verificados (corte 2026) y enfoque en Bolivia.
-  Incorpora búsqueda tipo Perplexity con Tavily (CLI o REST API), generación y validación de Word
-  (.docx) con plantilla institucional y bibliografía APA 7 con Sources.xml para Word. Úsala al
-  redactar o auditar monografías, tesinas, diplomados, EIP, FINOR, UAGRM, estado del arte,
-  matriz bibliográfica (MAB), planteamiento, objetivos, marco teórico, referencias APA 7, resumen,
-  carátula institucional, buscar o verificar fuentes de Bolivia (INE, BCB, ASFI, SciELO) o
-  generar/validar el documento Word final.
+  Guía Oficial EIP-FINOR-UAGRM (Santa Cruz, Bolivia), Manual Metodológico Maestro (Sampieri & Mendoza Torres),
+  normas APA 7.ª (2020), datos verificados (corte 2026) y enfoque en Bolivia. Incorpora búsqueda tipo Perplexity
+  con Tavily (CLI o REST API), generación y validación de Word (.docx) con plantilla institucional de 11 elementos,
+  distinción rigurosa Cita vs. Referencia vs. Bibliografía y catálogo Sources.xml para Word. Úsala al redactar
+  o auditar monografías, tesinas, diplomados, EIP, FINOR, UAGRM, estado del arte, matriz bibliográfica (MAB),
+  planteamiento del problema en pirámide, objetivos con Bloom, Bavaresco y Balestrini, marco teórico y divergencia
+  conceptual, postura epistémica en discusión, conclusiones biunívocas, referencias APA 7, resumen, carátula
+  institucional, buscar o verificar fuentes de Bolivia (INE, BCB, ASFI, SciELO) o generar/validar el documento final.
 compatibility: >-
   Requiere Python 3.10+ y python-docx. Tavily CLI (tvly) o TAVILY_API_KEY son opcionales (soporta
   búsqueda web nativa con registro de evidencia). Autocontenido en cualquier proyecto.
 metadata:
-  version: "2.1.0"
+  version: "2.3.0"
   idioma: es
 ---
 
 # Monografía de Compilación — EIP-FINOR-UAGRM · APA 7.ª · Bolivia · Corte 2026
 
-Construye una monografía de compilación **paso a paso**, con fuentes reales y verificadas,
+Construye una monografía de compilación teórica **paso a paso**, con fuentes reales y verificadas,
 actualizadas al corte más reciente (**octubre 2026** o posterior), enfocada **exclusivamente en
-Bolivia** (nacional, departamental, provincial o municipal). Se detiene exactamente donde el
-usuario lo indique y aplica la **prioridad institucional EIP-UAGRM** sobre APA 7 pura cuando
-haya discrepancia.
+Bolivia** (nacional, departamental, provincial o municipal). Sigue la **Guía Oficial para la
+Elaboración de Monografía** y el **Manual Metodológico Maestro** de la **Escuela Integral de
+Postgrado (E.I.P.)** de la **Facultad Integral del Norte (F.I.NOR.)** de la **Universidad Autónoma
+Gabriel René Moreno (U.A.G.R.M.)** (Santa Cruz, Bolivia), bajo la escuela metodológica de
+**Hernández Sampieri y Mendoza Torres** (el problema como árbitro soberano en cascada). Se detiene
+exactamente donde el usuario lo indique y aplica la **prioridad institucional EIP-UAGRM** sobre APA 7
+pura cuando haya discrepancia.
 
-## Regla de oro
+## Reglas de oro
 
-**Cero invención.** Ninguna cita, DOI, cifra, página o referencia proviene de la memoria. Toda
-fuente se encontró y verificó **en esta sesión** (URL/PDF abierto o resultado de búsqueda con
-enlace). Lo no confirmado se marca `[VERIFICAR]` y se declara en la entrega.
+1. **Cero invención.** Ninguna cita, DOI, cifra, página o referencia proviene de la memoria. Toda
+   fuente se encontró y verificó **en esta sesión** (URL/PDF abierto o resultado de búsqueda con
+   enlace). Lo no confirmado se marca `[VERIFICAR]` y se declara en la entrega.
+2. **Manejo de datos incompletos (`[CAMPOS PENDIENTES]`).** Si faltan datos clave (tema, población,
+   institución, lugar, período o programa de diplomado), **pregunta al usuario o márcalos
+   explícitamente como `[CAMPOS PENDIENTES]`**. Jamás inventes datos institucionales ni de contexto.
+3. **Revisión documental pura sin trabajo de campo.** No copies párrafos de las fuentes. Lee,
+   comprende, sintetiza, confronta y redacta con palabras propias en **tercera persona impersonal**.
+   Distingue siempre las ideas de los autores de las interpretaciones del investigador.
+4. **Diferenciación conceptual inviolable:**
+   - **Cita:** Idea textual o parafraseada inmersa en el texto con autor y año `(p. X si es textual)`.
+   - **Referencia:** Listado final con coincidencia biunívoca exacta 1:1 de las fuentes citadas.
+   - **Bibliografía:** Obras leídas de fondo pero NO citadas. **Prohibido titular "Bibliografía" a la lista de obras citadas.**
+5. **Calidad y umbral de fuentes.** Mínimo 5 fuentes académicas de alta jerarquía (meta 10–15).
+   Prohibido Wikipedia, monografias.com o sitios informales. La omisión de citas causa anulación por plagio.
 
 ## 0. Antes de empezar (30 segundos)
 
@@ -49,21 +66,31 @@ enlace). Lo no confirmado se marca `[VERIFICAR]` y se declara en la entrega.
    `references/plantillas_por_paso.md` para el paso concreto; `references/apa7_formatos.md`
    para citas, tablas y referencias; `references/busqueda_bolivia.md` antes de buscar.
 
-## 1. Secuencia de ejecución (11 pasos, no lineal)
+## 1. Secuencia de ejecución (11 pasos, en 3 macroetapas praxiológicas)
+
+```text
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│ 1. Etapa de Cimentación:       P1 (Título) ➔ P2 (Planteamiento) ➔ P3 (Objetivos)       │
+│ 2. Etapa de Desarrollo:        P4 (Revisión MAB) ➔ P5 (Términos) ➔ P6 (Discusión) ➔    │
+│                                P7 (Conclusiones biunívocas)                            │
+│ 3. Etapa de Enmarque/Cierre:   P8 (Introducción) ➔ P9 (Resumen) ➔ P10 (Referencias) ➔ │
+│                                P11 (Carátula institucional e índice automático)        │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+```
 
 | Paso | Producto | Criterio de cierre |
 |---|---|---|
-| P1 | Título borrador | ≤ 20 palabras, nominal, QUÉ + PARA QUIÉN + DÓNDE + CUÁNDO, sin punto final |
-| P2 | Planteamiento | Pirámide invertida (global → Bolivia → GAP) + una pregunta motora abierta |
-| P3 | Objetivos | OG con las 5 preguntas canónicas + 3–5 OE escalonados (Bloom), sin verbos de campo |
-| P4 | Revisión literaria | Por temas, ≥ 5 fuentes indexadas (meta 10–15), síntesis crítica Nivel 3, MAB |
+| P1 | Título borrador | Procedimiento 5 pasos EIP, ≤ 20 palabras, nominal, QUÉ + PARA QUIÉN + DÓNDE + CUÁNDO, sin punto final |
+| P2 | Planteamiento | Pirámide invertida (global → Bolivia → GAP) + una pregunta motora abierta (QUÉ, DÓNDE, CUÁNDO) |
+| P3 | Objetivos | OG con las 5 preguntas canónicas + 3–5 OE escalonados (Bloom/Bavaresco/Balestrini), sin verbos de campo |
+| P4 | Revisión literaria | Ejes temáticos, 5 preguntas del estado del arte, ≥ 5 fuentes indexadas (meta 10–15), síntesis crítica Nivel 3, MAB |
 | P5 | Definiciones | 5–10 constructos, 3 partes, ≤ 100 palabras cada uno, autores especializados |
-| P6 | Discusión | 5 partes, voz del investigador, **cero autores o datos nuevos** |
-| P7 | Conclusiones | 1 por OE + 1 integradora, pretérito impersonal, sin citas nuevas |
+| P6 | Discusión | 5 partes, voz del investigador, postura epistémica, confrontación de acuerdos y desacuerdos, **cero datos nuevos** |
+| P7 | Conclusiones | 1 párrafo conciso por cada OE + 1 para el OG, pretérito impersonal, sin citas nuevas |
 | P8 | Introducción | Se redacta al final; 5 párrafos; encabezado `1. Introducción` |
-| P9 | Resumen y palabras clave | Párrafo único ≤ 400 palabras, 3–6 palabras clave |
-| P10 | Título definitivo y referencias | Auditoría 1:1 citas ↔ referencias, APA 7, enlaces activos |
-| P11 | Carátula e índice | 10 elementos, paginación mixta, índice automático por estilos |
+| P9 | Resumen y palabras clave | 3 componentes EIP (intro/objetivos, hallazgos, conclusiones), ≤ 400 palabras, 3–6 palabras clave |
+| P10 | Título definitivo y referencias | Auditoría 1:1 citas ↔ referencias, APA 7, enlaces activos, distinción Cita vs. Referencia |
+| P11 | Carátula e índice | Carátula oficial de 11 elementos (Arial 14 pt título, 12 pt autor/docente), paginación mixta, índice por estilos |
 
 **Por qué este orden:** no se puede introducir ni resumir lo que aún no existe; la revisión (P4)
 alimenta P5–P7; los objetivos (P3) fijan el contrato que P7 debe liquidar; la carátula y el
@@ -83,13 +110,13 @@ Detalle operativo, cuestionarios y esqueletos: `references/plantillas_por_paso.m
    P6 y P7 no introducen autores ni datos nuevos.
 5. **Voz crítica Nivel 3.** Paráfrasis > 80 %; > 60 % de párrafos de P4 confrontan autores y
    contextualizan a Bolivia.
-6. **Prioridad EIP.** Resumen ≤ 400 palabras, carátula de 10 elementos con número invisible,
+6. **Prioridad EIP.** Resumen ≤ 400 palabras, carátula de 11 elementos con número invisible,
    romanos en preliminares y arábigos reiniciando en la Introducción.
 7. **Premadurez prohibida.** En entregas de Cimientos (P1–P3) no se incluye Introducción (P8),
    Índice (P11) ni Referencias finales (P10); el respaldo es la MAB como Apéndice A.
 
 Matriz normativa completa (TIT, PRO, OBJ, REV, TER, DIS, CON, INT, RES, REF, CAR, PAG, FOR, IND,
-APE, ACT, GEO) y checklist maestro de 16 puntos: `references/reglas_institucionales.md`.
+APE, ACT, GEO) y checklist maestro de verificación: `references/reglas_institucionales.md`.
 
 ## 3. Capacidades Incorporadas (Word · Tavily · Bibliografía)
 
@@ -129,7 +156,7 @@ Si el usuario ya tiene un `output/` con avances, **no lo sobrescribas a ciegas**
 
 | Archivo | Cuándo leerlo / usarlo |
 |---|---|
-| `references/reglas_institucionales.md` | Antes de redactar o auditar; matriz normativa y checklist maestro de 16 puntos |
+| `references/reglas_institucionales.md` | Antes de redactar o auditar; matriz normativa y checklist maestro |
 | `references/plantillas_por_paso.md` | Al ejecutar cualquier paso: cuestionarios, esqueletos y fórmulas canónicas |
 | `references/apa7_formatos.md` | Citas, 5 niveles de encabezado, formato de tablas/figuras y lista APA 7 |
 | `references/docx_guia.md` | Buenas prácticas Word OOXML, encabezados multinivel, tablas y validación |
@@ -154,12 +181,13 @@ Si el usuario ya tiene un `output/` con avances, **no lo sobrescribas a ciegas**
 Antes de declarar terminado un entregable:
 
 1. Ejecuta `python scripts/auditar_monografia.py <archivo> --json` y corrige todo error (✖).
-2. Revisa el checklist maestro de 16 puntos en `references/reglas_institucionales.md`.
+2. Revisa el checklist maestro en `references/reglas_institucionales.md`.
 3. Verifica que cada cita del texto tenga su referencia y viceversa (1:1).
 4. Revisa que ninguna fuente sea inventada, duplicada o fuera de la ventana 2021–2026.
 5. Si hay `.docx`, ábrelo o conviértelo para confirmar carátula, paginación e índice.
-6. Entrega un resumen de: archivos generados, fuentes añadidas, supuestos y pendientes
-   `[VERIFICAR]`.
+6. Ten presentes los plazos institucionales de entrega (anillado en ≤ 10 días hábiles, subsanación, empastados + CD, defensa en ≤ 30 días post-módulo).
+7. Entrega un resumen de: archivos generados, fuentes añadidas, supuestos y pendientes
+   `[CAMPOS PENDIENTES]` / `[VERIFICAR]`.
 
 ## 8. Instalación (para el agente o el usuario)
 
@@ -177,6 +205,7 @@ bunx skills add Max29xD/max-academic-bo --skill max-academic-bolivia -y
 Si el repo no está publicado, también acepta la ruta local:
 
 ```bash
+# Global desde carpeta local
 bunx skills add ./skills/max-academic-bolivia -g -y
 ```
 

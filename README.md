@@ -127,7 +127,7 @@ flowchart TD
 
 ### 1. Motor DOCX Profesional con Validación OOXML Integrada
 - **Sin necesidad de instalar la skill `docx`:** La skill contiene sus propias utilidades en `scripts/docx_utils.py` y ensamblado institucional en `scripts/generar_monografia_docx.py`.
-- **Estructura Reglamentaria EIP-FINOR:** Carátula con 10 elementos normativos en Arial 14/12 pt, logotipo oficial centrado, primera página con numeración oculta, preliminares en números romanos minúsculos (`ii`, `iii`...) y reinicio en números arábigos (`1`, `2`...) a partir de `1. Introducción`.
+- **Estructura Reglamentaria EIP-FINOR:** Carátula con 11 elementos normativos oficiales en Arial 14/12 pt (UAGRM, FINOR, EIP, logo, programa, título, grado, autor, docente/tutor, Santa Cruz – Bolivia, año), logotipo oficial centrado, primera página con numeración oculta, preliminares en números romanos minúsculos (`ii`, `iii`...) y reinicio en números arábigos (`1`, `2`...) a partir de `1. Introducción`.
 - **Tablas APA 7 Estrictas:** Formateo automático con bordes horizontales únicamente (superior, cabecera e inferior, sin líneas verticales), título descriptivo a doble espacio y nota al pie.
 - **Validación OOXML:** Inspecciona el contenedor ZIP y la sintaxis de `document.xml` para evitar que Microsoft Word reporte errores de apertura.
 

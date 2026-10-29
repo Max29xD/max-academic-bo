@@ -345,7 +345,7 @@ def primer_verbo(t):
 
 VERBOS_CAMPO = {"encuestar", "medir", "calcular"}
 VERBOS_CAMPO_AFINES = {"entrevistar", "experimentar", "muestrear", "cuestionar", "sondear", "cronometrar"}
-VERBOS_BAJOS_OG = {"conocer", "saber", "recordar", "listar", "enumerar", "nombrar", "revisar", "estudiar", "investigar", "ver", "tratar", "mostrar"}
+VERBOS_BAJOS_OG = {"conocer", "saber", "recordar", "listar", "enumerar", "nombrar", "revisar", "estudiar", "investigar", "ver", "tratar", "mostrar", "comprender", "entender", "apreciar", "familiarizarse", "dominar", "percibir"}
 PRIMERA_PERSONA = re.compile(
     r"\b(yo|nosotros|nosotras|nuestro|nuestra|nuestros|nuestras|mi|mis|considero|creo que|pienso|"
     r"analic[eé]|conclu[ií]|concluimos|analizamos|observamos|encontramos|realic[eé]|realizamos|propongo|proponemos)\b",
