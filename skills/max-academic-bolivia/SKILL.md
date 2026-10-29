@@ -1,21 +1,6 @@
 ---
 name: max-academic-bolivia
-description: >-
-  Asistente metodológico para monografías de compilación (revisión documental) de postgrado:
-  Guía Oficial EIP-FINOR-UAGRM (Santa Cruz, Bolivia), Manual Metodológico Maestro (Sampieri & Mendoza Torres),
-  normas APA 7.ª (2020), datos verificados (corte 2026) y enfoque en Bolivia. Incorpora búsqueda tipo Perplexity
-  con Tavily (CLI o REST API), generación y validación de Word (.docx) con plantilla institucional de 11 elementos,
-  distinción rigurosa Cita vs. Referencia vs. Bibliografía y catálogo Sources.xml para Word. Úsala al redactar
-  o auditar monografías, tesinas, diplomados, EIP, FINOR, UAGRM, estado del arte, matriz bibliográfica (MAB),
-  planteamiento del problema en pirámide, objetivos con Bloom, Bavaresco y Balestrini, marco teórico y divergencia
-  conceptual, postura epistémica en discusión, conclusiones biunívocas, referencias APA 7, resumen, carátula
-  institucional, buscar o verificar fuentes de Bolivia (INE, BCB, ASFI, SciELO) o generar/validar el documento final.
-compatibility: >-
-  Requiere Python 3.10+ y python-docx. Tavily CLI (tvly) o TAVILY_API_KEY son opcionales (soporta
-  búsqueda web nativa con registro de evidencia). Autocontenido en cualquier proyecto.
-metadata:
-  version: "2.3.0"
-  idioma: es
+description: "Asistente metodológico para monografías de compilación (revisión documental) de postgrado: Guía Oficial EIP-FINOR-UAGRM (Santa Cruz, Bolivia), Manual Metodológico Maestro (Sampieri & Mendoza Torres), normas APA 7.ª, datos verificados y enfoque en Bolivia. Búsqueda con Tavily, generación y validación de Word (.docx) con plantilla institucional de 11 elementos, distinción Cita vs. Referencia vs. Bibliografía y Sources.xml para Word. Úsala al redactar o auditar monografías, tesinas, diplomados, EIP, FINOR, UAGRM, matriz bibliográfica (MAB), planteamiento del problema, objetivos con Bloom, marco teórico, postura epistémica, conclusiones biunívocas, referencias APA 7, carátula institucional, fuentes de Bolivia (INE, BCB, ASFI, SciELO) o generar/validar el documento final."
 ---
 
 # Monografía de Compilación — EIP-FINOR-UAGRM · APA 7.ª · Bolivia · Corte 2026
