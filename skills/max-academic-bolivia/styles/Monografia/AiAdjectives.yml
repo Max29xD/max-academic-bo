@@ -1,0 +1,21 @@
+extends: existence
+message: "Adjetivo pomposo o hiperbólico típico de IA: '%s'. Prefiere términos académicos sobrios, mesurados y precisos."
+level: warning
+ignorecase: true
+tokens:
+  - revolucionario
+  - revolucionaria
+  - revolucionarios
+  - revolucionarias
+  - transformador
+  - transformadora
+  - paradigmático
+  - paradigmática
+  - holístico
+  - holística
+  - fascinante
+  - intrigante
+  - multifacético
+  - multifacética
+  - vertiginoso
+  - vertiginosa

@@ -39,6 +39,8 @@ pura cuando haya discrepancia.
    - **Bibliografía:** Obras leídas de fondo pero NO citadas. **Prohibido titular "Bibliografía" a la lista de obras citadas.**
 5. **Calidad y umbral de fuentes.** Mínimo 5 fuentes académicas de alta jerarquía (meta 10–15).
    Prohibido Wikipedia, monografias.com o sitios informales. La omisión de citas causa anulación por plagio.
+6. **Cuerpo 100 % textual (Prohibición estricta de tablas en el cuerpo).**
+   En cada monografía de compilación, el cuerpo del documento (Capítulos 1 al 7: Introducción, Planteamiento del Problema, Objetivos, Revisión de Literatura, Definición de Términos, Discusión y Conclusiones) es **estricta y exclusivamente textual (prosa narrativa continua)**. **Nunca existen tablas, cuadros, figuras ni gráficos dentro del cuerpo**. Toda tabla, matriz comparativa o gráfico suplementario (incluyendo la Matriz de Análisis Bibliográfico MAB, cuadros estadísticos de INE/BCB/ASFI o diagramas) debe ubicarse **exclusivamente al final del documento como Apéndices** (después de Referencias), aun cuando otras normativas generales de estilo permitan insertarlas.
 
 ## 0. Antes de empezar (30 segundos)
 
@@ -106,6 +108,7 @@ Detalle operativo, cuestionarios y esqueletos: `references/plantillas_por_paso.m
    romanos en preliminares y arábigos reiniciando en la Introducción.
 7. **Premadurez prohibida.** En entregas de Cimientos (P1–P3) no se incluye Introducción (P8),
    Índice (P11) ni Referencias finales (P10); el respaldo es la MAB como Apéndice A.
+8. **Cuerpo exclusivamente textual.** Cero tablas, cuadros o figuras intercaladas en los capítulos del cuerpo (P1–P8). Todo el análisis es narrativo puro; las tablas y figuras se ubican exclusivamente en la sección final de Apéndices.
 
 Matriz normativa completa (TIT, PRO, OBJ, REV, TER, DIS, CON, INT, RES, REF, CAR, PAG, FOR, IND,
 APE, ACT, GEO) y checklist maestro de verificación: `references/reglas_institucionales.md`.

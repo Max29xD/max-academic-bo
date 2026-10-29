@@ -1,0 +1,34 @@
+extends: existence
+message: "Patrón o cliché típico de IA detectado: '%s'. Reformula con redacción académica directa y objetiva."
+level: warning
+ignorecase: true
+tokens:
+  - es crucial destacar
+  - es imperativo señalar
+  - es menester destacar
+  - cabe resaltar
+  - cabe señalar
+  - cabe mencionar
+  - vale la pena mencionar
+  - vale la pena destacar
+  - no se puede subestimar
+  - juega un papel fundamental
+  - juega un rol fundamental
+  - desempeña un rol crucial
+  - desempeña un papel crucial
+  - en el vertiginoso mundo
+  - en un mundo en constante cambio
+  - navegar el complejo panorama
+  - navegar por el complejo panorama
+  - desentrañar la complejidad
+  - un tapiz de
+  - un testimonio de
+  - la piedra angular
+  - una piedra angular
+  - el faro de
+  - un faro de
+  - a modo de colofón
+  - a modo de conclusión
+  - en resumen, podemos decir
+  - de vital importancia
+  - como hemos visto

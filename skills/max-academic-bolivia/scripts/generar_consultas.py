@@ -19,7 +19,6 @@ Ejemplo:
     --desde 2021 --hasta 2026
 """
 import argparse
-import datetime
 import json
 
 DEFAULT_GEO = {

@@ -169,6 +169,10 @@ Mendoza, R. (2024). *Modelo de gobernanza de datos para la mitigación del riesg
 
 ## 7. Tablas y Figuras bajo APA 7
 
+> [!IMPORTANT]
+> **REGLA INSTITUCIONAL VIGENTE (Cuerpo 100 % Textual):**
+> En cada monografía de compilación, el cuerpo de los capítulos (Introducción, Planteamiento, Objetivos, Revisión, Términos, Discusión y Conclusiones) es **100 % texto continuo**. **No se insertan tablas, figuras ni cuadros en el cuerpo**. Toda tabla, matriz de consistencia, cuadro comparativo o gráfico estadístico se traslada **exclusivamente a la sección final de Apéndices** (después de Referencias), con la estructura APA 7 que se detalla a continuación.
+
 - **Formato en Dos Líneas:**
   ```text
   Tabla 1

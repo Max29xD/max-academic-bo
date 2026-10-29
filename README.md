@@ -17,6 +17,8 @@
   <a href="https://tavily.com"><img src="https://shieldcn.dev/badge/Tavily_AI-Perplexity_Deep_Search-0ea5e9.svg?logo=openai&variant=secondary&size=sm" alt="Tavily AI" /></a>
   <a href="https://uagrm.edu.bo"><img src="https://shieldcn.dev/badge/Instituci%C3%B3n-EIP--FINOR--UAGRM-dc2626.svg?logo=scikitlearn&variant=secondary&size=sm" alt="EIP FINOR UAGRM" /></a>
   <a href="https://learn.microsoft.com/en-us/office/open-xml/"><img src="https://shieldcn.dev/badge/Bibliography-Sources.xml-f59e0b.svg?logo=xml&variant=secondary&size=sm" alt="Sources.xml" /></a>
+  <a href="https://vale.sh"><img src="https://shieldcn.dev/badge/Linter_Prosa-Vale_3.x-10b981.svg?logo=go&variant=secondary&size=sm" alt="Vale Linter" /></a>
+  <a href="https://github.com/vale-cli/vale"><img src="https://shieldcn.dev/badge/Patrones_IA-Cero_Slop-ef4444.svg?logo=openai&variant=secondary&size=sm" alt="Cero Slop IA" /></a>
 </p>
 
 <p align="center">
@@ -128,7 +130,8 @@ flowchart TD
 ### 1. Motor DOCX Profesional con Validación OOXML Integrada
 - **Sin necesidad de instalar la skill `docx`:** La skill contiene sus propias utilidades en `scripts/docx_utils.py` y ensamblado institucional en `scripts/generar_monografia_docx.py`.
 - **Estructura Reglamentaria EIP-FINOR:** Carátula con 11 elementos normativos oficiales en Arial 14/12 pt (UAGRM, FINOR, EIP, logo, programa, título, grado, autor, docente/tutor, Santa Cruz – Bolivia, año), logotipo oficial centrado, primera página con numeración oculta, preliminares en números romanos minúsculos (`ii`, `iii`...) y reinicio en números arábigos (`1`, `2`...) a partir de `1. Introducción`.
-- **Tablas APA 7 Estrictas:** Formateo automático con bordes horizontales únicamente (superior, cabecera e inferior, sin líneas verticales), título descriptivo a doble espacio y nota al pie.
+- **Cuerpo 100 % Textual (Tablas y Figuras Exclusivas en Apéndices):** El cuerpo de la monografía (Capítulos 1 al 7: Introducción, Planteamiento, Objetivos, Revisión de Literatura, Términos, Discusión y Conclusiones) es **estricta y exclusivamente narrativo en prosa continua**. Queda terminantemente prohibido intercalar tablas o figuras en el cuerpo; todo elemento tabular (incluida la Matriz MAB y tablas de consistencia) se reubica al final del documento como **Apéndices** (después de Referencias).
+- **Tablas APA 7 Estrictas en Apéndices:** Formateo automático en dos líneas con bordes horizontales únicamente (superior, cabecera e inferior, sin líneas verticales), título descriptivo a doble espacio y nota al pie.
 - **Validación OOXML:** Inspecciona el contenedor ZIP y la sintaxis de `document.xml` para evitar que Microsoft Word reporte errores de apertura.
 
 ### 2. Búsqueda Profunda Tipo Perplexity con Evidencia (Tavily)
@@ -140,6 +143,11 @@ flowchart TD
 - **Importación con 1 Clic en Microsoft Word:** Genera el archivo `output/Sources.xml` según el estándar `http://schemas.openxmlformats.org/officeDocument/2006/bibliography`. El docente o tribunal solo entra a **Referencias → Administrar fuentes → Examinar...** y tiene todas las citas listas para insertar dinámicamente.
 - **Soporte de Tipos:** Clasificación estricta en `JournalArticle` (revista, volumen, número, páginas, DOI), `Report` (organismo, número de informe, URL) y `WebSite` / `InternetSite`.
 - **Markdown APA 7:** Generación simultánea en `output/referencias_bibliograficas.md` con sangría francesa y orden alfabético perfecto.
+
+### 4. Linter de Prosa y Erradicación de Patrones de IA con Vale
+- **Erradicación de "AI Slop" y Guiones Largos:** Los modelos LLM incurren en tics de estilo delatores (inserción constante de rayas/guiones largos `—` en lugar de comas o paréntesis, muletillas como *"es crucial destacar"*, *"es imperativo señalar"*, *"cabe resaltar"*, y adjetivos inflados como *"revolucionario"*, *"holístico"* o *"fascinante"*).
+- **Reglas Nativas `Monografia`:** Paquete de reglas incluido en `styles/Monografia/` (`EmDash.yml`, `AiCliches.yml`, `AiAdjectives.yml`, `Impersonalidad.yml` y `Sustituciones.yml`) bajo configuración `.vale.ini`.
+- **Auditoría Dual:** Procesa borradores en Markdown y documentos finales `.docx` a velocidad nativa en Go sin gastar tokens. Se ejecuta automáticamente dentro de `auditar_monografia.py` arrojando alertas `[VAL-ERR]`, `[VAL-WARN]` y `[VAL-SUG]`.
 
 ---
 
@@ -212,6 +220,8 @@ max-academic-bo/
 │   │   ├── 📘 word_bibliography_guia.md       # Estándar Sources.xml de Word
 │   │   ├── 📘 busqueda_bolivia.md             # Embudo geográfico y fuentes oficiales
 │   │   └── 📘 integraciones.md                # Planes de contingencia y degradación
+│   ├── 📁 styles/Monografia/                  # 🛡️ Reglas Vale anti-patrones de IA (—, clichés, adjetivos)
+│   ├── 📄 .vale.ini                           # Configuración del linter Vale
 │   ├── 📁 scripts/                            # Herramientas deterministas en Python
 │   │   ├── ⚙️ verificar_entorno.py            # Diagnóstico de capacidades y rutas
 │   │   ├── ⚙️ buscar_fuentes.py               # Búsqueda Tavily (CLI o REST API)
@@ -232,9 +242,41 @@ max-academic-bo/
 ## 🚀 Instalación y Comandos
 
 ### Requisitos del Sistema
-- **Python:** `>= 3.10`
-- **Librería de Word:** `pip install python-docx`
+- **Python:** `>= 3.10` (`pip install python-docx lxml`)
+- **Linter de Prosa y Patrones de IA:** [Vale CLI](https://github.com/vale-cli/vale) (`scoop install vale`)
 - **Opcional para búsquedas:** Tavily CLI (`tvly`) o variable de entorno `TAVILY_API_KEY`.
+
+### ⚙️ Instalación y Configuración de Vale (Windows / Scoop)
+
+Vale se utiliza para auditar el estilo y eliminar patrones artificiales de IA. Para instalarlo con Scoop en Windows:
+
+```powershell
+# 1. Si aún no tienes Scoop instalado en PowerShell:
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+irm get.scoop.sh | iex
+
+# 2. Instalar Vale con Scoop:
+scoop install vale
+
+# 3. Verificar instalación:
+vale -v
+```
+
+> **Otros gestores:** En Chocolatey: `choco install vale` · En Winget: `winget install errata-ai.vale` · En macOS: `brew install vale`.
+
+### ⚡ Autoconfiguración Inicial en 1 Paso
+
+Al interactuar con la skill o antes de comenzar la redacción, ejecuta el script de configuración automática:
+
+```bash
+python skills/max-academic-bolivia/scripts/verificar_entorno.py --setup
+```
+
+Este comando:
+1. **Verifica e instala** automáticamente dependencias de Python faltantes (`python-docx`, `lxml`).
+2. **Detecta e instala Vale** mediante Scoop si está disponible en Windows.
+3. **Despliega la configuración `.vale.ini` y las reglas `styles/Monografia`** en el proyecto actual.
+4. **Comprueba plantillas, logos y conexión a Tavily**, dejando el entorno 100 % listo.
 
 ### Instalación con `bunx skills`
 
@@ -253,7 +295,9 @@ bunx skills add ./skills/max-academic-bolivia -y
 
 | Comando | Propósito |
 | :--- | :--- |
-| `python skills/max-academic-bolivia/scripts/verificar_entorno.py` | Diagnostica dependencias, rutas, plantillas y conectividad Tavily |
+| `python skills/max-academic-bolivia/scripts/verificar_entorno.py --setup` | Diagnóstica y autoconfigura dependencias, instala Vale vía Scoop y despliega reglas |
+| `vale output/monografia_completa.md` | Audita borradores Markdown detectando guiones largos `—`, muletillas y tics de IA |
+| `vale output/max_academic_bolivia.docx` | Audita directamente el documento Word generado con Microsoft Word |
 | `python skills/max-academic-bolivia/scripts/buscar_fuentes.py "tema" --tipo search` | Ejecuta búsqueda con Tavily y guarda evidencia en `output/fuentes/` |
 | `python skills/max-academic-bolivia/scripts/gestor_referencias.py` | Convierte `referencias.json` a Markdown APA 7 y `Sources.xml` |
 | `python skills/max-academic-bolivia/scripts/generar_monografia_docx.py` | Ensambla el documento Word oficial sobre `apa7ma.docx` |

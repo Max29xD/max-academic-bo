@@ -1,0 +1,21 @@
+extends: existence
+message: "Infracción de impersonalidad académica (EIP-FINOR): '%s'. Redacta en tercera persona impersonal ('se analizó', 'se concluye', 'el presente trabajo')."
+level: error
+ignorecase: true
+tokens:
+  - yo analicé
+  - nosotros
+  - nuestro estudio
+  - nuestra investigación
+  - nuestros análisis
+  - nuestras observaciones
+  - analizamos
+  - observamos
+  - concluimos
+  - creemos que
+  - consideramos que
+  - podemos ver
+  - podemos observar
+  - veremos
+  - en este trabajo analizaremos
+  - en este trabajo veremos

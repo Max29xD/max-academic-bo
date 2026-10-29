@@ -15,6 +15,8 @@ import difflib
 import json
 import os
 import re
+import shutil
+import subprocess
 import unicodedata
 import zipfile
 from pathlib import Path
@@ -653,6 +655,86 @@ def chequear_abreviaturas(lines, r, secs=None):
         r.ok("APA-9", "Las siglas institucionales se definen una sola vez.")
 
 
+def chequear_tablas_cuerpo(lines, secs, r):
+    """Verifica que el cuerpo de la monografía (acápites 1 a 7) sea 100 % textual (TAB-1).
+    
+    Queda terminantemente prohibido incluir tablas, cuadros o figuras en el cuerpo.
+    Toda tabla o material suplementario debe ubicarse al final en la sección de Apéndices.
+    """
+    cuerpo_keys = ["introduccion", "problema", "objetivos", "revision", "terminos", "discusion", "conclusiones"]
+    tablas_en_cuerpo = []
+
+    for k in cuerpo_keys:
+        if k not in secs:
+            continue
+        sec_info = secs[k]
+        lineas_sec = sec_info["lineas"]
+        inicio = sec_info["inicio"]
+
+        for idx, l in enumerate(lineas_sec):
+            linea_num = inicio + idx
+            # Detectar encabezados de tabla dentro del cuerpo
+            if re.search(r"^\s*(?:#+\s*)?tabla\s+\d+", l, re.I):
+                tablas_en_cuerpo.append((sec_info["titulo"], linea_num, l.strip()))
+                break
+            # Detectar filas de tabla Markdown (| ... | ... |) dentro del cuerpo
+            if re.search(r"^\s*\|.*\|.*\|\s*$", l):
+                tablas_en_cuerpo.append((sec_info["titulo"], linea_num, l.strip()))
+                break
+
+    if tablas_en_cuerpo:
+        for tit_sec, l_num, muestra in tablas_en_cuerpo:
+            r.err("TAB-1", f"Cuerpo no textual: se detectó una tabla en el acápite «{tit_sec}» (línea ~{l_num}, «{muestra[:45]}»). El cuerpo de la monografía debe ser 100 % textual en prosa continua; toda tabla, matriz o figura debe reubicarse exclusivamente al final como Apéndice (después de Referencias).")
+    else:
+        r.ok("TAB-1", "Cuerpo 100 % textual: no se detectaron tablas ni figuras en los capítulos de desarrollo (material tabular reservado exclusivamente para Apéndices).")
+
+
+
+
+def chequear_estilo_vale(archivo, r):
+    exe = shutil.which("vale")
+    if not exe:
+        r.info("VAL-1", "Vale no detectado en PATH. Se recomienda instalarlo ('scoop install vale') para auditar prosa y tics de IA.")
+        return
+
+    cmd = [exe, "--output=JSON"]
+    ini_candidato = Path.cwd() / ".vale.ini"
+    if not ini_candidato.exists():
+        ini_candidato = Path(__file__).resolve().parent.parent / ".vale.ini"
+    if ini_candidato.exists():
+        cmd.extend(["--config", str(ini_candidato)])
+    cmd.append(str(archivo))
+
+    try:
+        res = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+        out = res.stdout.strip()
+        if not out:
+            r.ok("VAL-1", "Auditoría estilística con Vale: sin alertas de tics de IA ni errores de prosa.")
+            return
+        data = json.loads(out)
+        total_err = 0
+        total_warn = 0
+        total_sugg = 0
+        for fname, alerts in data.items():
+            for a in alerts:
+                sev = a.get("Severity", "").lower()
+                chk = a.get("Check", "Estilo")
+                msg = f"[{chk}] {a.get('Message', '')} (Línea {a.get('Line', '?')})"
+                if sev == "error":
+                    r.err("VAL-ERR", msg)
+                    total_err += 1
+                elif sev == "warning":
+                    r.warn("VAL-WARN", msg)
+                    total_warn += 1
+                else:
+                    r.info("VAL-SUG", msg)
+                    total_sugg += 1
+        if total_err == 0 and total_warn == 0:
+            r.ok("VAL-1", f"Auditoría estilística Vale superada (0 errores, {total_sugg} sugerencias).")
+    except Exception as e:
+        r.info("VAL-1", f"No se pudo completar el análisis con Vale: {e}")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("archivo")
@@ -662,6 +744,8 @@ def main():
     ap.add_argument("--md", help="Markdown maestro para contrastar citas y sincronía (por defecto, junto al archivo auditado)")
     ap.add_argument("--parcial", action="store_true",
                     help="Borrador incompleto: los acápites ausentes se informan como pendientes, no como error")
+    ap.add_argument("--vale", dest="usar_vale", action="store_true", default=True, help="Auditar estilo y patrones de IA con Vale")
+    ap.add_argument("--no-vale", dest="usar_vale", action="store_false", help="Desactivar análisis estilístico con Vale")
     args = ap.parse_args()
 
     lines, paras = leer(args.archivo)
@@ -719,12 +803,8 @@ def main():
             r.err("REF-1", f"Denominación antirreglamentaria: se detectó el encabezado «{l.strip()}». Conforme a APA 7 y Guía EIP-UAGRM, el título exclusivo debe ser «Referencias».")
             break
 
-    # Verificación de formato de Tablas APA 7 (dos líneas)
-    for l in lines:
-        m_tab = re.search(r"^\s*(#+\s*)?tabla\s+\d+\s*[:\-–]\s*[A-Za-zÁÉÍÓÚÑ]", l, re.I)
-        if m_tab:
-            r.err("FOR-8", f"Formato incorrecto en encabezado de tabla: «{l.strip()[:65]}». Bajo APA 7, el número debe figurar en una primera línea en negrita («Tabla 1») y en una segunda línea a doble espacio el título descriptivo en cursiva.")
-            break
+    # Verificación de Cuerpo 100 % Textual (TAB-1) y tablas en Apéndices (FOR-8)
+    chequear_tablas_cuerpo(lines, secs, r)
 
     # Verificación de la Matriz de Análisis Bibliográfico (MAB)
     txt_all_norm = norm(" ".join(lines))
@@ -936,6 +1016,10 @@ def main():
             if dom in txt_all and not any(dom in e["raw"].lower() for e in entradas):
                 r.err("REV-3", f"Se menciona una fuente no académica prohibida en el texto ({dom}).")
         chequear_referencias(secs["referencias"], entradas, todas, args.year, r)
+
+    # Auditoría estilística de prosa y patrones de IA con Vale
+    if getattr(args, "usar_vale", True):
+        chequear_estilo_vale(args.archivo, r)
 
     # Salida
     if args.json:

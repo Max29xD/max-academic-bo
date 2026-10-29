@@ -1,0 +1,5 @@
+extends: existence
+message: "Evita el uso de guion largo o raya ('—' / '–') típico de redacción por IA. En prosa académica en español utiliza comas, paréntesis o redacción subordinada."
+level: error
+raw:
+  - '[—–]'

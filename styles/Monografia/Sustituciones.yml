@@ -1,0 +1,11 @@
+extends: substitution
+message: "Prefiere la expresión académica rigurosa '%s' en lugar de la fórmula de IA '%s'."
+level: suggestion
+ignorecase: true
+swap:
+  "juega un papel fundamental": "influye de manera directa"
+  "juega un rol fundamental": "constituye un factor relevante"
+  "es de vital importancia": "resulta relevante"
+  "en conclusión": "en síntesis"
+  "a modo de resumen": "sintéticamente"
+  "a modo de conclusión": "en síntesis"
