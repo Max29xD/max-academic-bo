@@ -17,6 +17,13 @@ pura cuando haya discrepancia.
 
 ## Reglas de oro
 
+0. **Universalidad temática y neutralidad absoluta (Agnóstica a cualquier disciplina).**
+   Esta skill es un motor metodológico universal aplicable a **cualquier carrera, diplomado o tema académico**
+   (ej. Redes de Computadoras, Telecomunicaciones, Ciberseguridad, Inteligencia Artificial, Derecho, Medicina,
+   Agronomía, Educación, Contabilidad, Finanzas, etc.). **Queda estrictamente prohibido asumir, predeterminar o
+   mezclar temas de proyectos anteriores** (como bases de datos o riesgo financiero en Santa Cruz). El 100 % del
+   contenido, búsqueda, formulación, objetivos y conclusiones debe derivarse **única y exclusivamente del tema
+   solicitado por el usuario en su petición actual**. Los ejemplos en las guías son meramente ilustrativos.
 1. **Cero invención.** Ninguna cita, DOI, cifra, página o referencia proviene de la memoria. Toda
    fuente se encontró y verificó **en esta sesión** (URL/PDF abierto o resultado de búsqueda con
    enlace). Lo no confirmado se marca `[VERIFICAR]` y se declara en la entrega.
@@ -110,7 +117,7 @@ La skill es **completamente autocontenida**: funciona en cualquier proyecto limp
 | Capacidad | Módulos y scripts incorporados | Referencia técnica |
 |---|---|---|
 | **Búsqueda tipo Perplexity** | `scripts/buscar_fuentes.py` (CLI `tvly` o API REST directa con `TAVILY_API_KEY`) y `scripts/generar_consultas.py` | [references/tavily_busqueda.md](references/tavily_busqueda.md) y [references/busqueda_bolivia.md](references/busqueda_bolivia.md) |
-| **Generación & validación Word** | `scripts/generar_monografia_docx.py` (plantilla oficial) y `scripts/docx_utils.py` (validación OOXML, fusión de runs, extracción) | [references/docx_guia.md](references/docx_guia.md) |
+| **Generación & validación Word** | `scripts/generar_monografia_docx.py` (compilador dinámico de Markdown a Word sin datos prefijados) y `scripts/docx_utils.py` (validación OOXML, fusión de runs, extracción) | [references/docx_guia.md](references/docx_guia.md) |
 | **Bibliografía APA 7 + Sources.xml** | `scripts/gestor_referencias.py`, `scripts/word_bibliography.py` y `scripts/actualizar_sources_xml.py` | [references/word_bibliography_guia.md](references/word_bibliography_guia.md) y [references/apa7_formatos.md](references/apa7_formatos.md) |
 | **Auditoría metodológica** | `scripts/auditar_monografia.py` y `scripts/auditor_utils.py` | [references/reglas_institucionales.md](references/reglas_institucionales.md) |
 
@@ -157,7 +164,7 @@ Si el usuario ya tiene un `output/` con avances, **no lo sobrescribas a ciegas**
 | `scripts/gestor_referencias.py` | `referencias.json` → APA 7 + `Sources.xml` + incrustación en docx |
 | `scripts/actualizar_sources_xml.py` | Motor XML de bibliografía compatible con Microsoft Word |
 | `scripts/auditar_monografia.py` | Auditoría automática de `.md`/`.txt`/`.docx` contra la guía institucional |
-| `scripts/generar_monografia_docx.py` | Ensamblado del `.docx` institucional sobre la plantilla oficial |
+| `scripts/generar_monografia_docx.py` | Compilador universal y dinámico de Markdown (`monografia_completa.md`) a Word sobre la plantilla oficial |
 | `templates/apa7ma.docx` | Plantilla oficial APA 7 con estilos nativos y numeración automática |
 | `assets/logo.png` | Logotipo oficial de la institución para la carátula |
 

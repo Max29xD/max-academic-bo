@@ -31,7 +31,7 @@ documento.docx (ZIP)
 
 | Necesidad | Herramienta | Enfoque |
 |---|---|---|
-| **Monografía completa institucional** | `scripts/generar_monografia_docx.py` | Lee `output/monografia_completa.md` y la plantilla oficial `templates/apa7ma.docx`, aplicando los 10 elementos de carátula, numeración romana/arábiga y tablas APA 7. |
+| **Monografía completa institucional** | `scripts/generar_monografia_docx.py [archivo.md]` | Compilador agnóstico que lee `output/monografia_completa.md` (o cualquier `.md`), extrae metadatos y aplica la plantilla `templates/apa7ma.docx` con carátula de 10 elementos, numeración romana/arábiga y tablas APA 7. |
 | **Validación de integridad XML** | `scripts/docx_utils.py validar <doc>` | Comprueba que el ZIP esté intacto y que todos los XMLs internos sintácticamente cumplan el estándar (evita el temido mensaje de Word de "contenido ilegible"). |
 | **Extracción de texto / tablas** | `scripts/docx_utils.py texto <doc>` | Lee y extrae el texto a consola o markdown sin necesitar Microsoft Word ni LibreOffice. |
 | **Fusión de runs fragmentados** | `scripts/docx_utils.py fusionar-runs in.docx -o out.docx` | Coalesce fragmentos contiguos de texto `<w:r>` para permitir reemplazos o búsquedas de texto exactas. |

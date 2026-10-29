@@ -4,6 +4,9 @@ Guía Institucional 2026 · Normas APA 7.ª edición · Actualidad Estricta a Oc
 
 Convenciones institucionales EIP-FINOR-UAGRM: **"&" dentro del paréntesis y "y" en la cita narrativa** (p. ej., `(García & Mendoza, 2025)` y `Quispe y Mamani (2024)`). Esta convención se guarda en la ficha (`conector_autores`); si el tutor o tribunal exige "y" también entre paréntesis, cambiarla y aplicarla homogéneamente en todo el documento. La cursiva se representa con `*asteriscos*`.
 
+> [!NOTE]
+> **Neutralidad Temática:** Todos los nombres de autores, fragmentos de citas y referencias que aparecen en esta guía son ejemplos estructurales puramente ilustrativos. El agente debe aplicar estos formatos de manera 100 % agnóstica al tema específico solicitado por el usuario (Redes, Medicina, Derecho, Minería, Telecomunicaciones, etc.), sin copiar ni heredar temáticas de ejemplo.
+
 ---
 
 ## Índice
