@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
-"""Diagnóstico y configuración de capacidades de la skill.
+"""Diagnóstico y configuración obligatoria de capacidades de la skill.
 
 Uso:
   python scripts/verificar_entorno.py [--json] [--setup]
 
 Informa y configura:
-- Python y dependencias (python-docx, lxml).
+- Python y dependencias críticas (python-docx, lxml, tavily-cli).
+- Estado de autenticación de Tavily (CLI `tvly` o TAVILY_API_KEY).
 - Linter de prosa y anti-patrones de IA: Vale (con Scoop / PATH).
 - Configuración y reglas estilísticas de Vale (.vale.ini + styles/Monografia).
-- Tavily CLI (`tvly`) y si hay sesión/API key.
 - Skills compañeras instaladas (docx, word-bibliography, tavily-*).
 - Rutas efectivas de salida, plantilla y logo.
 
-Códigos de salida: 0 = todo lo esencial disponible; 2 = falta algo esencial
-(python-docx). Las carencias opcionales no bloquean.
+Política de parada estricta (Gatekeeper):
+Códigos de salida:
+  0 = Todo lo esencial está verificado y autenticado.
+  2 = Falta un prerrequisito obligatorio (python-docx o autenticación de Tavily).
+      SE DETIENE LA EJECUCIÓN hasta que se configure.
 """
 
 from __future__ import annotations
@@ -41,17 +44,46 @@ def _version_paquete(nombre: str) -> str | None:
 
 def _tvly() -> dict:
     exe = shutil.which("tvly")
-    api_key_set = bool(os.environ.get("TAVILY_API_KEY", "").strip())
-    info = {"disponible": bool(exe or api_key_set), "ruta": exe, "version": None, "api_key": api_key_set}
-    if exe:
+    api_key_env = bool(os.environ.get("TAVILY_API_KEY", "").strip())
+    config_file = Path.home() / ".tavily" / "config.json"
+    config_has_key = False
+    if config_file.exists():
         try:
-            salida = subprocess.run(
-                [exe, "--version"], capture_output=True, text=True, timeout=15
-            )
-            info["version"] = (salida.stdout or salida.stderr).strip().splitlines()[0]
+            with open(config_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                config_has_key = bool(data.get("api_key") or data.get("token"))
         except Exception:
             pass
-    return info
+
+    auth_ok = False
+    version = None
+    if exe:
+        try:
+            res = subprocess.run([exe, "--version"], capture_output=True, text=True, timeout=10)
+            version = (res.stdout or res.stderr).strip().splitlines()[0]
+        except Exception:
+            pass
+        try:
+            res = subprocess.run([exe, "auth", "--json"], capture_output=True, text=True, timeout=8)
+            if res.returncode == 0:
+                auth_data = json.loads(res.stdout)
+                auth_ok = bool(auth_data.get("authenticated", False))
+        except Exception:
+            pass
+    elif api_key_env:
+        auth_ok = True
+
+    if not auth_ok and config_has_key:
+        auth_ok = True
+
+    return {
+        "disponible": bool(exe or api_key_env or config_has_key),
+        "autenticado": auth_ok,
+        "ruta": exe,
+        "version": version,
+        "api_key_env": api_key_env,
+        "config_file": config_has_key,
+    }
 
 
 def _vale() -> dict:
@@ -89,24 +121,28 @@ def desplegar_estilos_vale() -> bool:
 
 
 def autoconfigurar() -> None:
-    """Instala dependencias esenciales de Python, Vale (vía Scoop) y despliega estilos."""
-    print("\n[Auto-Configuración y Verificación]")
-    print("-" * 55)
+    """Instala dependencias esenciales de Python (python-docx, lxml, tavily-cli), Vale (vía Scoop) y despliega estilos."""
+    print("\n[Auto-Configuración y Verificación de Herramientas]")
+    print("-" * 58)
+    
     # 1. Dependencias Python
     deps_faltantes = []
     if not _version_paquete("docx"):
         deps_faltantes.append("python-docx")
     if not _version_paquete("lxml"):
         deps_faltantes.append("lxml")
+    if not shutil.which("tvly"):
+        deps_faltantes.append("tavily-cli")
+
     if deps_faltantes:
-        print(f"📦 Instalando dependencias Python faltantes ({', '.join(deps_faltantes)})...")
+        print(f"📦 Instalando paquetes faltantes: {', '.join(deps_faltantes)}...")
         try:
             subprocess.run([sys.executable, "-m", "pip", "install", *deps_faltantes], check=True)
-            print("✔ Dependencias Python instaladas exitosamente.")
+            print("✔ Paquetes instalados exitosamente.")
         except Exception as e:
-            print(f"⚠ No se pudo instalar automáticamente: {e}. Ejecuta 'pip install python-docx lxml'.")
+            print(f"⚠ Error instalando paquetes: {e}. Ejecuta: pip install python-docx lxml tavily-cli")
     else:
-        print("✔ Dependencias Python esenciales verificadas.")
+        print("✔ Dependencias Python esenciales y Tavily CLI verificadas.")
 
     # 2. Vale linter
     v = _vale()
@@ -120,27 +156,25 @@ def autoconfigurar() -> None:
                 if v["disponible"]:
                     print(f"✔ Vale instalado exitosamente: {v['version']}")
                 else:
-                    print("⚠ Scoop completó el comando; reinicia la consola o verifica PATH si no se detecta de inmediato.")
+                    print("⚠ Scoop completó el comando; reinicia la consola o verifica PATH si no se detecta.")
             except Exception as e:
-                print(f"⚠ Error instalando Vale vía Scoop: {e}. Ejecuta manualmente: scoop install vale")
+                print(f"⚠ Error instalando Vale vía Scoop: {e}. Ejecuta: scoop install vale")
         else:
-            print("ℹ Vale no está instalado y Scoop no fue detectado en PATH.")
-            print("  Para instalar Vale en Windows:")
-            print("  1. Con Scoop (recomendado): scoop install vale")
-            print("  2. Con Chocolatey: choco install vale")
-            print("  3. Con Winget: winget install errata-ai.vale")
+            print("ℹ Vale no detectado en PATH. Instalación sugerida:")
+            print("  - Con Scoop: scoop install vale")
+            print("  - Con Winget: winget install errata-ai.vale")
+            print("  - Con Choco:  choco install vale")
     else:
         print(f"✔ Vale disponible: {v['version']} ({v['ruta']})")
 
     # 3. Despliegue de estilos .vale.ini y styles/Monografia
     desplegado = desplegar_estilos_vale()
     if desplegado:
-        print("✔ Estilos y reglas anti-patrones de IA (.vale.ini + styles/Monografia) desplegados.")
-    print("-" * 55)
+        print("✔ Reglas y estilos de Vale (.vale.ini + styles/Monografia) desplegados.")
+    print("-" * 58)
 
 
 def diagnosticar() -> dict:
-    # Asegura estilos en cwd si la skill está presente
     desplegar_estilos_vale()
 
     skills = {
@@ -174,7 +208,7 @@ def principal() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--json", action="store_true", help="Salida JSON legible por máquina")
     ap.add_argument("--setup", "--auto-install", action="store_true", dest="setup",
-                    help="Auto-instalar dependencias faltantes y configurar Vale y estilos")
+                    help="Auto-instalar dependencias faltantes y configurar herramientas")
     args = ap.parse_args()
 
     if args.setup:
@@ -184,49 +218,75 @@ def principal() -> int:
 
     if args.json:
         print(json.dumps(d, ensure_ascii=False, indent=2))
+        docx_ok = bool(d["dependencias"]["python-docx"])
+        tvly_ok = bool(d["tavily"]["autenticado"])
+        return 0 if (docx_ok and tvly_ok) else 2
+
+    print("Max Academic Bolivia — Diagnóstico de Entorno y Prerrequisitos")
+    print("=" * 62)
+    print(f"Python            : {d['python']} ({d['ejecutable']})")
+    print(f"Skill             : {d['skill_root']}")
+    print(f"Salida            : {d['output_dir']}")
+    print(f"Plantilla Word    : {'✔ OK' if d['plantilla_ok'] else '✖ FALTA'} — {d['plantilla']}")
+    print(f"Logo Institucional: {d['logo'] or 'no encontrado (la carátula usará un marcador)'}")
+    print("-" * 62)
+    
+    for nombre, version in d["dependencias"].items():
+        estado = f"✔ {version}" if version else "✖ NO INSTALADO (Obligatorio)"
+        print(f"{nombre:<18}: {estado}")
+
+    tv = d["tavily"]
+    if tv["autenticado"]:
+        tv_estado = f"✔ Autenticado y Operativo ({tv['version'] or 'tvly'})"
+    elif tv["disponible"]:
+        tv_estado = "⚠ Instalado pero NO Autenticado (Falta API key)"
     else:
-        print("Max Academic Bolivia — diagnóstico de entorno")
-        print("=" * 55)
-        print(f"Python            : {d['python']} ({d['ejecutable']})")
-        print(f"Skill             : {d['skill_root']}")
-        print(f"Salida            : {d['output_dir']}")
-        print(f"Plantilla         : {'OK' if d['plantilla_ok'] else 'FALTA'} — {d['plantilla']}")
-        print(f"Logo              : {d['logo'] or 'no encontrado (la carátula usará un marcador)'}")
-        print("-" * 55)
-        for nombre, version in d["dependencias"].items():
-            print(f"{nombre:<18}: {version or 'NO INSTALADO'}")
-        
-        vl = d["vale"]
-        vl_desc = f"{vl['version']} ({vl['ruta']})" if vl["disponible"] else "NO INSTALADO (opcional recomendado: scoop install vale)"
-        print(f"{'Vale (Linter IA)':<18}: {vl_desc}")
-        print(f"{'Reglas Monografia':<18}: {'✔ Configurado (.vale.ini + styles/Monografia)' if d['estilos_vale_ok'] else 'Falta desplegar'}")
+        tv_estado = "✖ NO INSTALADO NI CONFIGURADO (Obligatorio)"
+    print(f"{'Tavily (Búsqueda)':<18}: {tv_estado}")
 
-        tv = d["tavily"]
-        tv_desc = tv['version'] or ('CLI instalado' if tv['ruta'] else ('TAVILY_API_KEY activa' if tv.get('api_key') else 'NO DISPONIBLE'))
-        print(f"{'Tavily / tvly':<18}: {tv_desc}")
-        print("-" * 55)
-        print("Capacidades incorporadas (nativas en la skill):")
-        print("  ✔ docx_utils        : Validación OOXML, extracción de texto y fusión de runs")
-        print("  ✔ word_bibliography : XML Sources.xml para Word y formateo APA 7")
-        print("  ✔ gestor_referencias: Catálogo referencias.json -> Markdown + Sources.xml")
-        print("  ✔ buscar_fuentes    : Búsqueda académica Tavily (CLI / API REST) + evidencia")
-        print("  ✔ vale_linter       : Eliminación determinista de tics de IA (guiones largos, muletillas)")
-        print("-" * 55)
-        print("Skills compañeras detectadas en el entorno (refuerzos opcionales):")
-        for nombre, ruta in d["skills_companeras"].items():
-            print(f"  {nombre:<20}: {ruta or 'no detectada'}")
-        print("-" * 55)
-        if d["dependencias"]["python-docx"]:
-            print("✔ Esencial disponible. La generación institucional de Word funcionará.")
-        else:
-            print("✖ Falta python-docx: ejecuta con '--setup' o haz 'pip install python-docx'")
-        if not vl["disponible"]:
-            print("ℹ Vale no detectado: ejecuta con '--setup' para instalar vía Scoop o haz 'scoop install vale'.")
-        if not tv["disponible"]:
-            print("ℹ Sin Tavily (CLI o TAVILY_API_KEY): usa la búsqueda web nativa del agente (ver references/tavily_busqueda.md).")
-        print("✔ La skill es 100% autocontenida y funciona en cualquier proyecto.")
+    vl = d["vale"]
+    vl_desc = f"✔ {vl['version']}" if vl["disponible"] else "ℹ No instalado (Recomendado: scoop install vale)"
+    print(f"{'Vale (Linter IA)':<18}: {vl_desc}")
+    print(f"{'Reglas Monografía':<18}: {'✔ .vale.ini + styles/Monografia OK' if d['estilos_vale_ok'] else '⚠ Falta desplegar'}")
+    print("-" * 62)
+    
+    docx_ok = bool(d["dependencias"]["python-docx"])
+    tvly_ok = bool(tv["autenticado"])
 
-    return 0 if d["dependencias"]["python-docx"] else 2
+    if docx_ok and tvly_ok:
+        print("✔ TODOS LOS PRERREQUISITOS OBLIGATORIOS ESTÁN VERIFICADOS.")
+        print("  Puede continuar con la investigación y redacción con total garantía metodológica.")
+        print("=" * 62)
+        return 0
+
+    print("\n" + "!" * 62)
+    print("⛔ PARADA OBLIGATORIA (GATEKEEPER): PRERREQUISITOS INCOMPLETOS")
+    print("!" * 62)
+    print("Para garantizar el rigor académico y la regla de CERO INVENCIÓN,")
+    print("NO SE DEBE CONTINUAR sin las herramientas verificadas.")
+    print("\nAcciones requeridas para corregir:")
+
+    if not docx_ok:
+        print("  1. Instalar dependencias Python:")
+        print("     pip install python-docx lxml")
+    
+    if not tv["disponible"]:
+        print("  2. Instalar Tavily CLI:")
+        print("     pip install tavily-cli")
+
+    if not tvly_ok:
+        print("  3. Autenticar Tavily (obligatorio para rastreo de fuentes indexadas):")
+        print("     Ejecuta: tvly login --api-key <TU_API_KEY>")
+        print("     O define la variable de entorno:")
+        print("       - PowerShell:  $env:TAVILY_API_KEY=\"tvly-...\"")
+        print("       - CMD:         set TAVILY_API_KEY=tvly-...")
+        print("       - Bash/Linux:  export TAVILY_API_KEY=\"tvly-...\"")
+        print("     * Si no tienes clave, solicítala o pídele al asistente que la configure por ti.")
+
+    print("\nO ejecuta el comando de auto-reparación:")
+    print("     python scripts/verificar_entorno.py --setup")
+    print("!" * 62 + "\n")
+    return 2
 
 
 if __name__ == "__main__":

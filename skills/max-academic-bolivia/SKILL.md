@@ -41,18 +41,18 @@ pura cuando haya discrepancia.
    Prohibido Wikipedia, monografias.com o sitios informales. La omisión de citas causa anulación por plagio.
 6. **Cuerpo 100 % textual (Prohibición estricta de tablas en el cuerpo).**
    En cada monografía de compilación, el cuerpo del documento (Capítulos 1 al 7: Introducción, Planteamiento del Problema, Objetivos, Revisión de Literatura, Definición de Términos, Discusión y Conclusiones) es **estricta y exclusivamente textual (prosa narrativa continua)**. **Nunca existen tablas, cuadros, figuras ni gráficos dentro del cuerpo**. Toda tabla, matriz comparativa o gráfico suplementario (incluyendo la Matriz de Análisis Bibliográfico MAB, cuadros estadísticos de INE/BCB/ASFI o diagramas) debe ubicarse **exclusivamente al final del documento como Apéndices** (después de Referencias), aun cuando otras normativas generales de estilo permitan insertarlas.
+7. **Prerrequisitos obligatorios y Política de Parada Estricta (Gatekeeper):**
+   Antes de redactar o indagar, ejecuta obligatoriamente `python scripts/verificar_entorno.py`. Si `python-docx`, `lxml` o `Tavily` (CLI `tvly` autenticado o `TAVILY_API_KEY`) no están configurados, **DETÉN LA EJECUCIÓN INMEDIATAMENTE**. Queda estrictamente prohibido simular búsquedas o generar contenido a ciegas. Informa con precisión qué falta, ejecuta la autoconfiguración (`python scripts/verificar_entorno.py --setup`), solicita la API key de Tavily (`tvly login --api-key <KEY>`), y no prosigas hasta que el diagnóstico finalice con código 0.
 
 ## 0. Antes de empezar (30 segundos)
 
-1. Ejecuta el diagnóstico de entorno:
+1. Ejecuta obligatoriamente el diagnóstico de entorno y prerrequisitos:
 
    ```bash
    python scripts/verificar_entorno.py
    ```
 
-   Informa qué hay disponible: `python-docx`, `tvly`, skills `docx`, `word-bibliography` y
-   `tavily-*`, y qué rutas de salida se usarán. Si falta algo, aplica el plan B de
-   [references/integraciones.md](references/integraciones.md); **nunca bloquees la tarea**.
+   **Política de Parada:** Si el script devuelve código `2` (falta `python-docx`, `lxml` o autenticación de Tavily), **DETÉN LA SESIÓN Y NO AVANCES**. Aplica los pasos de corrección (`python scripts/verificar_entorno.py --setup` / `tvly login --api-key <KEY>`) o solicita los datos al usuario. Solo continúa cuando todos los prerrequisitos estén en estado operativo (código `0`).
 2. Confirma con el usuario, si no está claro: tema, delimitación boliviana, carrera/programa,
    año de corte, alcance (`HASTA Pn`, `CIMIENTOS`, `NUCLEO`, `CIERRE`, `COMPLETO`) y ritmo
    (`PAUSA` o `CORRIDO`). Si el usuario ya lo dijo, no vuelvas a preguntar.
@@ -109,9 +109,10 @@ Detalle operativo, cuestionarios y esqueletos: `references/plantillas_por_paso.m
 7. **Premadurez prohibida.** En entregas de Cimientos (P1–P3) no se incluye Introducción (P8),
    Índice (P11) ni Referencias finales (P10); el respaldo es la MAB como Apéndice A.
 8. **Cuerpo exclusivamente textual.** Cero tablas, cuadros o figuras intercaladas en los capítulos del cuerpo (P1–P8). Todo el análisis es narrativo puro; las tablas y figuras se ubican exclusivamente en la sección final de Apéndices.
+9. **Matriz de Consistencia Metodológica canónica.** Articula 6 componentes: Problemas (PG y PE1..PE4), Objetivos (OG y OE1..OE4), Categorías/Ejes Temáticos (P4), Supuestos Teóricos Guía, Estrategia Documental y Conclusiones Biunívocas (P7). Ubicada estrictamente en Apéndices (Tabla A1) con coherencia horizontal y vertical sumativa (Giesecke, 2020; Chan-Pech, 2020; Carrasco Díaz, 2018).
 
 Matriz normativa completa (TIT, PRO, OBJ, REV, TER, DIS, CON, INT, RES, REF, CAR, PAG, FOR, IND,
-APE, ACT, GEO) y checklist maestro de verificación: `references/reglas_institucionales.md`.
+APE, ACT, GEO, MAT, PRQ) y checklist maestro de verificación: `references/reglas_institucionales.md`.
 
 ## 3. Capacidades Incorporadas (Word · Tavily · Bibliografía)
 

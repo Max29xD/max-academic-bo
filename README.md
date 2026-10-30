@@ -241,10 +241,18 @@ max-academic-bo/
 
 ## 🚀 Instalación y Comandos
 
-### Requisitos del Sistema
-- **Python:** `>= 3.10` (`pip install python-docx lxml`)
-- **Linter de Prosa y Patrones de IA:** [Vale CLI](https://github.com/vale-cli/vale) (`scoop install vale`)
-- **Opcional para búsquedas:** Tavily CLI (`tvly`) o variable de entorno `TAVILY_API_KEY`.
+### ⛔ Prerrequisitos Obligatorios y Política de Parada Estricta (Gatekeeper)
+
+Para cumplir con la regla metodológica de **Cero Invención** y garantizar que ningún dato, cifra, DOI o cita sea inventado o fruto de alucinación, esta skill cuenta con una **política estricta de parada (Gatekeeper)**:
+
+> [!CAUTION]
+> **SI EL ENTORNO NO ESTÁ CONFIGURADO, NO SE DEBE CONTINUAR.**  
+> El asistente inteligente detendrá inmediatamente cualquier redacción o investigación si detecta que faltan dependencias esenciales (`python-docx`, `lxml`) o si **Tavily** (`tvly` o `TAVILY_API_KEY`) no está autenticado. Queda terminantemente prohibido avanzar simulando búsquedas o acudiendo a la memoria del modelo.
+
+#### Requisitos Obligatorios:
+1. **Python `>= 3.10`**: con `python-docx` y `lxml` instalados.
+2. **Tavily CLI (`tvly`) autenticado o `TAVILY_API_KEY`**: obligatorio para rastreo, verificación y almacenamiento de evidencia documental real en disco (`output/fuentes/`).
+3. **Linter de Prosa y Antipatrones de IA (Vale CLI)** *(Recomendado)*: para auditar que el texto no contenga guiones largos `—`, muletillas ni adjetivos de IA.
 
 ### ⚙️ Instalación y Configuración de Vale (Windows / Scoop)
 
@@ -264,19 +272,41 @@ vale -v
 
 > **Otros gestores:** En Chocolatey: `choco install vale` · En Winget: `winget install errata-ai.vale` · En macOS: `brew install vale`.
 
-### ⚡ Autoconfiguración Inicial en 1 Paso
+### 🔑 Configuración y Autenticación de Tavily (Paso a Paso)
 
-Al interactuar con la skill o antes de comenzar la redacción, ejecuta el script de configuración automática:
+Tavily es el motor de búsqueda académica que sustenta la Matriz de Análisis Bibliográfico (MAB) y la regla de no alucinación. Si aún no está configurado en tu equipo:
+
+```powershell
+# 1. Instalar Tavily CLI mediante pip:
+pip install tavily-cli
+
+# 2. Autenticar con tu API Key (obtenida en https://tavily.com):
+tvly login --api-key tvly-TU_CLAVE_AQUI
+
+# 3. (Alternativa) Definir la variable de entorno:
+# En PowerShell:
+$env:TAVILY_API_KEY="tvly-TU_CLAVE_AQUI"
+# En CMD:
+set TAVILY_API_KEY=tvly-TU_CLAVE_AQUI
+# En Bash / Linux / macOS:
+export TAVILY_API_KEY="tvly-TU_CLAVE_AQUI"
+```
+
+> **Autogestión por el Asistente:** Si trabajas con un asistente de IA (Antigravity, Claude Code, Cursor), puedes proporcionarle directamente tu API key en el chat diciendo: `"Configura Tavily con la clave tvly-..."`, y el asistente ejecutará `tvly login` por ti de manera autónoma.
+
+### ⚡ Autoconfiguración y Diagnóstico en 1 Paso
+
+Antes de redactar, ejecuta el script de diagnóstico y auto-reparación:
 
 ```bash
 python skills/max-academic-bolivia/scripts/verificar_entorno.py --setup
 ```
 
 Este comando:
-1. **Verifica e instala** automáticamente dependencias de Python faltantes (`python-docx`, `lxml`).
+1. **Verifica e instala** automáticamente paquetes de Python (`python-docx`, `lxml`, `tavily-cli`).
 2. **Detecta e instala Vale** mediante Scoop si está disponible en Windows.
 3. **Despliega la configuración `.vale.ini` y las reglas `styles/Monografia`** en el proyecto actual.
-4. **Comprueba plantillas, logos y conexión a Tavily**, dejando el entorno 100 % listo.
+4. **Certifica la autenticación activa de Tavily**. Si todo es correcto, devuelve código de salida `0`; de lo contrario, devuelve código `2` y detiene el flujo informando qué falta para corregir.
 
 ### Instalación con `bunx skills`
 
@@ -305,6 +335,34 @@ bunx skills add ./skills/max-academic-bolivia -y
 | `python skills/max-academic-bolivia/scripts/auditar_monografia.py archivo.md --json` | Audita el manuscrito contra las reglas normativas de la EIP-FINOR |
 
 ---
+
+---
+
+## 📊 Matriz de Consistencia Metodológica para Monografía de Compilación
+
+Basada en la investigación de literatura educativa indexada (**Giesecke, 2020** en *SciELO*; **Chan-Pech, 2020** en *Redalyc*; **Carrasco Díaz, 2018**; **Ñaupas Paitán et al., 2018**; **Hernández-Sampieri & Mendoza Torres, 2018**), la skill implementa el modelo canónico de **Matriz de Consistencia Cualitativa y Documental (MCc)**:
+
+### 1. Principio de Doble Coherencia:
+- **Coherencia Horizontal (Simetría Biunívoca 1:1):** Cada fila debe alinear estrictamente:
+  $$\text{Pregunta Específica (PE)} \longleftrightarrow \text{Objetivo Específico (OE)} \longleftrightarrow \text{Subcategoría/Eje (P4)} \longleftrightarrow \text{Premisa Guía} \longleftrightarrow \text{Unidad Documental (MAB)} \longleftrightarrow \text{Conclusión (P7)}$$
+  *(Prohibido dejar celdas de problemas específicos vacías o con guiones).*
+- **Coherencia Vertical (Principio Sumativo):** La suma conceptual de los problemas y objetivos específicos agota holísticamente el problema y objetivo general:
+  $$\sum_{i=1}^n \text{PE}_i = \text{PG} \quad \text{y} \quad \sum_{i=1}^n \text{OE}_i = \text{OG}$$
+
+### 2. Adecuación al Paradigma Documental vs. Cuantitativo:
+En una monografía de compilación teórica **no existen variables numéricas operacionales ni hipótesis empíricas de contraste estadístico**. Se articulan **Categorías de Análisis / Ejes Temáticos** y **Supuestos Teóricos Directrices**, sustentados en el corpus bibliográfico verificado (2021–2026 en Bolivia).
+
+### 3. Estructura Canónica (Ubicada en Apéndice A o B según Regla TAB-1):
+
+| Problema de Investigación (P2) | Objetivos de Investigación (P3) | Categorías / Ejes Temáticos (P4) | Supuesto Teórico / Premisa Guía | Estrategia Metodológica Documental | Conclusión Biunívoca Esperada (P7) |
+|---|---|---|---|---|---|
+| **PG:** ¿De qué manera [fenómeno] incide en [sector] de [Bolivia] durante [2021–2026]? | **OG:** Sintetizar y evaluar [fenómeno] en [sector] de [Bolivia] a partir de literatura científica. | **Categoría Macro:** Estado del arte integrador del fenómeno en Bolivia. | **Supuesto General:** Evidencia de brechas y asimetrías críticas en el contexto boliviano. | **Enfoque:** Cualitativo.<br>**Tipo:** Compilación documental.<br>**Método:** Analítico-sintético.<br>**Corpus:** ≥10–15 fuentes indexadas 2021–2026. | **Conclusión General:** Síntesis integradora al OG en pretérito impersonal. |
+| **PE1:** ¿Cuáles son los fundamentos teóricos y antecedentes de [dimensión 1]? | **OE1:** *Caracterizar* o *Identificar* los fundamentos conceptuales de [dimensión 1]. | **Subcategoría / Eje 1:** Evolución conceptual y marcos doctrinales. | **Premisa 1:** Divergencias teóricas en la delimitación de la dimensión analizada. | **Unidades:** Fuentes L3/L4 (artículos indexados y tratados doctrinales). | **Conclusión 1:** Respuesta analítica al OE1 confirmando consensos teóricos. |
+| **PE2:** ¿Cómo se estructura la normativa e institucionalidad de [dimensión 2 en Bolivia]? | **OE2:** *Examinar* o *Analizar* el marco regulatorio e institucional boliviano. | **Subcategoría / Eje 2:** Marco normativo y regulatorio boliviano. | **Premisa 2:** El marco regulatorio presenta desfases frente a la práctica operativa. | **Unidades:** Fuentes L4/L5 (leyes, decretos, resoluciones ASFI/BCB/ministeriales). | **Conclusión 2:** Respuesta al OE2 determinando la suficiencia o vacíos normativos. |
+| **PE3:** ¿Cuáles son las brechas y evidencias empíricas reportadas sobre [dimensión 3 en Bolivia]? | **OE3:** *Comparar* o *Examinar* la evidencia empírica y estadísticas oficiales en Bolivia. | **Subcategoría / Eje 3:** Evidencia empírica, estadísticas oficiales y brechas en Bolivia. | **Premisa 3:** Disparidades territoriales y barreras estructurales en el país. | **Unidades:** Estadísticas INE Censo 2024, BCB, ASFI, UDAPE y estudios 2024–2026. | **Conclusión 3:** Respuesta al OE3 cualificando o cuantificando brechas empíricas. |
+| **PE4 (Opcional):** ¿Qué implicaciones y lineamientos teóricos emergen para Bolivia? | **OE4:** *Sintetizar* o *Proponer lineamientos teóricos* derivados de los hallazgos. | **Subcategoría / Eje 4:** Implicaciones críticas y líneas de acción teórica. | **Premisa 4:** Criterios rectores deducidos de la articulación de los ejes 1 a 3. | **Unidades:** Triangulación documental teórica entre evidencia empírica y normativa. | **Conclusión 4:** Respuesta al OE4 con lineamientos conclusivos. |
+
+> **Regla de Oro Institucional (Cuerpo 100 % Textual):** Esta tabla se ubica **exclusivamente como Apéndice** (con formato APA 7 en dos líneas: número en negrita y título descriptivo en cursiva). En el cuerpo del trabajo solo se hace referencia narrativa fluida.
 
 ## 👨💻 Autor
 

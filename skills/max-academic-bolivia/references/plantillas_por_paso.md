@@ -65,20 +65,33 @@ alcance_ejecucion: HASTA P3 · PAUSA · BORRADOR
 
 ---
 
-## Matriz de Consistencia Científica (P3, P7, P10)
+## Matriz de Consistencia Metodológica para Monografía de Compilación (P3, P7, P10)
 
-**Tabla 1**  
-*Matriz de Consistencia Científica y Articulación Metodológica*
+> [!IMPORTANT]
+> **Fundamentación Epistemológica en Investigaciones Educativas (Giesecke, 2020; Chan-Pech, 2020; Carrasco Díaz, 2018; Ñaupas et al., 2018; Sampieri & Mendoza Torres, 2018):**
+> 1. **Doble Coherencia Obligatoria:**
+>    - **Coherencia Horizontal:** En cada fila, la Pregunta Específica ($), el Objetivo Específico ($), la Subcategoría/Eje Temático ($), la Premisa o Supuesto Guía ($), la Estrategia Documental ($) y la Conclusión Biunívoca ($) deben guardar simetría rigurosa 1:1. Prohibido dejar filas de PE vacías o con guiones (—).
+>    - **Coherencia Vertical:** La suma conceptual de los problemas específicos agota el problema general ($\sum PE = PG$), la suma de los objetivos específicos agota el objetivo general ($\sum OE = OG$), y la articulación de los ejes agota la totalidad del marco conceptual.
+> 2. **Adecuación al Paradigma Documental-Cualitativo:**
+>    - En una monografía de compilación teórica **no se operacionalizan variables cuantitativas** ni se formulan hipótesis causales empíricas de contraste estadístico.
+>    - En su lugar, se articulan **Categorías y Subcategorías de Análisis Temático** y **Supuestos Teóricos Directrices** (Giesecke, 2020; Chan-Pech, 2020), sustentados en unidades documentales indexadas (corpus bibliográfico verificado 2021–2026 en Bolivia).
+> 3. **Ubicación Institucional Estricta (Regla TAB-1 y FOR-8):**
+>    - El cuerpo de la monografía es **100 % texto continuo**. Esta matriz se traslada **exclusivamente a la sección de Apéndices** (ej. Tabla A1), en formato APA 7 de dos líneas (número en negrita, título breve en cursiva, sin líneas verticales internas y con nota al pie aclaratoria).
 
-| Formulación del Problema (P2.2) | Objetivo (P3) | Eje Temático en Revisión (P4) | Fuentes Verificadas (MAB) | Conclusión Biunívoca (P7) |
-|---|---|---|---|---|
-| **Pregunta General:** ¿[Pregunta central motorizada delimitada en Bolivia]? | **OG:** [Objetivo General con 5 elementos Bloom/Bavaresco] | Marco Global e Integrador | Fuentes L3/L4/L5 | **Conclusión General:** Respuesta integradora al OG en pretérito |
-| — | **OE1:** [Verbo Comprensión: Identificar/Caracterizar estado actual] | **Eje 1:** [Evolución y antecedentes del fenómeno] | S01, S04... (V, 2024–2026) | **Conclusión 1:** Respuesta al OE1 con fórmula biunívoca |
-| — | **OE2:** [Verbo Análisis: Analizar/Examinar modelos y teorías] | **Eje 2:** [Modelos teóricos y marcos analíticos] | S02, S05... (V, 2022–2026) | **Conclusión 2:** Respuesta al OE2 con fórmula biunívoca |
-| — | **OE3:** [Verbo Análisis: Comparar/Examinar factores y brechas empíricas] | **Eje 3:** [Factores determinantes y brechas en Bolivia] | S03, S06... (V, 2024–2026) | **Conclusión 3:** Respuesta al OE3 con fórmula biunívoca |
-| — | **OE4 (Opcional):** [Verbo Síntesis/Evaluación: Sintetizar/Proponer lineamientos] | **Eje 4:** [Implicaciones y lineamientos para la región] | S07, S08... (V, 2025–2026) | **Conclusión 4:** Respuesta al OE4 con fórmula biunívoca |
+**Tabla A1**  
+*Matriz de Consistencia Metodológica y Articulación Documental*
 
-*Regla inviolable de consistencia:* Ningún OE sin eje temático en la revisión, ningún eje sin sustento documental, y ninguna conclusión sin correspondencia exacta con un OE.
+| Problema de Investigación (P2) | Objetivos de Investigación (P3) | Categorías / Ejes Temáticos (P4) | Supuesto Teórico / Premisa Guía | Estrategia Metodológica Documental | Conclusión Biunívoca Esperada (P7) |
+|---|---|---|---|---|---|
+| **Pregunta General (PG):**<br>¿De qué manera [fenómeno central] se manifiesta, regula e impacta en [sujeto/sector] de [delimitación territorial Bolivia] durante el período [2021–2026]? | **Objetivo General (OG):**<br>[Verbo cognitivo superior Bloom/Bavaresco: Sintetizar/Analizar/Evaluar] [fenómeno central] en [sujeto/sector] de [Bolivia] durante [período] a partir de la literatura científica. | **Categoría Macro:**<br>Marco integrador del estado del arte del fenómeno central y su desarrollo en Bolivia. | **Supuesto General:**<br>La literatura académica reciente evidencia asimetrías y brechas críticas que condicionan el fenómeno en el contexto boliviano. | **Enfoque:** Cualitativo.<br>**Tipo:** Monografía de compilación (revisión documental).<br>**Método:** Analítico-sintético y hermenéutico.<br>**Corpus:** ≥ 10–15 fuentes indexadas (SciELO, Redalyc, repositorios, BCB/INE/ASFI) 2021–2026.<br>**Técnica:** Análisis documental y fichaje analítico (MAB). | **Conclusión General:**<br>Respuesta integradora al OG redactada en pretérito impersonal, sintetizando holísticamente las conclusiones específicas. |
+| **Pregunta Específica 1 (PE1):**<br>¿Cuáles son los fundamentos teóricos, conceptuales y antecedentes que definen [dimensión 1]? | **Objetivo Específico 1 (OE1):**<br>[Verbo Comprensión/Descriptivo]: *Caracterizar* o *Identificar* los fundamentos conceptuales de [dimensión 1]. | **Subcategoría / Eje 1:**<br>Evolución conceptual, antecedentes y marcos doctrinales de referencia. | **Premisa 1:**<br>Existen divergencias conceptuales en la literatura respecto al alcance y delimitación teórica de [dimensión 1]. | **Unidad Documental:**<br>Artículos doctrinales y marcos teóricos internacionales y nacionales (Fuentes L3/L4). | **Conclusión 1:**<br>Respuesta precisa al OE1 confirmando o sintetizando los enfoques teóricos consolidados. |
+| **Pregunta Específica 2 (PE2):**<br>¿Cómo se estructura el marco regulatorio, institucional y normativo de [dimensión 2 en Bolivia]? | **Objetivo Específico 2 (OE2):**<br>[Verbo Análisis]: *Examinar* o *Analizar* la normativa e institucionalidad sectorial vigente en Bolivia. | **Subcategoría / Eje 2:**<br>Marco normativo, regulatorio e institucional boliviano. | **Premisa 2:**<br>El marco regulatorio boliviano presenta desfases u oportunidades de modernización frente a la realidad operativa. | **Unidad Documental:**<br>Normativa del Estado Plurinacional, informes técnicos de entidades rectoras e informes sectoriales (Fuentes L4/L5). | **Conclusión 2:**<br>Respuesta al OE2 determinando la suficiencia, vacíos o fortalezas del marco normativo boliviano. |
+| **Pregunta Específica 3 (PE3):**<br>¿Cuáles son las brechas, factores determinantes y evidencias empíricas reportadas sobre [dimensión 3 en Bolivia]? | **Objetivo Específico 3 (OE3):**<br>[Verbo Análisis/Comparación]: *Comparar* o *Examinar* la evidencia empírica, estadísticas oficiales y brechas en Bolivia. | **Subcategoría / Eje 3:**<br>Evidencia empírica, estadísticas oficiales y brechas en el contexto nacional. | **Premisa 3:**<br>La evidencia reporta disparidades territoriales o barreras estructurales de implementación en el país. | **Unidad Documental:**<br>Estadísticas oficiales (INE Censo 2024, BCB, ASFI, UDAPE) y estudios empíricos 2024–2026. | **Conclusión 3:**<br>Respuesta al OE3 cuantificando o cualificando las brechas y hallazgos empíricos contrastados. |
+| **Pregunta Específica 4 (PE4 - Opcional):**<br>¿Qué implicaciones, lineamientos teóricos o perspectivas estratégicas emergen para [Bolivia]? | **Objetivo Específico 4 (OE4):**<br>[Verbo Síntesis/Evaluación]: *Sintetizar* o *Proponer lineamientos teóricos* derivados de los hallazgos analizados. | **Subcategoría / Eje 4:**<br>Implicaciones, perspectivas críticas y líneas de acción teórica. | **Premisa 4:**<br>La articulación de los ejes precedentes permite deducir pautas conceptuales orientadas al ámbito boliviano. | **Unidad Documental:**<br>Triangulación teórica y discusión documental entre fuentes empíricas y normativas. | **Conclusión 4:**<br>Respuesta al OE4 con los lineamientos o reflexiones sintéticas finales del estudio. |
+
+*Reglas inviolables de consistencia:*  
+1. **Regla de simetría total:** Ningún OE sin PE previa; ningún OE sin eje temático en la revisión (P4); ningún eje sin unidad documental verificada en la MAB; y ninguna conclusión en P7 sin correspondencia biunívoca con un OE.  
+2. **Cero tablas en el cuerpo:** La tabla anterior se inserta obligatoriamente en la sección final de **Apéndices** de la monografía. En el cuerpo del trabajo solo se hace referencia textual narrativa continua (ej. *«conforme se detalla en la Matriz de Consistencia Metodológica del Apéndice A»*).
 
 ---
 

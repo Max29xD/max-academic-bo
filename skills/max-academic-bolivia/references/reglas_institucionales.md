@@ -502,7 +502,27 @@ SANTA CRUZ – BOLIVIA
 
 ---
 
-## 18. Matriz Comparativa Maestro: Guía EIP-UAGRM (2026) vs. Normas APA 7.ª Edición
+## 18. MAT · Matriz de Consistencia Metodológica y Rigor Documental
+
+| ID | Regla | Severidad | Descripción y criterio de evaluación |
+|---|---|---|---|
+| **MAT-1** | Coherencia Horizontal Biunívoca | Error (✖) | En la Matriz de Consistencia, cada fila debe presentar estricta correspondencia simétrica 1:1 de izquierda a derecha entre la Pregunta Específica (PE), el Objetivo Específico (OE), la Subcategoría/Eje Temático (P4), la Premisa Teórica Guía, la Unidad Documental (MAB) y la Conclusión Biunívoca (P7). Queda prohibido dejar celdas de PE vacías o con guiones (—). |
+| **MAT-2** | Coherencia Vertical Sumativa | Error (✖) | La articulación jerárquica debe ser completa y sumativa: la suma de las preguntas específicas debe equivaler conceptualmente al problema general (\sum PE = PG), y la suma de los objetivos específicos debe agotar el objetivo general (\sum OE = OG). |
+| **MAT-3** | Paradigma Cualitativo-Documental (Categorías vs. Variables) | Error (✖) | En monografías de compilación teórica queda prohibido forzar matrices cuantitativas con variables dependientes/independientes o hipótesis empíricas de contraste estadístico. Se deben emplear **Categorías/Ejes Temáticos** y **Supuestos Teóricos Directrices**, respaldados en un corpus documental con criterios de inclusión (Giesecke, 2020; Chan-Pech, 2020; Carrasco Díaz, 2018). |
+| **MAT-4** | Ubicación Estricta en Apéndices (Cuerpo 100 % Textual) | Error (✖) | En aplicación estricta de la regla TAB-1, la Matriz de Consistencia Metodológica debe insertarse **exclusivamente en la sección de Apéndices** (ej. Tabla A1), en formato APA 7 de dos líneas. En el cuerpo del trabajo únicamente se hace mención narrativa en prosa fluida. |
+
+---
+
+## 19. PRQ · Prerrequisitos de Entorno y Política de Parada Estricta (Gatekeeper)
+
+| ID | Regla | Severidad | Descripción y criterio de evaluación |
+|---|---|---|---|
+| **PRQ-1** | Verificación Diagnóstica Previa | Error (✖) | Antes de iniciar cualquier fase de indagación o redacción, es obligatorio ejecutar python scripts/verificar_entorno.py. El resultado debe certificar la disponibilidad de python-docx, lxml y la autenticación activa de Tavily (	vly o TAVILY_API_KEY). |
+| **PRQ-2** | Parada Obligatoria si Falta Configuración | Error (✖) | Si falta alguna herramienta o Tavily no está autenticado, **EL ASISTENTE O INVESTIGADOR DEBE DETENERSE INMEDIATAMENTE**. Queda terminantemente prohibido inventar datos, simular búsquedas o continuar a ciegas. Se debe informar al usuario qué falta, ejecutar la autoconfiguración (--setup), solicitar la API key de Tavily (	vly login --api-key <KEY>), y no continuar hasta que el diagnóstico finalice con código de salida 0. |
+
+---
+
+## 20. Matriz Comparativa Maestro: Guía EIP-UAGRM (2026) vs. Normas APA 7.ª Edición
 
 En caso de discrepancia en la elaboración del manuscrito, se aplica la norma con prioridad institucional según el siguiente desglose exhaustivo:
 
@@ -533,7 +553,7 @@ En caso de discrepancia en la elaboración del manuscrito, se aplica la norma co
 
 ---
 
-## 19. Matriz de Control de Calidad y Checklist Maestro de Verificación
+## 21. Matriz de Control de Calidad y Checklist Maestro de Verificación
 
 Antes de proceder a la impresión, entrega de anillados o defensa final, se debe auditar el cumplimiento del 100 % de los siguientes ítems articulados en los cuatro pilares de la Guía EIP-FINOR:
 
