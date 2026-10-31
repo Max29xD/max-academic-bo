@@ -186,14 +186,28 @@ Para cada candidata seleccionada, confirmar los 8 campos obligatorios:
 
 ---
 
-## 7. Matriz de Análisis Bibliográfico (MAB)
+## 7. Matriz de Análisis Bibliográfico (MAB) Oficial (5 Bloques y 15 Columnas)
 
-Se exporta como **Apéndice A**. Cada fila representa una fuente con estado V:
+Se exporta como **Apéndice A**. Estructura institucional obligatoria organizada en **5 bloques funcionales** y **15 columnas de análisis riguroso**:
 
-| ID | Estado | Autores (año) | Referencia APA completa | Nivel (T1–T5) | Indexación | País/Contexto | Objetivo | Método y muestra | Hallazgo clave | Limitación | Relevancia para Bolivia | Postura (↑/↓) | Eje | OE | Dato citable + pág. |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Bloque 1: Identificación | | | | | Bloque 2: Delimitación | | | Bloque 3: Enfoque / Tesis | | | Bloque 4: Análisis Crítico | | | Bloque 5: Valoración |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Código** | **Referencia APA 7.ª ed.** | **Tipo de Fuente** | **Filiación / Autoridad** | **Año de Publicación** | **Objetivo del Estudio** | **OE al que aporta** | **Variables de Estudio** | **Enfoque / Metodología** | **Universo / Muestra** | **Tesis / Cita Corta** | **Aporte a la Monografía** | **Convergencias / Divergencias** | **Limitaciones / Sesgos** | **Nivel de Confiabilidad** |
+| F-01 | García, M., & López, P. (2023). Impacto del teletrabajo en la productividad académica. *Revista de Educación y Trabajo*, 15(2), 45-62. | Artículo de Revista Indexada | Universidad Nacional Autónoma de México (UNAM) | 2023 | Analizar la relación entre el trabajo remoto y la eficiencia docente universitaria durante el periodo 2021-2022. | OE 1 | Teletrabajo, Productividad, Estrés laboral, Desempeño docente | Cuantitativo | 350 docentes universitarios de Lima Metodológica | "El 68% de los docentes percibe un incremento sustancial en las horas dedicadas a tareas administrativas" (p. 52). | Proporciona evidencia empírica directa para respaldar el marco teórico sobre sobrecarga digital. | Coincide con Ramírez (2021) en la percepción de carga, pero difiere de Pérez (2020) en el nivel de satisfacción laboral. | Muestra limitada a una sola universidad pública, lo que restringe la generalización de resultados. | Alto |
 
-Ninguna cita puede insertarse en el cuerpo de la monografía sin su correspondiente ID en la MAB en estado V.
+> [!IMPORTANT]
+> **Regla de Integridad de la MAB (APE-3):** Ninguna cita puede insertarse en el cuerpo de la monografía sin su correspondiente código `F-XX` registrado en la MAB en estado verificado y con sus 15 columnas obligatorias desarrolladas.
+
+---
+
+## 7.1. Matriz de Revisión de la Literatura / Análisis Teórico (Paso 4)
+
+Matriz metodológica de articulación biunívoca utilizada durante la fase de desarrollo del **PASO 4 (Revisión Literaria)** para garantizar que cada fuente seleccionada nutra directamente los cimientos formulados en los Pasos 0, 1, 2 y 3:
+
+| I. IDENTIFICACIÓN DE LA FUENTE | | | II. CONTENIDO Y SÍNTESIS TEÓRICA (6 CAMPOS SOLICITADOS) | | | | III. ARTICULACIÓN BIUNÍVOCA (PASOS 0, 1, 2 Y 3) | | |
+|---|---|---|---|---|---|---|---|---|---|
+| **Cód.** | **1. Autor(es) y Año** | **2. Título del Documento / Fuente** | **3. Eje Temático / Objetivos** | **4. Conceptos Clave** | **5. Conclusiones / Resultados** | **6. Relación / Utilidad** | **Vínculo con Pasos 1 y 2 (Título borrador, Planteamiento del Problema (Pregunta))** | **Aporte a Pasos 3 (Objetivos General y Específicos)** | **Nivel de Relevancia / Calidad** |
+| F-01 | García, M., & López, P. (2023) | El impacto de la digitalización en la gestión de procesos universitarios | Gestión institucional / Evaluar la transformación digital en la administración docente | Digitalización, Gestión académica, Eficiencia operativa, Automatización | La automatización de flujos documentales redujo en 42% los tiempos de respuesta e incrementó la satisfacción docente. | Fundamenta la hipótesis de que la optimización tecnológica impacta directamente en el desempeño operativo. | Respalda la justificación del problema (Paso 1) demostrando que la falta de digitalización genera ineficiencia. | Aporta directamente al OE 1 (Diagnóstico) y define la Variable 'Digitalización' del Marco Teórico (Paso 3). | Alto |
 
 ---
 

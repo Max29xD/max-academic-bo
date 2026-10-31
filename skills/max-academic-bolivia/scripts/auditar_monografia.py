@@ -503,7 +503,7 @@ def chequear_citas_mab(md_path, r):
     except OSError:
         r.info("MAB-9", "No se pudo leer el Markdown maestro para contrastar las citas.")
         return
-    filas = [l for l in lineas if re.match(r"^\|\s*\*\*S\d\d\*\*", l)]
+    filas = [l for l in lineas if re.search(r"^\|\s*\*{0,2}(F-\d+|S\d+)\*{0,2}\s*\|", l, re.IGNORECASE)]
     if not filas:
         return
     carpeta = _carpeta_fuentes()
@@ -513,10 +513,11 @@ def chequear_citas_mab(md_path, r):
 
     verificadas = no_verificables = 0
     for fila in filas:
-        sid = re.match(r"^\|\s*\*\*(S\d\d)\*\*", fila).group(1)
-        m = re.search(r"«([^»]+)»", fila)
+        m_id = re.search(r"^\|\s*\*{0,2}(F-\d+|S\d+)\*{0,2}\s*\|", fila, re.IGNORECASE)
+        sid = m_id.group(1).upper()
+        m = re.search(r'[«"]([^»"]+)[»"]', fila)
         if not m:
-            r.warn("MAB-9", f"{sid} no presenta cita textual entre comillas angulares.")
+            r.warn("MAB-9", f"{sid} no presenta cita textual entre comillas o comillas angulares.")
             continue
         cita = re.sub(r"\s*\((p\.|párr\.|párrafo|sección|seccion|req\.|art\.|conclusiones|resumen)[^)]*\)\s*$",
                       "", m.group(1), flags=re.IGNORECASE).strip()
@@ -808,12 +809,16 @@ def main():
 
     # Verificación de la Matriz de Análisis Bibliográfico (MAB)
     txt_all_norm = norm(" ".join(lines))
-    tiene_mab = ("matriz de analisis bibliografico" in txt_all_norm or "matriz mab" in txt_all_norm) and ("hallazgo" in txt_all_norm or "cita corta" in txt_all_norm or "oe al que aporta" in txt_all_norm)
+    tiene_mab = ("matriz de analisis bibliografico" in txt_all_norm or "matriz mab" in txt_all_norm or "bloque 1: identificacion" in txt_all_norm or "bloque 1" in txt_all_norm) and ("hallazgo" in txt_all_norm or "cita corta" in txt_all_norm or "tesis / cita corta" in txt_all_norm or "oe al que aporta" in txt_all_norm or "filiacion" in txt_all_norm or "variables de estudio" in txt_all_norm)
     if "apendices" in secs or args.parcial:
         if tiene_mab:
-            r.ok("APE-3", "Matriz de Análisis Bibliográfico (MAB) presente como apéndice de trabajo obligatorio.")
+            r.ok("APE-3", "Matriz de Análisis Bibliográfico (MAB) de 5 bloques y 15 columnas presente como apéndice de trabajo obligatorio.")
         else:
-            r.err("APE-3", "Ausencia de la Matriz de Análisis Bibliográfico (MAB) como anexo de trabajo obligatorio (exigida por la Guía EIP-UAGRM con autor, año, OE, hallazgo, cita corta y relevancia local).")
+            r.err("APE-3", "Ausencia de la Matriz de Análisis Bibliográfico (MAB) como anexo de trabajo obligatorio (exigida por la Guía EIP-UAGRM con 5 bloques: Identificación, Delimitación, Enfoque/Tesis, Análisis Crítico y Valoración).")
+
+    tiene_matriz_rev = "matriz de revision de la literatura" in txt_all_norm or "analisis teorico (paso 4)" in txt_all_norm or "articulacion biunivoca" in txt_all_norm
+    if tiene_matriz_rev:
+        r.ok("REV-14", "Matriz de Revisión de la Literatura / Análisis Teórico (Paso 4) presente con articulación biunívoca.")
 
     # Estructura
     requeridas = ["introduccion", "problema", "objetivos", "revision", "discusion", "conclusiones", "referencias"]

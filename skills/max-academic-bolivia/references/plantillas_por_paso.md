@@ -243,6 +243,28 @@ Cada sección de la revisión debe responder a:
 - Postura crítica del investigador.
 - Implicación contextual para Bolivia o Santa Cruz.
 
+### Matrices Metodológicas Canónicas de Soporte
+
+#### A. MATRIZ DE REVISIÓN DE LA LITERATURA / ANÁLISIS TEÓRICO (PASO 4)
+Instrumento metodológico operativo para articular biunívocamente cada fuente analizada con los cimientos formulados en los Pasos 0, 1, 2 y 3:
+
+| I. IDENTIFICACIÓN DE LA FUENTE | | | II. CONTENIDO Y SÍNTESIS TEÓRICA (6 CAMPOS SOLICITADOS) | | | | III. ARTICULACIÓN BIUNÍVOCA (PASOS 0, 1, 2 Y 3) | | |
+|---|---|---|---|---|---|---|---|---|---|
+| **Cód.** | **1. Autor(es) y Año** | **2. Título del Documento / Fuente** | **3. Eje Temático / Objetivos** | **4. Conceptos Clave** | **5. Conclusiones / Resultados** | **6. Relación / Utilidad** | **Vínculo con Pasos 1 y 2<br>(Título borrador, Planteamiento del Problema (Pregunta))** | **Aporte a Pasos 3<br>(Objetivos: General y Específicos)** | **Nivel de Relevancia / Calidad** |
+| F-01 | García, M., & López, P. (2023) | El impacto de la digitalización en la gestión de procesos universitarios | Gestión institucional / Evaluar la transformación digital en la administración docente | Digitalización, Gestión académica, Eficiencia operativa, Automatización | La automatización de flujos documentales redujo en 42% los tiempos de respuesta e incrementó la satisfacción docente. | Fundamenta la hipótesis de que la optimización tecnológica impacta directamente en el desempeño operativo. | Respalda la justificación del problema (Paso 1) demostrando que la falta de digitalización genera ineficiencia. | Aporta directamente al OE 1 (Diagnóstico) y define la Variable 'Digitalización' del Marco Teórico (Paso 3). | Alto |
+
+#### B. MATRIZ DE ANÁLISIS BIBLIOGRÁFICO (MAB) — (APÉNDICE A)
+Estructura institucional obligatoria con **5 bloques funcionales** y **15 columnas de evaluación metodológica y crítica**:
+
+| Bloque 1: Identificación | | | | | Bloque 2: Delimitación | | | Bloque 3: Enfoque / Tesis | | | Bloque 4: Análisis Crítico | | | Bloque 5: Valoración |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Código** | **Referencia APA 7.ª ed.** | **Tipo de Fuente** | **Filiación / Autoridad** | **Año de Publicación** | **Objetivo del Estudio** | **OE al que aporta** | **Variables de Estudio** | **Enfoque / Metodología** | **Universo / Muestra** | **Tesis / Cita Corta** | **Aporte a la Monografía** | **Convergencias / Divergencias** | **Limitaciones / Sesgos** | **Nivel de Confiabilidad** |
+| F-01 | García, M., & López, P. (2023). Impacto del teletrabajo en la productividad académica. *Revista de Educación y Trabajo*, 15(2), 45-62. https://doi.org/... | Artículo de Revista Indexada | Universidad Nacional Autónoma de México (UNAM) | 2023 | Analizar la relación entre el trabajo remoto y la eficiencia docente universitaria durante el periodo 2021-2022. | OE 1 | Teletrabajo, Productividad, Estrés laboral, Desempeño docente | Cuantitativo | 350 docentes universitarios de Lima Metropolitana | "El 68% de los docentes percibe un incremento sustancial en las horas dedicadas a tareas administrativas" (p. 52). | Proporciona evidencia empírica directa para respaldar el marco teórico sobre sobrecarga digital. | Coincide con Ramírez (2021) en la percepción de carga, pero difiere de Pérez (2020) en el nivel de satisfacción laboral. | Muestra limitada a una sola universidad pública, lo que restringe la generalización de resultados. | Alto |
+
+*Reglas de articulación:*
+1. **Diferenciación de roles:** La *Matriz de Revisión de Literatura (Paso 4)* mapea la articulación biunívoca con el problema y objetivos para redactar la prosa temática del cuerpo; la *MAB (Apéndice A)* es la matriz documental maestra de respaldo empírico con 15 columnas y 5 bloques.
+2. **Cero tablas en el cuerpo:** Ambas matrices se alojan en la sección final de **Apéndices** (MAB en Apéndice A y Matriz de Articulación en Apéndice de Metodología Documental) o en la bitácora de trabajo del maestrante. El cuerpo del Capítulo 4 es 100 % prosa narrativa temática con citas APA 7.
+
 ---
 
 ## PASO 5: Definición de Términos y Conceptos
