@@ -16,6 +16,7 @@ Uso:
 from __future__ import annotations
 
 import argparse
+import datetime
 import sys
 import xml.etree.ElementTree as ET
 import zipfile
@@ -181,6 +182,68 @@ def info_docx(ruta: Path | str) -> dict:
     }
 
 
+def generar_version_revision(ruta_in: Path | str, ruta_out: Path | str, autor: str = "Revisión Académica UAGRM") -> bool:
+    """Genera una versión con control de cambios nativo (Word Track Changes) para el tutor.
+    - Envuelve los runs en <w:ins> con metadatos de autoría y fecha.
+    - Activa <w:trackRevisions/> en word/settings.xml para que Word abra en modo revisión.
+    """
+    pin = Path(ruta_in)
+    pout = Path(ruta_out)
+    if not pin.exists() or not zipfile.is_zipfile(pin):
+        return False
+
+    date_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    archivos = {}
+    with zipfile.ZipFile(pin, "r") as zf:
+        for name in zf.namelist():
+            archivos[name] = zf.read(name)
+
+    w_ns = NS["w"]
+    ET.register_namespace("w", w_ns)
+
+    # 1. Modificar settings.xml
+    if "word/settings.xml" in archivos:
+        try:
+            root_s = ET.fromstring(archivos["word/settings.xml"])
+            if root_s.find(f"{{{w_ns}}}trackRevisions") is None:
+                tr_elem = ET.Element(f"{{{w_ns}}}trackRevisions")
+                root_s.insert(0, tr_elem)
+                archivos["word/settings.xml"] = ET.tostring(root_s, encoding="utf-8", xml_declaration=True)
+        except Exception:
+            pass
+
+    # 2. Modificar document.xml
+    if "word/document.xml" in archivos:
+        try:
+            root_d = ET.fromstring(archivos["word/document.xml"])
+            rev_id = 100
+            for p in root_d.iter(f"{{{w_ns}}}p"):
+                runs = [child for child in list(p) if child.tag == f"{{{w_ns}}}r"]
+                for r in runs:
+                    idx = list(p).index(r)
+                    p.remove(r)
+                    ins_elem = ET.Element(f"{{{w_ns}}}ins", {
+                        f"{{{w_ns}}}id": str(rev_id),
+                        f"{{{w_ns}}}author": autor,
+                        f"{{{w_ns}}}date": date_str,
+                    })
+                    ins_elem.append(r)
+                    p.insert(idx, ins_elem)
+                    rev_id += 1
+            archivos["word/document.xml"] = ET.tostring(root_d, encoding="utf-8", xml_declaration=True)
+        except Exception as e:
+            print(f"Error procesando document.xml para revisión: {e}", file=sys.stderr)
+            return False
+
+    pout.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(pout, "w", compression=zipfile.ZIP_DEFLATED) as zf_out:
+        for name, data in archivos.items():
+            zf_out.writestr(name, data)
+
+    valido, _ = validar_docx(pout)
+    return valido
+
+
 def main():
     parser = argparse.ArgumentParser(description="Utilidades avanzadas OOXML / DOCX")
     sub = parser.add_subparsers(dest="subcomando", required=True)
@@ -197,6 +260,11 @@ def main():
 
     p_inf = sub.add_parser("info", help="Muestra métricas y análisis de estructura")
     p_inf.add_argument("archivo", help="Ruta al archivo .docx")
+
+    p_rev = sub.add_parser("revision", help="Genera copia con control de cambios (Track Changes)")
+    p_rev.add_argument("archivo", help="Ruta al archivo .docx de entrada")
+    p_rev.add_argument("-o", "--salida", required=True, help="Ruta de destino del .docx de revisión")
+    p_rev.add_argument("--autor", default="Revisión Académica UAGRM", help="Nombre del autor para el control de cambios")
 
     args = parser.parse_args()
 
@@ -225,6 +293,15 @@ def main():
         import json
         print(json.dumps(res, ensure_ascii=False, indent=2))
         return 0
+
+    elif args.subcomando == "revision":
+        ok = generar_version_revision(args.archivo, args.salida, autor=args.autor)
+        if ok:
+            print(f"✔ Versión con control de cambios creada en: {args.salida}")
+            return 0
+        else:
+            print(f"✖ Error generando versión de revisión", file=sys.stderr)
+            return 1
 
 
 if __name__ == "__main__":

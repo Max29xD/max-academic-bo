@@ -601,7 +601,7 @@ def parsear_bloques_markdown(md_contenido: str) -> list[dict]:
 # Constructor del Documento Word Oficial
 # =========================================================================
 
-def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = None) -> Path:
+def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = None, generar_revision: bool = True) -> Path:
     """Compila dinámicamente un manuscrito Markdown a DOCX bajo estándares EIP-FINOR y APA 7."""
     if not md_path.exists():
         raise FileNotFoundError(f"No se encontró el manuscrito Markdown en: {md_path}")
@@ -954,6 +954,16 @@ def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = N
     else:
         print(f"⚠ Advertencias OOXML detectadas: {errs}")
 
+    # Generación de copia complementaria con Control de Cambios para el tutor
+    if generar_revision:
+        ruta_rev = salida_final.with_name(salida_final.stem + "_revision_tutor.docx")
+        try:
+            ok_rev = docx_utils.generar_version_revision(salida_final, ruta_rev, autor="Revisión EIP-FINOR-UAGRM")
+            if ok_rev:
+                print(f"✔ Versión con Control de Cambios generada para el tutor en: {ruta_rev}")
+        except Exception as e:
+            print(f"⚠ Aviso generando versión con control de cambios: {e}")
+
     return salida_final
 
 
@@ -973,6 +983,7 @@ def main():
     parser.add_argument("--tutor", default=None, help="Override del docente guía o tutor")
     parser.add_argument("--gestion", default=None, help="Override del año de gestión (ej. 2026)")
     parser.add_argument("--lugar", default=None, help="Override del lugar (ej. Santa Cruz de la Sierra, Bolivia)")
+    parser.add_argument("--sin-revision", action="store_true", help="No generar la versión complementaria con control de cambios")
 
     args = parser.parse_args()
 
@@ -1007,7 +1018,7 @@ def main():
         "lugar": args.lugar,
     }
 
-    compilar_monografia_docx(md_file, target_docx, overrides=overrides)
+    compilar_monografia_docx(md_file, target_docx, overrides=overrides, generar_revision=not args.sin_revision)
 
 
 if __name__ == "__main__":

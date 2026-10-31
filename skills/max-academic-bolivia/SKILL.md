@@ -121,9 +121,10 @@ La skill es **completamente autocontenida**: funciona en cualquier proyecto limp
 | Capacidad | Módulos y scripts incorporados | Referencia técnica |
 |---|---|---|
 | **Búsqueda tipo Perplexity** | `scripts/buscar_fuentes.py` (CLI `tvly` o API REST directa con `TAVILY_API_KEY`) y `scripts/generar_consultas.py` | [references/tavily_busqueda.md](references/tavily_busqueda.md) y [references/busqueda_bolivia.md](references/busqueda_bolivia.md) |
-| **Generación & validación Word** | `scripts/generar_monografia_docx.py` (compilador dinámico de Markdown a Word sin datos prefijados) y `scripts/docx_utils.py` (validación OOXML, fusión de runs, extracción) | [references/docx_guia.md](references/docx_guia.md) |
+| **Resolución Canónica (Crossref/OpenAlex)** | `scripts/resolver_fuente.py` (resolución gratuita de metadatos académicos de papers y DOIs con OpenAlex y Crossref) | [references/word_bibliography_guia.md](references/word_bibliography_guia.md) |
+| **Generación Word Dual & OOXML** | `scripts/generar_monografia_docx.py` (compilador dinámico Markdown a Word con salida dual: limpia + `_revision_tutor.docx` con control de cambios) y `scripts/docx_utils.py` (validación OOXML, fusión de runs, track changes) | [references/docx_guia.md](references/docx_guia.md) |
 | **Bibliografía APA 7 + Sources.xml** | `scripts/gestor_referencias.py`, `scripts/word_bibliography.py` y `scripts/actualizar_sources_xml.py` | [references/word_bibliography_guia.md](references/word_bibliography_guia.md) y [references/apa7_formatos.md](references/apa7_formatos.md) |
-| **Auditoría metodológica** | `scripts/auditar_monografia.py` y `scripts/auditor_utils.py` | [references/reglas_institucionales.md](references/reglas_institucionales.md) |
+| **Auditoría metodológica & APA 7** | `scripts/auditar_monografia.py` (auditoría institucional EIP + reglas finas de APA 7ma: et al., ampersands, cifras) y `scripts/auditor_utils.py` | [references/reglas_institucionales.md](references/reglas_institucionales.md) |
 
 **Evidencia de búsqueda:** cada consulta guarda un JSON en `output/fuentes/` con parámetros, fecha, resultados y URLs. La MAB (Apéndice A) y el registro de búsqueda (Apéndice B) se sustentan estrictamente en esa evidencia. Sin URL/DOI verificable no se admite ninguna fuente.
 
@@ -134,7 +135,8 @@ La skill es **completamente autocontenida**: funciona en cualquier proyecto limp
 - **Recursos internos (inmutables):** `templates/apa7ma.docx`, `assets/logo.png`, `references/`.
 - **Archivos generados en el proyecto:**
   - `output/<tema>.md` o `output/monografia_completa.md`
-  - `output/monografia_compilacion_bolivia.docx`
+  - `output/monografia_compilacion_bolivia.docx` (versión limpia para encuadernación / entrega)
+  - `output/monografia_compilacion_bolivia_revision_tutor.docx` (versión con control de cambios nativo)
   - `output/referencias.json`, `output/referencias_bibliograficas.md`, `output/Sources.xml`
   - `output/fuentes/*.json` (evidencia de rastreo de literatura)
 

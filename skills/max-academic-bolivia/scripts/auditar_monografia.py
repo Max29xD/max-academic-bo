@@ -736,6 +736,48 @@ def chequear_estilo_vale(archivo, r):
         r.info("VAL-1", f"No se pudo completar el análisis con Vale: {e}")
 
 
+def chequear_apa7_avanzado(lines, secs, todas_citas, r):
+    """Auditoría profunda de reglas finas de APA 7.ª edición (inspirado en saulmcphd/apa-style)."""
+    # 1. Ampersand (&) vs conjunción en citas
+    for c in todas_citas:
+        aut = c.get("aut", "")
+        tipo = c.get("tipo", "")
+        linea = c.get("linea", "?")
+        if tipo == "par":
+            if re.search(r"\b[A-Za-zÁÉÍÓÚÑáéíóúñ]+\s+(y|e)\s+[A-Za-zÁÉÍÓÚÑáéíóúñ]+", aut, re.I):
+                r.warn("APA-CIT-02", f"En citas parentéticas se debe usar el ampersand '&' entre autores en lugar de 'y/e': «({aut}, {c.get('anio')})» (línea ~{linea}).")
+        elif tipo == "narr":
+            if "&" in aut:
+                r.warn("APA-CIT-02", f"En citas narrativas en prosa continua se debe usar 'y/e' en lugar del ampersand '&': «{aut} ({c.get('anio')})» (línea ~{linea}).")
+
+    # 2. Citas secundarias ('citado en', 'como se citó en')
+    for ln, l in enumerate(lines, 1):
+        if re.search(r"\b(como\s+se\s+cit[oó]\s+en|citado\s+(en|por))\b", l, re.I):
+            r.warn("APA-CIT-03", f"Posible cita secundaria ('cita de cita') en línea ~{ln}. La Guía EIP-UAGRM y APA 7 exigen consultar y citar la fuente primaria original.")
+
+    # 3. Números en dígitos al inicio de oraciones (APA 7 Section 6.32)
+    for ln, l in enumerate(lines, 1):
+        l_strip = l.strip()
+        if not l_strip or l_strip.startswith("#") or l_strip.startswith("|") or l_strip.startswith("```"):
+            continue
+        m_inicio = re.match(r"^(\d+)\s+([A-Za-zÁÉÍÓÚÑáéíóúñ]+)", l_strip)
+        if m_inicio:
+            num = m_inicio.group(1)
+            # Ignorar numeraciones formales con punto tipo '1. Introducción' o '1.1 Problema'
+            if not re.match(r"^\d+(\.\d+)*\.\s+", l_strip):
+                r.warn("APA-NUM-01", f"Inicio de oración con dígitos ('{num}') en línea ~{ln}. Según APA 7 (Sección 6.32), las oraciones deben iniciar con palabras (ej. 'Quince' en vez de '15').")
+
+    # 4. Jerarquía de encabezados Markdown (sin saltos de nivel)
+    nivel_previo = 0
+    for ln, l in enumerate(lines, 1):
+        m_h = re.match(r"^(#{1,6})\s+", l)
+        if m_h:
+            nivel_actual = len(m_h.group(1))
+            if nivel_previo > 0 and (nivel_actual - nivel_previo) > 1:
+                r.err("APA-HEAD-01", f"Salto antirreglamentario en jerarquía de títulos en línea ~{ln}: de Nivel {nivel_previo} se saltó a Nivel {nivel_actual} sin nivel intermedio.")
+            nivel_previo = nivel_actual
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("archivo")
@@ -958,6 +1000,7 @@ def main():
     c_con = citas_de("conclusiones")
     c_int = citas_de("introduccion")
     c_pro = citas_de("problema")
+    todas = c_int + c_pro + c_rev + c_ter + c_dis + c_con
     base_rev = conjunto_citas(c_rev) | conjunto_citas(c_ter)
 
     # Revisión
@@ -1021,6 +1064,9 @@ def main():
             if dom in txt_all and not any(dom in e["raw"].lower() for e in entradas):
                 r.err("REV-3", f"Se menciona una fuente no académica prohibida en el texto ({dom}).")
         chequear_referencias(secs["referencias"], entradas, todas, args.year, r)
+
+    # Auditoría avanzada de reglas APA 7.ª (saulmcphd/apa-style)
+    chequear_apa7_avanzado(lines, secs, todas if 'todas' in locals() else [], r)
 
     # Auditoría estilística de prosa y patrones de IA con Vale
     if getattr(args, "usar_vale", True):

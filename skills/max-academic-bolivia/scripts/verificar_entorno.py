@@ -243,6 +243,7 @@ def principal() -> int:
     else:
         tv_estado = "✖ NO INSTALADO NI CONFIGURADO (Obligatorio)"
     print(f"{'Tavily (Búsqueda)':<18}: {tv_estado}")
+    print(f"{'Resolvedor DOIs':<18}: ✔ APIs OpenAlex & Crossref Disponibles (Gratuitas)")
 
     vl = d["vale"]
     vl_desc = f"✔ {vl['version']}" if vl["disponible"] else "ℹ No instalado (Recomendado: scoop install vale)"

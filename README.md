@@ -329,8 +329,9 @@ bunx skills add ./skills/max-academic-bolivia -y
 | `vale output/monografia_completa.md` | Audita borradores Markdown detectando guiones largos `—`, muletillas y tics de IA |
 | `vale output/max_academic_bolivia.docx` | Audita directamente el documento Word generado con Microsoft Word |
 | `python skills/max-academic-bolivia/scripts/buscar_fuentes.py "tema" --tipo search` | Ejecuta búsqueda con Tavily y guarda evidencia en `output/fuentes/` |
+| `python skills/max-academic-bolivia/scripts/resolver_fuente.py --doi <DOI> --agregar` | Resuelve metadatos canónicos gratuitos vía OpenAlex/Crossref e inyecta en el catálogo |
 | `python skills/max-academic-bolivia/scripts/gestor_referencias.py` | Convierte `referencias.json` a Markdown APA 7 y `Sources.xml` |
-| `python skills/max-academic-bolivia/scripts/generar_monografia_docx.py` | Ensambla el documento Word oficial sobre `apa7ma.docx` |
+| `python skills/max-academic-bolivia/scripts/generar_monografia_docx.py` | Ensambla salida dual: versión limpia y `_revision_tutor.docx` con control de cambios |
 | `python skills/max-academic-bolivia/scripts/docx_utils.py validar output/*.docx` | Valida que el archivo Word cumpla con el estándar OOXML sin errores |
 | `python skills/max-academic-bolivia/scripts/auditar_monografia.py archivo.md --json` | Audita el manuscrito contra las reglas normativas de la EIP-FINOR |
 
