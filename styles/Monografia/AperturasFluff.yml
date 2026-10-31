@@ -1,0 +1,14 @@
+extends: existence
+message: "Apertura o muletilla inflada de IA: '%s'. Comienza directamente con los datos o el sujeto gramatical."
+level: warning
+ignorecase: true
+tokens:
+  - en el panorama actual
+  - en un mundo en constante cambio
+  - en un mundo en constante evolución
+  - en la era digital
+  - en la sociedad del conocimiento
+  - a lo largo de la historia
+  - resulta imprescindible subrayar
+  - resulta pertinente destacar
+  - no se puede subestimar

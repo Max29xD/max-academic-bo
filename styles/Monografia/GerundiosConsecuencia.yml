@@ -1,0 +1,20 @@
+extends: existence
+message: "Gerundio de consecuencia o posterioridad no normativo: '%s'. En español académico, el gerundio no debe indicar consecuencia; usa 'lo que permite...', 'y con ello se logra...' o punto y seguido."
+level: error
+ignorecase: true
+tokens:
+  - logrando así
+  - logrando asi
+  - permitiendo de este modo
+  - permitiendo así
+  - permitiendo asi
+  - garantizando con ello
+  - garantizando así
+  - garantizando asi
+  - propiciando así
+  - propiciando asi
+  - facilitando de este modo
+  - facilitando así
+  - facilitando asi
+  - dando lugar así
+  - dando lugar asi

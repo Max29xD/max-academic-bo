@@ -105,16 +105,17 @@ Detalle operativo, cuestionarios y esqueletos: `references/plantillas_por_paso.m
 5. **Voz crítica Nivel 3.** Paráfrasis > 80 %; > 60 % de párrafos de P4 confrontan autores y
    contextualizan a Bolivia.
 6. **Prioridad EIP.** Resumen ≤ 400 palabras, carátula de 11 elementos con número invisible,
-   romanos en preliminares y arábigos reiniciando en la Introducción.
+   romanos invisibles en preliminares y arábigos continuos en la esquina superior derecha desde la Introducción, tipografía Arial.
 7. **Premadurez prohibida.** En entregas de Cimientos (P1–P3) no se incluye Introducción (P8),
    Índice (P11) ni Referencias finales (P10); el respaldo es la MAB como Apéndice A.
 8. **Cuerpo exclusivamente textual.** Cero tablas, cuadros o figuras intercaladas en los capítulos del cuerpo (P1–P8). Todo el análisis es narrativo puro; las tablas y figuras se ubican exclusivamente en la sección final de Apéndices.
 9. **Matriz de Consistencia Metodológica canónica.** Articula 6 componentes: Problemas (PG y PE1..PE4), Objetivos (OG y OE1..OE4), Categorías/Ejes Temáticos (P4), Supuestos Teóricos Guía, Estrategia Documental y Conclusiones Biunívocas (P7). Ubicada estrictamente en Apéndices (Tabla A1) con coherencia horizontal y vertical sumativa (Giesecke, 2020; Chan-Pech, 2020; Carrasco Díaz, 2018).
+10. **Protocolo Humanamente (Prosa natural y anti-patrones de IA en español).** Todo acápite de redacción (P4 Revisión, P6 Discusión, P7 Conclusiones, P8 Introducción) se somete al protocolo *Humanamente* (`scripts/humanizar_texto.py`): cero falsos paralelismos (*«no solo X sino Y»*), cero gerundios de consecuencia no normativos (*«, logrando así...»*), cero aperturas cliché (*«en el panorama actual»*) y cero guiones largos anglosajones (`—`), preservando al 100 % las citas APA 7 y los conceptos técnicos.
 
 Matriz normativa completa (TIT, PRO, OBJ, REV, TER, DIS, CON, INT, RES, REF, CAR, PAG, FOR, IND,
-APE, ACT, GEO, MAT, PRQ) y checklist maestro de verificación: `references/reglas_institucionales.md`.
+APE, ACT, GEO, MAT, PRQ, HUM) y checklist maestro de verificación: `references/reglas_institucionales.md`.
 
-## 3. Capacidades Incorporadas (Word · Tavily · Bibliografía)
+## 3. Capacidades Incorporadas (Word · Tavily · Bibliografía · Humanamente)
 
 La skill es **completamente autocontenida**: funciona en cualquier proyecto limpio sin necesidad de instalar skills externas. Incorpora internamente:
 
@@ -125,6 +126,7 @@ La skill es **completamente autocontenida**: funciona en cualquier proyecto limp
 | **Generación Word Dual & OOXML** | `scripts/generar_monografia_docx.py` (compilador dinámico Markdown a Word con salida dual: limpia + `_revision_tutor.docx` con control de cambios) y `scripts/docx_utils.py` (validación OOXML, fusión de runs, track changes) | [references/docx_guia.md](references/docx_guia.md) |
 | **Bibliografía APA 7 + Sources.xml** | `scripts/gestor_referencias.py`, `scripts/word_bibliography.py` y `scripts/actualizar_sources_xml.py` | [references/word_bibliography_guia.md](references/word_bibliography_guia.md) y [references/apa7_formatos.md](references/apa7_formatos.md) |
 | **Auditoría metodológica & APA 7** | `scripts/auditar_monografia.py` (auditoría institucional EIP + reglas finas de APA 7ma: et al., ampersands, cifras) y `scripts/auditor_utils.py` | [references/reglas_institucionales.md](references/reglas_institucionales.md) |
+| **Protocolo Humanamente (Anti-IA Español)** | `scripts/humanizar_texto.py` (auditoría y reescritura conservadora de prosa orgánica) y `styles/Monografia/` (reglas Vale nativas) | [references/humanamente_guia.md](references/humanamente_guia.md) y [references/auditoria_estilo_vale.md](references/auditoria_estilo_vale.md) |
 
 **Evidencia de búsqueda:** cada consulta guarda un JSON en `output/fuentes/` con parámetros, fecha, resultados y URLs. La MAB (Apéndice A) y el registro de búsqueda (Apéndice B) se sustentan estrictamente en esa evidencia. Sin URL/DOI verificable no se admite ninguna fuente.
 
@@ -162,10 +164,12 @@ Si el usuario ya tiene un `output/` con avances, **no lo sobrescribas a ciegas**
 | `references/word_bibliography_guia.md` | Estándar XML de bibliografía Word, SourceTypes y pasos de importación |
 | `references/busqueda_bolivia.md` | Protocolo de recencia 2024–2026 y embudo territorial boliviano |
 | `references/integraciones.md` | Matriz de compatibilidad y planes de degradación elegante |
+| `references/humanamente_guia.md` | Protocolo Humanamente: anti-patrones de IA en español y prosa orgánica |
 | `scripts/verificar_entorno.py` | Diagnóstico inicial de capacidades y rutas |
 | `scripts/buscar_fuentes.py` | Búsqueda reproducible con evidencia en `output/fuentes/` (Tavily CLI o REST API) |
 | `scripts/generar_consultas.py` | Cadenas booleanas y consultas por embudo geográfico |
 | `scripts/docx_utils.py` | Validación OOXML, extracción de texto y fusión de runs para Word |
+| `scripts/humanizar_texto.py` | Auditoría de tics de IA, cálculo de puntaje Humanamente y sugerencias |
 | `scripts/word_bibliography.py` | Generador directo de `Sources.xml` y formateador APA 7 |
 | `scripts/gestor_referencias.py` | `referencias.json` → APA 7 + `Sources.xml` + incrustación en docx |
 | `scripts/actualizar_sources_xml.py` | Motor XML de bibliografía compatible con Microsoft Word |

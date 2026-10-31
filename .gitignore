@@ -23,6 +23,7 @@ skills-lock.json
 # Salidas de trabajo del usuario (se conserva la carpeta con .gitkeep, se ignora todo su contenido)
 output/*
 !output/.gitkeep
+!output/bitacora_instrucciones_ia.md
 
 # Archivos de respaldo o ejemplos de trabajo personal
 examples/

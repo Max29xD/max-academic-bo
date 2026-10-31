@@ -35,10 +35,49 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from rutas import NOMBRE_DOCX, archivo_salida, logo as logo_actual, output_dir, plantilla  # noqa: E402
 import docx_utils  # noqa: E402
 
+FUENTE_DOCUMENTO = "Arial"
+TAMANO_TEXTO = Pt(11)
+
 
 # =========================================================================
 # Utilidades de Formato XML y APA 7
 # =========================================================================
+
+def configurar_fuente_global(doc, fuente=FUENTE_DOCUMENTO, tamano_pt=11):
+    """Establece la tipografía institucional global (Arial 11 pt) en estilos y valores predeterminados."""
+    for style_name in ('Normal', 'Heading 1', 'Heading 2', 'Heading 3', 'Title'):
+        if style_name in doc.styles:
+            st = doc.styles[style_name]
+            st.font.name = fuente
+            if style_name == 'Normal':
+                st.font.size = Pt(tamano_pt)
+
+    # Actualizar docDefaults en styles.xml si existe
+    try:
+        rFonts = doc.styles.element.xpath('.//w:docDefaults/w:rPrDefault/w:rPr/w:rFonts')
+        for rf in rFonts:
+            rf.set(qn('w:ascii'), fuente)
+            rf.set(qn('w:hAnsi'), fuente)
+            rf.set(qn('w:cs'), fuente)
+    except Exception:
+        pass
+
+
+def es_bloque_metadatos_o_preambulo(b: dict) -> bool:
+    """Identifica si un bloque es un metadato de portada o preámbulo administrativo que no debe ir al cuerpo."""
+    if b.get("tipo") != "paragraph":
+        return False
+    txt = b.get("texto", "").strip().lower()
+    prefijos_meta = (
+        'universidad:', 'facultad:', 'unidad de postgrado:', 'unidad de posgrado:',
+        'escuela:', 'escuela integral de postgrado', 'programa:', 'mención:', 'mencion:',
+        'autor:', 'autora:', 'postgraduante:', 'docente:', 'tutor:', 'docente guía:',
+        'docente guia:', 'docente guía / tutor:', 'docente guía/tutor:', 'docente tutor:',
+        'gestión:', 'gestion:', 'lugar:', 'grado a optar:', 'titulo_monografia:',
+        'logotipo:', 'fecha:', 'ciudad:'
+    )
+    return any(txt.startswith(p) for p in prefijos_meta)
+
 
 def set_cell_border(cell, **kwargs):
     """Aplica bordes específicos a una celda XML."""
@@ -95,55 +134,74 @@ def set_section_page_numbering(section, num_format="decimal", start_at=None):
     pgNumType.set(qn('w:fmt'), num_format)
     if start_at is not None:
         pgNumType.set(qn('w:start'), str(start_at))
+    elif qn('w:start') in pgNumType.attrib:
+        del pgNumType.attrib[qn('w:start')]
 
 
-def configure_pagination(doc):
-    """Deja un único campo PAGE en el pie de los preliminares; portada y cuerpo lo heredan o lo omiten."""
+def configure_pagination(doc, fuente=FUENTE_DOCUMENTO, tamano_pt=11):
+    """
+    Configura la paginación según las normas institucionales y directivas del usuario:
+    - Portada (Sección 0): numeración romana (i) invisible. Sin encabezado ni pie visible.
+    - Preliminares (Sección 1: Resumen hasta el Índice): numeración romana (ii, iii...) invisible.
+      Sin encabezado ni pie visible.
+    - Cuerpo Principal (Sección 2: Introducción hasta Apéndices): numeración arábiga normal correlativa,
+      ubicada en la parte superior derecha (encabezado derecho), continuando la numeración sin reiniciar en 1.
+    """
     secs = doc.sections
-    for section in secs:
-        section.header.is_linked_to_previous = True
-        section.footer.is_linked_to_previous = True
+    if not secs:
+        return
 
-    set_section_page_numbering(secs[0], num_format="decimal", start_at=1)
-    if len(secs) > 1:
-        set_section_page_numbering(secs[1], num_format="lowerRoman", start_at=2)
-        prelim = secs[1]
-        prelim.footer.is_linked_to_previous = False
-        p = prelim.footer.paragraphs[0]
+    # 1. Carátula (Sección 0): número invisible
+    sec_0 = secs[0]
+    sec_0.header.is_linked_to_previous = False
+    sec_0.footer.is_linked_to_previous = False
+    for p in sec_0.header.paragraphs:
         p.text = ""
-        p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-        run = p.add_run()
-        run.font.name = 'Times New Roman'
-        run.font.size = Pt(12)
+    for p in sec_0.footer.paragraphs:
+        p.text = ""
+    for ref in list(sec_0._sectPr.findall(qn('w:headerReference'))) + list(sec_0._sectPr.findall(qn('w:footerReference'))):
+        sec_0._sectPr.remove(ref)
+    set_section_page_numbering(sec_0, num_format="lowerRoman", start_at=1)
 
-        fldChar1 = parse_xml(r'<w:fldChar %s w:fldCharType="begin"/>' % nsdecls('w'))
-        instrText = parse_xml(r'<w:instrText %s xml:space="preserve"> PAGE </w:instrText>' % nsdecls('w'))
-        fldChar2 = parse_xml(r'<w:fldChar %s w:fldCharType="separate"/>' % nsdecls('w'))
-        fldChar3 = parse_xml(r'<w:fldChar %s w:fldCharType="end"/>' % nsdecls('w'))
+    # 2. Preliminares (Sección 1): números romanos invisibles
+    if len(secs) > 1:
+        sec_1 = secs[1]
+        sec_1.header.is_linked_to_previous = False
+        sec_1.footer.is_linked_to_previous = False
+        for p in sec_1.header.paragraphs:
+            p.text = ""
+        for p in sec_1.footer.paragraphs:
+            p.text = ""
+        for ref in list(sec_1._sectPr.findall(qn('w:headerReference'))) + list(sec_1._sectPr.findall(qn('w:footerReference'))):
+            sec_1._sectPr.remove(ref)
+        set_section_page_numbering(sec_1, num_format="lowerRoman", start_at=None)
 
-        run._r.append(fldChar1)
-        run._r.append(instrText)
-        run._r.append(fldChar2)
-        run._r.append(fldChar3)
-
+    # 3. Cuerpo Principal (Sección 2): arábigos correlativos en parte superior derecha
     if len(secs) > 2:
-        set_section_page_numbering(secs[2], num_format="decimal", start_at=1)
-        body_sec = secs[2]
-        body_sec.footer.is_linked_to_previous = False
-        p_body = body_sec.footer.paragraphs[0]
-        p_body.text = ""
-        p_body.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-        run_b = p_body.add_run()
-        run_b.font.name = 'Times New Roman'
-        run_b.font.size = Pt(12)
+        sec_2 = secs[2]
+        sec_2.header.is_linked_to_previous = False
+        sec_2.footer.is_linked_to_previous = False
+        for p in sec_2.footer.paragraphs:
+            p.text = ""
+
+        p_hdr = sec_2.header.paragraphs[0]
+        p_hdr.text = ""
+        p_hdr.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        run_hdr = p_hdr.add_run()
+        run_hdr.font.name = fuente
+        run_hdr.font.size = Pt(tamano_pt)
+
         fldChar1 = parse_xml(r'<w:fldChar %s w:fldCharType="begin"/>' % nsdecls('w'))
         instrText = parse_xml(r'<w:instrText %s xml:space="preserve"> PAGE </w:instrText>' % nsdecls('w'))
         fldChar2 = parse_xml(r'<w:fldChar %s w:fldCharType="separate"/>' % nsdecls('w'))
         fldChar3 = parse_xml(r'<w:fldChar %s w:fldCharType="end"/>' % nsdecls('w'))
-        run_b._r.append(fldChar1)
-        run_b._r.append(instrText)
-        run_b._r.append(fldChar2)
-        run_b._r.append(fldChar3)
+        run_hdr._r.append(fldChar1)
+        run_hdr._r.append(instrText)
+        run_hdr._r.append(fldChar2)
+        run_hdr._r.append(fldChar3)
+
+        # Numeración arábiga continua sin reiniciar en 1 (start_at=None)
+        set_section_page_numbering(sec_2, num_format="decimal", start_at=None)
 
     prune_orphan_header_footer_parts(doc)
 
@@ -217,13 +275,13 @@ def add_formatted_paragraph(doc, md_text, style='Normal', first_line_indent=0.5,
             run.italic = True
         else:
             run = p.add_run(token)
-        run.font.name = 'Times New Roman'
-        run.font.size = Pt(12)
+        run.font.name = FUENTE_DOCUMENTO
+        run.font.size = Pt(11)
     return p
 
 
 def add_bullet_item(doc, bold_prefix, text, indent=0.5, hanging=-0.25):
-    """Agrega un ítem de viñeta con formato APA/Times New Roman."""
+    """Agrega un ítem de viñeta con formato APA/Arial."""
     p = doc.add_paragraph()
     p.style = doc.styles['Normal']
     p.paragraph_format.left_indent = Inches(indent)
@@ -234,13 +292,13 @@ def add_bullet_item(doc, bold_prefix, text, indent=0.5, hanging=-0.25):
     p.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
     r_bullet = p.add_run("• ")
-    r_bullet.font.name = 'Times New Roman'
-    r_bullet.font.size = Pt(12)
+    r_bullet.font.name = FUENTE_DOCUMENTO
+    r_bullet.font.size = Pt(11)
 
     if bold_prefix:
         r_bold = p.add_run(bold_prefix)
-        r_bold.font.name = 'Times New Roman'
-        r_bold.font.size = Pt(12)
+        r_bold.font.name = FUENTE_DOCUMENTO
+        r_bold.font.size = Pt(11)
         r_bold.bold = True
 
     tokens = re.split(r'(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)', f" {text}" if bold_prefix else text)
@@ -260,8 +318,8 @@ def add_bullet_item(doc, bold_prefix, text, indent=0.5, hanging=-0.25):
             r.italic = True
         else:
             r = p.add_run(token)
-        r.font.name = 'Times New Roman'
-        r.font.size = Pt(12)
+        r.font.name = FUENTE_DOCUMENTO
+        r.font.size = Pt(11)
     return p
 
 
@@ -283,19 +341,19 @@ def add_reference_paragraph(doc, ref_text):
         if token.startswith('**') and token.endswith('**'):
             run = p.add_run(token[2:-2])
             run.bold = True
-            run.font.name = 'Times New Roman'
-            run.font.size = Pt(12)
+            run.font.name = FUENTE_DOCUMENTO
+            run.font.size = Pt(11)
         elif token.startswith('*') and token.endswith('*'):
             run = p.add_run(token[1:-1])
             run.italic = True
-            run.font.name = 'Times New Roman'
-            run.font.size = Pt(12)
+            run.font.name = FUENTE_DOCUMENTO
+            run.font.size = Pt(11)
         elif token.startswith('http://') or token.startswith('https://'):
             add_url_runs(p, token)
         else:
             run = p.add_run(token)
-            run.font.name = 'Times New Roman'
-            run.font.size = Pt(12)
+            run.font.name = FUENTE_DOCUMENTO
+            run.font.size = Pt(11)
     return p
 
 
@@ -315,8 +373,8 @@ def add_url_runs(paragraph, url):
             br = paragraph.add_run()
             br.add_break()
         run = paragraph.add_run(segment)
-        run.font.name = 'Times New Roman'
-        run.font.size = Pt(12)
+        run.font.name = FUENTE_DOCUMENTO
+        run.font.size = Pt(11)
         run.font.color.rgb = RGBColor(0x05, 0x63, 0xC1)
         run.font.underline = True
 
@@ -330,8 +388,8 @@ def add_table_label(doc, table_num, table_title):
     p_num.paragraph_format.line_spacing = 2.0
     r_num = p_num.add_run(table_num)
     r_num.bold = True
-    r_num.font.name = 'Times New Roman'
-    r_num.font.size = Pt(12)
+    r_num.font.name = FUENTE_DOCUMENTO
+    r_num.font.size = Pt(11)
 
     p_tit = doc.add_paragraph()
     p_tit.style = doc.styles['Normal']
@@ -340,8 +398,8 @@ def add_table_label(doc, table_num, table_title):
     p_tit.paragraph_format.line_spacing = 2.0
     r_tit = p_tit.add_run(table_title)
     r_tit.italic = True
-    r_tit.font.name = 'Times New Roman'
-    r_tit.font.size = Pt(12)
+    r_tit.font.name = FUENTE_DOCUMENTO
+    r_tit.font.size = Pt(11)
 
 
 def add_table_note(doc, note_text, etiqueta="Nota."):
@@ -353,7 +411,7 @@ def add_table_note(doc, note_text, etiqueta="Nota."):
     p_note.paragraph_format.line_spacing = 1.15
     r1 = p_note.add_run(etiqueta + " ")
     r1.italic = True
-    r1.font.name = 'Times New Roman'
+    r1.font.name = FUENTE_DOCUMENTO
     r1.font.size = Pt(10)
     for token in re.split(r"(\*\*[^*]+\*\*|\*[^*]+\*)", note_text):
         if not token:
@@ -366,7 +424,7 @@ def add_table_note(doc, note_text, etiqueta="Nota."):
             r.italic = True
         else:
             r = p_note.add_run(token)
-        r.font.name = 'Times New Roman'
+        r.font.name = FUENTE_DOCUMENTO
         r.font.size = Pt(10)
 
 
@@ -616,6 +674,7 @@ def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = N
     print(f"Cargando plantilla institucional: {plantilla_base.name}")
     doc = docx.Document(str(plantilla_base))
     enable_update_fields_on_open(doc)
+    configurar_fuente_global(doc, fuente=FUENTE_DOCUMENTO, tamano_pt=11)
 
     # -------------------------------------------------------------------------
     # 1. CARÁTULA INSTITUCIONAL (Sección 0, 10/11 Elementos Normativos)
@@ -735,7 +794,7 @@ def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = N
     # Configuración de carátula (número invisible)
     sec_caratula = doc.sections[0]
     sec_caratula.different_first_page_header_footer = False
-    set_section_page_numbering(sec_caratula, num_format="decimal", start_at=1)
+    set_section_page_numbering(sec_caratula, num_format="lowerRoman", start_at=1)
 
     # Limpiar cualquier contenido restante de la plantilla
     remove_template_toc(doc)
@@ -749,28 +808,40 @@ def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = N
     bloques = parsear_bloques_markdown(md_contenido)
 
     # Separar preliminares (Resumen y Palabras clave) del cuerpo principal
+    # Garantizando que metadatos institucionales y preámbulos NO se filtren al cuerpo
     resumen_bloques = []
     cuerpo_bloques = []
     en_resumen = False
+    inicio_cuerpo = False
 
     for b in bloques:
-        if b["tipo"] == "heading" and "resumen" in b["texto"].lower():
-            en_resumen = True
+        tipo = b["tipo"]
+        texto = b.get("texto", "").strip()
+
+        # Omitir cualquier párrafo de metadatos institucionales de portada
+        if es_bloque_metadatos_o_preambulo(b):
             continue
-        elif b["tipo"] == "heading" and en_resumen:
-            en_resumen = False
-            cuerpo_bloques.append(b)
+
+        if tipo == "heading":
+            txt_low = texto.lower()
+            if "resumen" in txt_low:
+                en_resumen = True
+                inicio_cuerpo = False
+                continue
+            elif en_resumen:
+                en_resumen = False
+                inicio_cuerpo = True
+                cuerpo_bloques.append(b)
+            elif txt_low in ("ficha técnica de proyecto (p0)", "ficha de proyecto", "carátula", "portada", "metadatos"):
+                continue
+            elif texto == meta["titulo"]:
+                continue
+            else:
+                inicio_cuerpo = True
+                cuerpo_bloques.append(b)
         elif en_resumen:
             resumen_bloques.append(b)
-        elif not en_resumen and b["tipo"] == "heading" and b["texto"].lower() in (
-            "ficha técnica de proyecto (p0)", "ficha de proyecto"
-        ):
-            # Omitir Ficha Técnica P0 del cuerpo formal del DOCX si viene en el markdown
-            continue
-        elif not en_resumen and b["tipo"] == "heading" and b["texto"] == meta["titulo"]:
-            # Omitir el título de la carátula si ya fue colocado en portada
-            continue
-        else:
+        elif inicio_cuerpo:
             cuerpo_bloques.append(b)
 
     # -------------------------------------------------------------------------
@@ -778,7 +849,7 @@ def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = N
     # -------------------------------------------------------------------------
     print("Construyendo Preliminares (Resumen, Palabras clave, Índice)...")
     sec_prelim = doc.add_section(WD_SECTION.NEW_PAGE)
-    set_section_page_numbering(sec_prelim, num_format="lowerRoman", start_at=2)
+    set_section_page_numbering(sec_prelim, num_format="lowerRoman", start_at=None)
 
     p_res_tit = doc.add_paragraph()
     p_res_tit.style = doc.styles['Normal']
@@ -786,7 +857,7 @@ def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = N
     p_res_tit.paragraph_format.space_before = Pt(18)
     p_res_tit.paragraph_format.space_after = Pt(18)
     r_res = p_res_tit.add_run("Resumen")
-    r_res.font.name = 'Times New Roman'
+    r_res.font.name = FUENTE_DOCUMENTO
     r_res.font.size = Pt(12)
     r_res.bold = True
 
@@ -826,11 +897,11 @@ def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = N
     p_kw.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     r_kw_lbl = p_kw.add_run("Palabras clave: ")
     r_kw_lbl.italic = True
-    r_kw_lbl.font.name = 'Times New Roman'
-    r_kw_lbl.font.size = Pt(12)
+    r_kw_lbl.font.name = FUENTE_DOCUMENTO
+    r_kw_lbl.font.size = Pt(11)
     r_kw_v = p_kw.add_run(kw_val)
-    r_kw_v.font.name = 'Times New Roman'
-    r_kw_v.font.size = Pt(12)
+    r_kw_v.font.name = FUENTE_DOCUMENTO
+    r_kw_v.font.size = Pt(11)
 
     # Índice de contenido
     doc.add_page_break()
@@ -840,19 +911,18 @@ def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = N
     p_idx_tit.paragraph_format.space_before = Pt(18)
     p_idx_tit.paragraph_format.space_after = Pt(18)
     r_idx = p_idx_tit.add_run("Índice de Contenido")
-    r_idx.font.name = 'Times New Roman'
+    r_idx.font.name = FUENTE_DOCUMENTO
     r_idx.font.size = Pt(12)
     r_idx.bold = True
 
     add_toc_field(doc)
 
     # -------------------------------------------------------------------------
-    # 3. CUERPO PRINCIPAL (Sección 2, PAG-2: Arábigos reiniciando en 1)
+    # 3. CUERPO PRINCIPAL (Sección 2, PAG-2: Arábigos continuos)
     # -------------------------------------------------------------------------
     print("Construyendo Cuerpo Principal dinámico...")
     sec_body = doc.add_section(WD_SECTION.NEW_PAGE)
-    set_section_page_numbering(sec_body, num_format="decimal", start_at=1)
-    configure_pagination(doc)
+    configure_pagination(doc, fuente=FUENTE_DOCUMENTO, tamano_pt=11)
 
     for b in cuerpo_bloques:
         tipo = b["tipo"]
@@ -919,7 +989,7 @@ def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = N
                         p_c.paragraph_format.space_before = Pt(2)
                         p_c.paragraph_format.space_after = Pt(2)
                         r_c = p_c.add_run(val)
-                        r_c.font.name = 'Times New Roman'
+                        r_c.font.name = FUENTE_DOCUMENTO
                         r_c.font.size = Pt(9 if n_cols >= 6 else 10)
                         if r_idx == 0:
                             r_c.bold = True

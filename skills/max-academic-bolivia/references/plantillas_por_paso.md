@@ -415,10 +415,10 @@ SANTA CRUZ – BOLIVIA
 ### 11.2. Sistema de Paginación Mixta Institucional
 - **Sección 1 (Páginas Preliminares):**
   - Comprende: Agradecimientos (opcional), Dedicatoria (opcional), Resumen, Índice.
-  - Numeración con **números romanos en minúscula (`ii`, `iii`, `iv`, `v`...)** en la esquina superior derecha. La carátula es la página `i` pero su número está oculto.
+  - Numeración interna con **números romanos en minúscula (`i`, `ii`, `iii`, `iv`, `v`...)** pero de forma **completamente invisible (oculta)**, sin imprimir número en encabezado ni pie de página.
 - **Sección 2 (Cuerpo Principal de la Monografía):**
   - Comprende: Desde `1. Introducción` hasta el último Apéndice.
-  - Se reinicia la numeración con **números arábigos (`1`, `2`, `3`...)**, apareciendo el número `"1"` visible en la primera página de la Introducción.
+  - Se continúa la numeración correlativa con **números arábigos (`4`, `5`, `6`...)** sin reiniciar en 1, figurando visible en la **esquina superior derecha (encabezado derecho)** de forma continua.
 
 ### 11.3. Índice o Tabla de Contenidos Automática
 - Elaborado de forma **automática en Word** vinculando los estilos de título nativos (Nivel 1, Nivel 2, Nivel 3).

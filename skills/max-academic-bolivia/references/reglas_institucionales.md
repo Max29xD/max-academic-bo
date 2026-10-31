@@ -35,6 +35,7 @@ Este documento contiene el catálogo normativo completo con identificadores úni
 25. [GEO · Enfoque territorial exclusivo en Bolivia](#17-geo--enfoque-territorial-exclusivo-en-bolivia)
 26. [Matriz Comparativa Maestro: Guía EIP-UAGRM vs. APA 7.ª Edición](#18-matriz-comparativa-maestro-guía-eip-uagrm-2026-vs-normas-apa-7a-edición)
 27. [Lista de Verificación Final Institucional para el Agente](#19-matriz-de-control-de-calidad-y-checklist-maestro-de-verificación)
+28. [HUM · Protocolo Humanamente (Anti-Patrones de IA en Español)](#20-hum--protocolo-humanamente-anti-patrones-de-ia-en-español)
 
 ---
 
@@ -436,8 +437,8 @@ SANTA CRUZ – BOLIVIA
 
 | ID | Regla | Severidad | Descripción y criterio de evaluación |
 |---|---|---|---|
-| **PAG-1** | Preliminares con números romanos minúsculos | Error (✖) | Las páginas preliminares (Agradecimientos, Dedicatoria, Resumen, Índice) se numeran con **números romanos en minúscula (`ii`, `iii`, `iv`, `v`...)** en la esquina superior derecha. La carátula es la página `i` pero su número se oculta. |
-| **PAG-2** | Reinicio en arábigos en la Introducción | Error (✖) | En el inicio del texto principal (Sección 2, `1. Introducción`), **se reinicia la numeración con números arábigos (`1`, `2`, `3`...)**, apareciendo el número `"1"` visible en la esquina superior derecha de la primera página de la Introducción y continuando de forma correlativa hasta la última página de Apéndices. |
+| **PAG-1** | Preliminares con números romanos invisibles | Error (✖) | Las páginas preliminares (desde la carátula hasta el final del Índice de Contenido) se numeran internamente con **números romanos en minúscula (`i`, `ii`, `iii`, `iv`, `v`...)**, pero su numeración se mantiene **invisible (oculta, sin imprimir número en encabezado ni pie de página)**. |
+| **PAG-2** | Arábigos continuos en esquina superior derecha | Error (✖) | Después del índice, al inicio del cuerpo principal (Sección 2, `1. Introducción`), **la numeración continúa en números arábigos normales (`4`, `5`, `6`...)** sin reiniciarse en 1, figurando visible en la **esquina superior derecha (encabezado derecho)** de forma correlativa hasta la última página de Apéndices. |
 
 ---
 
@@ -551,6 +552,20 @@ En caso de discrepancia en la elaboración del manuscrito, se aplica la norma co
 | **Titulillo (Running Head)** | Omitido en trabajos de estudiantes. | Omitido totalmente. | **Ambas (Convergencia)** |
 | **Ubicación de Editorial (Libros)** | Se omite la ciudad/país en referencias. | Adopta regla APA 7: Se omite la ciudad. | **Ambas (Convergencia)** |
 | **Alineación del Texto** | Izquierda (margen derecho irregular). | Izquierda (permitido justificado si la EIP/tutor lo solicita). | **EIP-UAGRM** |
+
+---
+
+## 20. HUM · Protocolo Humanamente (Anti-Patrones de IA en Español)
+
+| ID | Regla | Severidad | Descripción y criterio de evaluación |
+|---|---|---|---|
+| **HUM-1** | Falsos paralelismos de IA | Aviso (⚠) | Prohibido abusar de la estructura pendular *«no solo X, sino también Y»*. En español natural, se prefiere coordinación directa con nexos simples (*«y»*, *«además»*) o división en oraciones correlativas. |
+| **HUM-2** | Gerundios de consecuencia no normativos | Error (✖) | El gerundio en castellano no debe expresar consecuencia o posterioridad (*«, logrando así...»*, *«, permitiendo de este modo...»*). Debe sustituirse por oraciones con relativo (*«lo que permite...»*) o punto y seguido. |
+| **HUM-3** | Guion largo o raya anglosajona | Error (✖) | Se prohíbe el uso de rayas (—, –) como incisos discursivos de relleno. Emplear comas, paréntesis o reformulación sintáctica fluida. |
+| **HUM-4** | Aperturas cliché y muletillas infladas | Aviso (⚠) | Prohibidas las aperturas artificiales (*«En el panorama actual»*, *«En un mundo en constante evolución»*, *«En la era digital»*, *«Cabe destacar que»*, *«Es menester señalar»*). Comenzar directamente con los datos o constructos. |
+| **HUM-5** | Clichés metafóricos de IA | Aviso (⚠) | Sustitución de metáforas trilladas (*«la piedra angular»*, *«un tapiz de»*, *«el faro de»*, *«juega un papel fundamental»*) por terminología académica sobria (*«fundamento metodológico»*, *«entramado»*, *«influye directamente»*). |
+| **HUM-6** | Adjetivación laudatoria / hiperbólica | Aviso (⚠) | Evitar adjetivos inflados típicos de LLMs (*revolucionario, holístico, disruptivo, fascinante, multifacético, vertiginoso*). Emplear léxico científico mesurado. |
+| **HUM-7** | Blindaje absoluto de Citas APA 7 | Error (✖) | Ningún proceso de humanización o reescritura puede alterar citas parentéticas (Autor, Año, p. X) ni narrativas Autor (Año), siglas bolivianas o términos de leyes y decretos. |
 
 ---
 

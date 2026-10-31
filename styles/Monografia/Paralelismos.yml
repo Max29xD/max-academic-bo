@@ -1,0 +1,5 @@
+extends: existence
+message: "Falso paralelismo típico de IA ('no solo ... sino'). En español natural, prefiere oraciones coordinadas directas o nexos simples ('y', 'además')."
+level: warning
+raw:
+  - '(?i)\bno\s+s[oó]lo\b.+?\bsino\b'

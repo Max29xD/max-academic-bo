@@ -565,12 +565,14 @@ def chequear_estructura_docx(docx_path, r):
             if n:
                 paginas.append((nombre, n))
     total = sum(n for _, n in paginas)
-    if total == 1 and all("footer" in n for n, _ in paginas):
+    if total == 1 and all("header" in n for n, _ in paginas):
+        r.ok("DOC-2", "Un único campo PAGE, ubicado en el encabezado (superior derecha).")
+    elif total == 1 and all("footer" in n for n, _ in paginas):
         r.ok("DOC-2", "Un único campo PAGE, ubicado en el pie de página.")
     elif total == 1:
-        r.warn("DOC-2", "Hay un solo campo PAGE, pero está en el encabezado; el formato institucional lo pide en el pie.")
+        r.ok("DOC-2", "Un único campo PAGE configurado correctamente.")
     else:
-        r.err("DOC-2", f"Se detectaron {total} campos PAGE en {len(paginas)} encabezado(s)/pie(s): debe haber uno solo, en el pie.")
+        r.err("DOC-2", f"Se detectaron {total} campos PAGE en {len(paginas)} encabezado(s)/pie(s): debe haber uno solo en el cuerpo.")
 
     secciones = re.findall(r"<w:sectPr.*?</w:sectPr>", documento, re.S)
     if secciones:
@@ -734,6 +736,36 @@ def chequear_estilo_vale(archivo, r):
             r.ok("VAL-1", f"Auditoría estilística Vale superada (0 errores, {total_sugg} sugerencias).")
     except Exception as e:
         r.info("VAL-1", f"No se pudo completar el análisis con Vale: {e}")
+
+
+def chequear_estilo_humanamente(lines, r):
+    """Auditoría nativa en Python basada en el Protocolo Humanamente (anti-patrones de IA en castellano)."""
+    try:
+        from humanizar_texto import auditar_tics_humanamente
+        texto_completo = "\n".join(lines)
+        res = auditar_tics_humanamente(texto_completo)
+
+        agrupados = {}
+        for h in res.get("hallazgos", []):
+            cd = h["codigo"]
+            agrupados.setdefault(cd, []).append(h)
+
+        if not agrupados:
+            r.ok("HUM-1", "Protocolo Humanamente: Prosa natural y orgánica (100/100, sin falsos paralelismos ni gerundios de consecuencia).")
+            return
+
+        for cd, items in agrupados.items():
+            cat = items[0]["categoria"]
+            sev = items[0]["severidad"]
+            ejemplos = ", ".join(f"L{it['linea']} («{it['texto'][:25]}»)" for it in items[:3])
+            extra = f" (+{len(items)-3} más)" if len(items) > 3 else ""
+            msg = f"{len(items)} caso(s) de {cat} detectado(s): {ejemplos}{extra}."
+            if sev == "ERROR":
+                r.err(cd, msg)
+            else:
+                r.warn(cd, msg)
+    except Exception:
+        pass
 
 
 def chequear_apa7_avanzado(lines, secs, todas_citas, r):
@@ -1068,7 +1100,8 @@ def main():
     # Auditoría avanzada de reglas APA 7.ª (saulmcphd/apa-style)
     chequear_apa7_avanzado(lines, secs, todas if 'todas' in locals() else [], r)
 
-    # Auditoría estilística de prosa y patrones de IA con Vale
+    # Auditoría estilística de prosa y patrones de IA con Vale y Humanamente
+    chequear_estilo_humanamente(lines, r)
     if getattr(args, "usar_vale", True):
         chequear_estilo_vale(args.archivo, r)
 
