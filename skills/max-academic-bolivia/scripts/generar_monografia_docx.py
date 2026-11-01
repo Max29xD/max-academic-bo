@@ -428,6 +428,40 @@ def add_table_note(doc, note_text, etiqueta="Nota."):
         r.font.size = Pt(10)
 
 
+def add_cell_runs(paragraph, md_text, size, force_bold=False):
+    """Escribe texto de celda de tabla interpretando el Markdown de la celda.
+
+    Resuelve tres defectos de renderizado:
+      1. `**negrita**` y `*cursiva*` se renderizan como formato, no como texto literal.
+      2. `<br>` se convierte en un salto de línea real, no en la cadena «<br>».
+      3. `` `código` `` usa una fuente monoespaciada (Consolas).
+    """
+    lineas = re.split(r'<br\s*/?>', md_text or '', flags=re.IGNORECASE)
+    for idx, linea in enumerate(lineas):
+        if idx > 0:
+            paragraph.add_run().add_break()
+        tokens = re.split(r'(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)', linea)
+        for token in tokens:
+            if not token:
+                continue
+            es_codigo = False
+            if token.startswith('**') and token.endswith('**'):
+                run = paragraph.add_run(token[2:-2])
+                run.bold = True
+            elif token.startswith('`') and token.endswith('`'):
+                run = paragraph.add_run(token[1:-1])
+                es_codigo = True
+            elif token.startswith('*') and token.endswith('*'):
+                run = paragraph.add_run(token[1:-1])
+                run.italic = True
+            else:
+                run = paragraph.add_run(token)
+            run.font.name = 'Consolas' if es_codigo else FUENTE_DOCUMENTO
+            run.font.size = Pt(size)
+            if force_bold:
+                run.bold = True
+
+
 def add_toc_field(doc):
     """Inserta el campo dinámico de Tabla de Contenido (TOC) de Microsoft Word."""
     for style in doc.styles:
@@ -884,7 +918,9 @@ def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = N
     # Palabras clave
     if kw_line:
         m_kw = re.search(r'palabras\s+clave\s*:\s*(.*)$', kw_line, re.I)
-        kw_val = m_kw.group(1).strip().rstrip(".") if m_kw else kw_line
+        # La línea del Markdown viene como `**Palabras clave:** valor`; se retiran los
+        # marcadores de énfasis para que no se impriman literalmente en el documento.
+        kw_val = re.sub(r'[*_`]', '', m_kw.group(1)).strip().rstrip(".") if m_kw else kw_line
     else:
         kw_val = "[Palabras clave no provistas]"
 
@@ -988,11 +1024,12 @@ def compilar_monografia_docx(md_path: Path, docx_path: Path, overrides: dict = N
                         p_c.paragraph_format.line_spacing = 1.15
                         p_c.paragraph_format.space_before = Pt(2)
                         p_c.paragraph_format.space_after = Pt(2)
-                        r_c = p_c.add_run(val)
-                        r_c.font.name = FUENTE_DOCUMENTO
-                        r_c.font.size = Pt(9 if n_cols >= 6 else 10)
+                        add_cell_runs(
+                            p_c, val,
+                            9 if n_cols >= 6 else 10,
+                            force_bold=(r_idx == 0),
+                        )
                         if r_idx == 0:
-                            r_c.bold = True
                             p_c.alignment = WD_ALIGN_PARAGRAPH.CENTER
                         else:
                             p_c.alignment = WD_ALIGN_PARAGRAPH.LEFT
